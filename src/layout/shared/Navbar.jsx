@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import dummyUser from "../../assets/dummy-user.jpg";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
@@ -29,13 +29,15 @@ export default function Navbar() {
 			</div>
 			
 			{/* Logo */}
-				<div className="flex items-center lg:gap-4 gap-2">
-					<img className="hidden w-12 md:block lg:w-16" src="/logo.png" alt="Logo"/>
-					<h1 className="text-5xl lg:text-6xl text-primary font-banger">Purrlinks</h1>
-			</div>
+			<button>
+			<Link to="/" className="flex items-center lg:gap-4 gap-2">
+				<img className="hidden w-12 md:block lg:w-16" src="/logo.png" alt="Logo"/>
+				<h1 className="text-5xl lg:text-6xl text-primary font-banger">Purrlinks</h1>
+			</Link>
+			</button>
 			
 			{/* Navlinks */}
-			<div className="hidden md:block font-opensans">
+			<div className="hidden md:block text-title font-opensans">
 				<ul className="flex text:md lg:text-lg lg:gap-5 gap-3">
 					{ navlinks }
 				</ul>
