@@ -7,8 +7,6 @@ export default function Navbar() {
 	const [openMenu, setOpenMenu] = useState(false);
 	const [openAvatar, setOpenAvatar] = useState(false);
 	
-	console.log(openMenu, openAvatar);
-	
 	const navlinks = <>
 		<li><NavLink to="/">Home</NavLink></li>
 		<li><NavLink to="/pet-listing">Pet Listing</NavLink></li>

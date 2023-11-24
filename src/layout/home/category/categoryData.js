@@ -14,7 +14,7 @@ const category = [
 		icon: PiCat,
 	},
 	{
-		label: "luBird",
+		label: "Bird",
 		icon: LuBird,
 	},
 	{
