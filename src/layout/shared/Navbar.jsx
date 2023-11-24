@@ -7,6 +7,8 @@ export default function Navbar() {
 	const [openMenu, setOpenMenu] = useState(false);
 	const [openAvatar, setOpenAvatar] = useState(false);
 	
+	console.log(openMenu, openAvatar);
+	
 	const navlinks = <>
 		<li><NavLink to="/">Home</NavLink></li>
 		<li><NavLink to="/pet-listing">Pet Listing</NavLink></li>
@@ -19,7 +21,7 @@ export default function Navbar() {
 		<li><button>Logout</button></li>
 	</>
 	
-		return <div>
+		return <div className="z-[9999]">
 			<div className="relative flex items-center justify-between h-20 px-8 md:h-24 bg-secondary-2">
 			{/* Displayed in small screen */}
 				<div className="md:hidden">
@@ -57,7 +59,7 @@ export default function Navbar() {
 		
 		{/* Menu Dropdown */}
 		{
-			openMenu && <div className={`transition md:hidden ease-out left-0 absolute top-20 duration-1000 -z-10`}>
+			openMenu && <div className={`transition md:hidden ease-out left-0 absolute top-20 duration-1000 z-[9999]`}>
 			<div className="border rounded-br-lg w-max bg-neutral">
 				<ul className="py-2 dropdown divide-y">
 					{ navlinks }
@@ -68,7 +70,7 @@ export default function Navbar() {
 		
 		{/* Avatar Dropdown */}
 		{
-			openAvatar && <div className={`transition ease-out md:right-3 duration-1000 right-0 absolute top-20 md:top-24 -z-10`}>
+			openAvatar && <div className={`transition ease-out md:right-3 duration-1000 right-0 absolute top-20 z-[9999] md:top-24`}>
 				<div className="border rounded-bl-lg md:rounded-b-lg w-max bg-neutral">
 					<ul className="py-2 dropdown divide-y">
 						{ avatarLinks }
