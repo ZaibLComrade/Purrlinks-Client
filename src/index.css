@@ -35,3 +35,7 @@
 .debug > * {
 	border: 1px solid black;
 }
+
+.dropdown > * {
+	padding: 8px 32px;
+}
