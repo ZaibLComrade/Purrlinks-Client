@@ -36,6 +36,10 @@
 	border: 1px solid red;
 }
 
+.debug > * > * {
+	border: 1px solid green;
+}
+
 .dropdown > * {
 	padding: 8px 32px;
 }
