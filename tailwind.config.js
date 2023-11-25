@@ -11,6 +11,7 @@ export default {
 				"secondary-1": "#B683AB",
 				"secondary-2": "#dedbd2",
 				"accent-1": "#A8DADC",
+				"accent-2": "#FFCBA4",
 				"title": "#333333",
 				"subtitle": "#666666",
 				"neutral": " #EDEDED",

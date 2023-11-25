@@ -37,7 +37,7 @@ export default function Category() {
 		<div className="relative w-full border-2 md:w-auto lg:flex border-primary rounded-xl">
 			<div className="flex">
 				<div className="h-[60px] lg:w-auto w-full flex max-lg:rounded-t-lg lg:rounded-l-lg items-center justify-center bg-primary px-4 lg:pl-4">
-					<h4 className="text-xl">Categories</h4>
+					<h4 className="text-xl text-white">Categories</h4>
 				</div>
 				<div className={`${ rightArrowStyle } hidden lg:block`}></div>
 			</div>
