@@ -5,7 +5,7 @@ import homeImg from "../../../assets/home-with-heart-sign.png";
 import pawImg from "../../../assets/paw.png";
 import shakeImg from "../../../assets/shake.png";
 
-const aboutUsData = [
+const servicesData = [
   {
     title: "Forever Homes",
     description: "Connect loving homes with cats seeking forever companionship. Our platform is dedicated to ensuring each feline finds a lasting and loving home.",
@@ -38,4 +38,4 @@ const aboutUsData = [
   }
 ];
 
-export default aboutUsData;
+export default servicesData;

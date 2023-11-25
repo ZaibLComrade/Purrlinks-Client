@@ -4,7 +4,7 @@ import ButtonPrimary from "../../../components/buttons/ButtonPrimary";
 // import purrImg2 from "../../../assets/embrace-purr-2.jpeg";
 
 export default function WhyUs() {
-	return <div className="">
+	return <div className="container mx-auto">
 		<Header 
 			title="Embrace Love, Change a Life"
 			subtitle="Adopt Happiness Today at PurrLinks"

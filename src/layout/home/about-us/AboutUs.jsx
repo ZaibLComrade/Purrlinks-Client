@@ -13,7 +13,7 @@ export default function AboutUs() {
 		
 		<Parallax strength={ -200 } className="relative">
 			<Background>
-				<div className="w-screen" style={{
+				<div className="w-screen bg-cover" style={{
 					backgroundImage: `url(${purrImg})`,
 					height: 2000,
 				}}></div>
@@ -33,9 +33,9 @@ export default function AboutUs() {
 				</div>
 			</div>
 		</Parallax>
-		<div className="p-8 py-20 space-y-10">
-			<h3 className="mx-auto mb-4 text-3xl w-max text-primary">--- How does it work?</h3>
-			<div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+		<div className="container p-8 py-20 mx-auto space-y-10">
+			<h3 className="mx-auto mb-4 text-2xl text-center md:text-3xl text-primary">--- How does it work?</h3>
+			<div className="p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-16">
 				{
 					adoptionSteps.map(({ step, icon: Icon, title, description }) => <div key={ step } className="relative p-4 bg-white border-2 rounded-lg border-secondary-1">
 						<div className="absolute flex items-center justify-center w-10 h-10 rounded-full bg-accent-2 -right-4 -top-4">{ step }</div>
