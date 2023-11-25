@@ -8,15 +8,22 @@ import servicesImg from "../../../assets/services.jpg";
 export default function Services() {
 	return <div className="container mx-auto">
 		<Header title="Our Services" subtitle="Discover a Seamless Journey to Uniting Hearts and Paws" />
-		<div className="hidden p-4 lg:grid grid-cols-3 md:p-8 grid-rows-3 gap-10">
-			<div className="flex items-center justify-center col-start-2 rows-start-2 row-span-3">
-				<img src={ servicesImg } className="rounded-lg"/>
+		<div className="hidden lg:grid grid-cols-3 place-items-center md:p-8 grid-rows-3 gap-10">
+			<div className="col-start-2 rows-start-2 row-span-3">
+				<img src={ servicesImg } alt=""/>
 			</div>
+			{/* <div className="w-full h-[100px] col-start-1 row-start-1"></div> */}
+			{/* <div className="w-full h-[100px] col-start-1 row-start-2"></div> */}
+			{/* <div className="w-full h-[100px] col-start-1 row-start-3"></div> */}
+			
+			{/* <div className="w-full h-[100px] col-start-3 row-start-1"></div> */}
+			{/* <div className="w-full h-[100px] col-start-3 row-start-2"></div> */}
+			{/* <div className="w-full h-[100px] col-start-3 row-start-3"></div> */}
 			
 			{ 
-				servicesData.map(({ title, description, icon }, i) => <div 
-					key={ title }
-					className={`flex items-center gap-4 ${(i < 3 ) ? `col-start-1 row-start-${(i + 1)}` : `col-start-3 row-start-${(i + 1) % 3}`}`}
+				servicesData.map(({ title, description, icon, pos, col }) => <div 
+					key={ pos + col }
+					className={`flex items-center gap-4 row-start-${pos} col-start-${col}`}
 				>
 					<img 
 						src={ icon }
@@ -37,7 +44,7 @@ export default function Services() {
 			</div>
 			
 			{ 
-				servicesData.map(({ title, description, icon }, i) => <div 
+				servicesData.map(({ title, description, icon }) => <div 
 					key={ title }
 					className={`flex flex-col justify-center text-center items-center gap-4`}
 				>

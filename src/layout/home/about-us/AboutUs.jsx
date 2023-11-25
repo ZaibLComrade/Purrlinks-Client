@@ -37,7 +37,7 @@ export default function AboutUs() {
 			<h3 className="mx-auto mb-4 text-2xl text-center md:text-3xl text-primary">--- How does it work?</h3>
 			<div className="p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-16">
 				{
-					adoptionSteps.map(({ step, icon: Icon, title, description }) => <div key={ step } className="relative p-4 bg-white border-2 rounded-lg border-secondary-1">
+					adoptionSteps.map(({ step, icon: Icon, title, description }) => <div key={ step } className="relative p-4 bg-white border-2 rounded-lg shadow-lg border-secondary-1">
 						<div className="absolute flex items-center justify-center w-10 h-10 rounded-full bg-accent-2 -right-4 -top-4">{ step }</div>
 						<div className="text-center">
 							<div className="flex justify-center mb-4">
