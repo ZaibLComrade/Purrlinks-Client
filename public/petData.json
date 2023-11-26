@@ -1,6 +1,6 @@
 [
 	{
-		"id": 1,
+		"id": "1",
 		"pet_image": "cat_image.jpg",
 		"pet_name": "Whiskers",
 		"pet_age": 3,
@@ -12,7 +12,7 @@
 		"adopted": false
 	},
 	{
-		"id": 2,
+		"id": "2",
 		"pet_image": "dog_image.jpg",
 		"pet_name": "Buddy",
 		"pet_age": 2,
@@ -24,7 +24,7 @@
 		"adopted": true
 	},
 	{
-		"id": 3,
+		"id": "3",
 		"pet_image": "rabbit_image.jpg",
 		"pet_name": "Thumper",
 		"pet_age": 1,
@@ -36,7 +36,7 @@
 		"adopted": false
 	},
 	{
-		"id": 4,
+		"id": "4",
 		"pet_image": "parrot_image.jpg",
 		"pet_name": "Sunny",
 		"pet_age": 4,

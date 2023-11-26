@@ -1,5 +1,5 @@
 export default function Search() {
-	return <form className="container px-4 mx-auto">   
+	return <form className="px-4 w-max">   
 			<label htmlFor="default-search" className="mb-2 text-sm font-medium sr-only">Search</label>
 			<div className="flex items-center justify-center gap-1">
 				<div className="relative">

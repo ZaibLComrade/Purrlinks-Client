@@ -27,7 +27,7 @@ export default function Card({ pet }) {
 					</div>
 				</div>
 				<div className="pb-3 normal-case rounded-lg font-montserrat">
-					<Link to={`/books/details/${id}`} className="font-bold hover:underline text-primary">
+					<Link to={`/pets/details/${id}`} className="font-bold hover:underline text-primary">
 						Details
 					</Link>
 				</div>
