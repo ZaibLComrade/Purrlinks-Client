@@ -1,6 +1,85 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
 export default function LoginForm() {
+	const { loginUser, setLoading, googleSignIn, facebookSignIn } = useAuth();
+	const navigate = useNavigate();
+	
+	const handleGoogleSignIn = e => {
+		e.preventDefault();
+		googleSignIn()
+			.then((result) => {
+				// const user = result.user;
+				// axiosSecure.put(`/users/${user.email}`, {
+				// 	name: user.displayName,
+				// 	image: user.photoURL,
+				// 	email: user.email,
+				// 	role: "user",
+				// 	creationTime: user?.metadata?.creationTime,
+				// 	lastSignInTime: user?.metadata?.lastSignInTime,
+				// 	borrowed: [],
+				// });
+				
+				Swal.fire({
+					title: "Successfully logged in",
+					icon: "success",
+					confirmButtonText: "Continue",
+				}).then(() => {
+					navigate(location?.state || "/");
+					setLoading(false);
+				});
+			})
+			.catch(err => {
+				Swal.fire({
+					title: "Something went wrong",
+					icon: "error",
+					confirmButtonText: "Ok",
+				}).then(() => {
+					setLoading(false);
+				});
+			});
+	}
+	
+	const handleFacebookSignIn = e => {
+		e.preventDefault();
+		facebookSignIn()
+			.then((result) => {
+				// const user = result.user;
+				// axiosSecure.put(`/users/${user.email}`, {
+				// 	name: user.displayName,
+				// 	image: user.photoURL,
+				// 	email: user.email,
+				// 	role: "user",
+				// 	creationTime: user?.metadata?.creationTime,
+				// 	lastSignInTime: user?.metadata?.lastSignInTime,
+				// 	borrowed: [],
+				// });
+				
+				Swal.fire({
+					title: "Successfully logged in",
+					icon: "success",
+					confirmButtonText: "Continue",
+				}).then(() => {
+					navigate(location?.state || "/");
+					setLoading(false);
+				})
+				.catch(err => {
+					Swal.fire({
+						title: "Something went wrong",
+						icon: "error",
+						confirmButtonText: "Ok",
+					}).then(() => {
+						setLoading(false);
+					});
+				});
+			})
+	}
+	
 	return <div className="flex w-full max-w-xs border-2 rounded-lg font-montserrat border-primary">
 		<Formik
 			initialValues={{
@@ -25,10 +104,42 @@ export default function LoginForm() {
 				return errors;
 			}}
 			onSubmit={ (values) => {
-				alert(JSON.stringify(values, null, 2));
+				const { email, password } = values;
+				loginUser(email, password)
+					.then(() => {
+						Swal.fire({
+							title: "User logged in successfully",
+							icon: "success",
+							confirmButtonText: "Ok",
+						}).then(res => {
+							if(res.isConfirmed) {
+								navigate(location?.state || "/")
+							}
+						})
+					})
+					.catch((err) => {
+							if(err.code === "auth/invalid-login-credentials") {
+								Swal.fire({
+									title: "Invalid Credentials",
+									icon: "error",
+									confirmButtonText: "Close",
+								}).then(() => {
+									setLoading(false);
+								});
+							} else if(err.code === "auth/too-many-requests") {
+								Swal.fire({
+									title: "Account has been temporarily disabled",
+									text: "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.",
+									icon: "error",
+									confirmButtonText: "Close",
+								}).then(() => {
+									setLoading(false);
+								});
+							}
+			});
 			}}
 		>
-			<Form className="px-8 pt-6 pb-8 bg-white rounded-lg shadow-md">
+			<Form className="px-4 pt-6 pb-4 bg-white rounded-lg shadow-md">
 				<div className="mb-4">
 					<label 
 						className="block mb-2 text-sm font-bold text-gray-700" 
@@ -75,7 +186,28 @@ export default function LoginForm() {
 							Forgot Password?
 						</a>
 				</div>
+				<div className="mx-auto mt-6 text-sm text-center md:text-sm">
+					<p>
+						Don&apos;t have an account?{" "}
+						<Link
+							className="text-blue-600 underline hover:text-blue-500"
+							to="/register"
+						>
+							Register
+						</Link>{" "}
+						here
+					</p>
+				</div>
+				<div className="w-full mx-auto mt-6 text-center">
+					<hr className="w-full border"/>
+					<p className="relative w-8 mx-auto font-bold bg-base-100 -top-3"> Or</p>
+					<div className="space-y-3">
+						<button onClick={ handleGoogleSignIn } type="button" className="flex items-center justify-center w-full py-2 mx-auto border-2 rounded-lg border-accent-2 bg-accent-2 gap-2"><FcGoogle className="text-2xl"/><span>Login with Google</span></button>
+						<button onClick={ handleFacebookSignIn } type="button" className="flex items-center justify-center w-full py-2 mx-auto border-2 rounded-lg border-accent-1 bg-accent-1 gap-2"><FaFacebook className="text-2xl bg-white rounded-full text-[#4267B2]"/><span>Login with Facebook</span></button>
+					</div>
+				</div>
 			</Form>
+
 		</Formik>
 	</div>
 }

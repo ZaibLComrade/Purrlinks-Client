@@ -1,15 +1,23 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import {useState} from "react";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function RegisterForm() {
-	const [ profile, setProfile ] = useState({});
+	const {
+		registerUser,
+		updateUser,
+		setLoading,
+	} = useAuth();
+	
 	return <div className="flex w-full max-w-xs border-2 rounded-lg font-montserrat border-primary">
 		<Formik
 			initialValues={{
 				email: "",
 				password: "",
 				fullName: "",
-				file: [],
+				imageFile: {},
 			}}
 			validate ={ values => {
 				const errors = {};
@@ -47,21 +55,45 @@ export default function RegisterForm() {
 					errors.password = "Password must contain at least 1 special character";
 				}
 				
-				// Image file validation
-				const file = values.file;
-				if(!file) {
-					errors.file = "Required";
-				}
-				
 				return errors;
 			}}
-			onSubmit={ (values) => {
-				setProfile(values);
+			onSubmit={ async (values) => {
+				const { fullName, email, password, imageFile } = values;
+				const formData = new FormData();
+				formData.append("image", imageFile);
+				const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
+				const { data } = await axios.post(imgHostingApi, formData, {
+					headers: {
+						"Content-Type": "multipart/form-data",
+					}
+				})
+				const imgUrl = data.data.display_url;
+				registerUser(email, password)
+					.then(() => {
+						updateUser(fullName, imgUrl)
+							.then(() => {
+								Swal.fire({
+									title: "Success",
+									text: "User registered successfully",
+									icon: "success",
+									confirmButtonText: "Close",
+								})
+							})
+					})
+					.catch((err) => {
+						if (err.code === "auth/email-already-in-use")
+							Swal.fire({
+								title: "Email is already in use",
+								icon: "error",
+								confirmButtonText: "Close",
+							});
+						setLoading(false);
+					});
 			}}
 		>
 			{ (formik) => {
 				return <>
-			<Form className="px-8 pt-6 pb-8 bg-white rounded-lg shadow-md">
+			<Form className="px-4 pt-6 pb-8 bg-white rounded-lg shadow-md">
 				{/* Name */}
 				<div className="mb-4">
 					<label 
@@ -132,23 +164,35 @@ export default function RegisterForm() {
 					</label>
 					<input 
 						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-						name="file"
-						id="file" 
+						name="imageFile"
+						id="imageFile" 
 						type="file" 
 						onChange={(event) => {
-							formik.setFieldValue("file", event.currentTarget.files[0]);
+							formik.setFieldValue("imageFile", event.currentTarget.files[0]);
 						}}
 					/>
 					
 					
 					<p className="text-xs italic text-red-500">
-						<ErrorMessage name="file"/>
+						<ErrorMessage name="imageFile"/>
+					</p>
+				</div>
+				<div className="mx-auto my-6 text-sm text-center md:text-sm">
+					<p>
+						Already have an account?{" "}
+						<Link
+							className="text-blue-600 underline hover:text-blue-500"
+							to="/login"
+						>
+							Login
+						</Link>{" "}
+						here
 					</p>
 				</div>
 				
 				<div className="flex items-center justify-between font-opensans">
 					<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
-						Sign In
+						Register
 					</button>
 						<a className="inline-block text-sm font-bold text-blue-500 align-baseline hover:text-blue-800" href="#">
 							Forgot Password?

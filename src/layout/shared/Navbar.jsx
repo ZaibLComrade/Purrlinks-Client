@@ -2,21 +2,21 @@ import { Link, NavLink } from "react-router-dom"
 import dummyUser from "../../assets/dummy-user.jpg";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 export default function Navbar() {
 	const [openMenu, setOpenMenu] = useState(false);
 	const [openAvatar, setOpenAvatar] = useState(false);
+	const { user, logOut } = useAuth();
 	
 	const navlinks = <>
 		<li><NavLink to="/">Home</NavLink></li>
 		<li><NavLink to="/pet-listing">Pet Listing</NavLink></li>
 		<li><NavLink to="/donation">Donation Campaign</NavLink></li>
-		<li><NavLink to="/register">Register</NavLink></li>
 	</>
 	
 	const avatarLinks = <>
 		<li><NavLink to="/dashboard">DashBoard</NavLink></li>
-		<li><button>Logout</button></li>
 	</>
 	
 		return <div className="z-[9999]">
@@ -40,17 +40,21 @@ export default function Navbar() {
 			<div className="hidden md:block text-title font-opensans">
 				<ul className="flex text:md lg:text-lg lg:gap-5 gap-3">
 					{ navlinks }
+					{
+						!user && <li><NavLink to="/login">Login</NavLink></li>
+					}
 				</ul>
 			</div>
 			
 			{/* User */}
 			<div className="flex">
-				<button onClick={ () => {setOpenAvatar(!openAvatar); setOpenMenu(false)} } className="h-10 rounded-full outline outline-black/5 hover:outline-black/10 transition ease-out duration-200 hover:-translate-y-px md:h-12">
-					<img 
-						src={ dummyUser } 
-						alt="Dummy User" 
-						className="object-contain h-full rounded-full"
-					/>
+				<button onClick={ () => {setOpenAvatar(!openAvatar); setOpenMenu(false)} } className="w-12 h-12 rounded-full outline outline-black/5 hover:outline-black/10 transition ease-out duration-200 hover:-translate-y-px md:h-12">
+					<div className="w-full h-full">
+						<img 
+							src={ user?.photoURL ? user.photoURL : dummyUser } 
+							className="object-cover w-full h-full rounded-full"
+						/>
+					</div>
 				</button>
 			</div>
 		</div>
@@ -72,6 +76,7 @@ export default function Navbar() {
 				<div className="border rounded-bl-lg md:rounded-b-lg w-max bg-neutral">
 					<ul className="py-2 dropdown divide-y">
 						{ avatarLinks }
+						{user && <li><button onClick={ logOut }>Logout</button></li>}
 					</ul>
 				</div>
 			</div>
