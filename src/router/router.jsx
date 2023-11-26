@@ -8,6 +8,7 @@ import PetDetails from "../layout/pets/PetDetails/PetDetails";
 import AvailablePets from "../layout/pets/AvailablePets/AvailablePets";
 import axios from "axios";
 import DonationCampaign from "../layout/home/donations/DonationCampaign/DonationCampaign";
+import DonationDetails from "../layout/home/donations/DonationDetails/DonationDetails";
 
 const router = createBrowserRouter([
 	{
@@ -20,13 +21,22 @@ const router = createBrowserRouter([
 			{ 
 				path: "/pets/details/:id",
 				element: <PetDetails/>,
-				loader : async ({ params }) => {
+				loader: async ({ params }) => {
 					const { data } = await axios.get("/petData.json");
-					const petData = data.find(pet => params.id === pet.id)
+					const petData = data.find(pet => params.id === pet.id);
 					return petData || null;
 				}
 			},
 			{ path: "/donation/campaigns", element: <DonationCampaign/> },
+			{ 
+				path: "/donation/details/:id",
+				element: <DonationDetails/>,
+				loader: async ({ params }) => {
+					const { data } = await axios.get("/donationData.json");
+					const campaignDetails = data.find(campaign => params.id === campaign.id);
+					return campaignDetails || null;
+				}
+			},
 			{ path: "/login", element: <LoginPage/> },
 			{ path: "/register", element: <RegisterPage/> },
 		],

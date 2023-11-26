@@ -32,7 +32,7 @@ export default function Card({ campaign }) {
 					</div>
 				</div>
 				<div className="pt-3 normal-case rounded-lg font-montserrat">
-					<Link to={`/pets/details/${id}`} className="font-bold hover:underline text-primary">
+					<Link to={`/donation/details/${id}`} className="font-bold hover:underline text-primary">
 						View Details
 					</Link>
 				</div>
