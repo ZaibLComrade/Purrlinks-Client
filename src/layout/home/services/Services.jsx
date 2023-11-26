@@ -10,7 +10,7 @@ export default function Services() {
 		<Header title="Our Services" subtitle="Discover a Seamless Journey to Uniting Hearts and Paws" />
 		<div className="hidden lg:grid grid-cols-3 place-items-center md:p-8 grid-rows-3 gap-10">
 			<div className="col-start-2 rows-start-2 row-span-3">
-				<img src={ servicesImg } alt=""/>
+				<img src={ servicesImg } className="rounded-lg" alt=""/>
 			</div>
 			{/* <div className="w-full h-[100px] col-start-1 row-start-1"></div> */}
 			{/* <div className="w-full h-[100px] col-start-1 row-start-2"></div> */}
