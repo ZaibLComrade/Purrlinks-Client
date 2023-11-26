@@ -1,14 +1,11 @@
 import PropTypes from "prop-types";
 import dummyImage from "../../../../assets/embrace-purr1.jpg";
-import { IoCalendarOutline } from "react-icons/io5";
-import { IoLocationOutline } from "react-icons/io5";
 import {Link} from "react-router-dom";
 
 export default function Card({ campaign }) {
 	const { 
 		id,
 		pet_name,
-		pet_image,
 		max_donation_amount,
 		donated_amount,
 	} = campaign;
