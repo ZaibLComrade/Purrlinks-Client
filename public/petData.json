@@ -8,7 +8,7 @@
 		"pet_location": "Cityville",
 		"short_description": "Playful and affectionate cat seeking a loving home.",
 		"long_description": "Whiskers is a charming 3-year-old cat with a soft fur coat and a playful personality. He enjoys interactive playtime and loves curling up for a cozy nap. Whiskers is fully vaccinated and litter-trained. If you're looking for a furry companion to brighten your days, Whiskers is the perfect match!",
-		"posted_date": "2023-05-12",
+		"posted_date": "Sun Nov 26 2023 17:06:41 GMT+0600 (Bangladesh Standard Time)",
 		"adopted": false
 	},
 	{
@@ -20,10 +20,11 @@
 		"pet_location": "Suburbia",
 		"short_description": "Friendly and energetic dog in search of a forever home.",
 		"long_description": "Meet Buddy, a lovable 2-year-old dog with a heart full of affection. Buddy is great with kids and other pets, making him an ideal family companion. He enjoys outdoor activities and is well-trained in basic commands. Buddy is up-to-date on vaccinations and eagerly awaits a loving family to call his own.",
-		"posted_date": "2023-06-08",
+		"posted_date": "Sun Nov 26 2023 17:06:41 GMT+0600 (Bangladesh Standard Time)",
 		"adopted": true
 	},
 	{
+		"id": 3,
 		"pet_image": "rabbit_image.jpg",
 		"pet_name": "Thumper",
 		"pet_age": 1,
@@ -31,10 +32,11 @@
 		"pet_location": "Countryside",
 		"short_description": "Adorable and gentle rabbit seeking a quiet home.",
 		"long_description": "Thumper is a sweet 1-year-old rabbit with a beautiful coat and gentle demeanor. He enjoys nibbling on fresh greens and exploring cozy hideaways. Thumper is litter-trained and would thrive in a calm environment. If you're looking for a delightful companion with fluffy ears, Thumper is the perfect addition to your family.",
-		"posted_date": "2023-07-20",
+		"posted_date": "Sun Nov 26 2023 17:06:41 GMT+0600 (Bangladesh Standard Time)",
 		"adopted": false
 	},
 	{
+		"id": 4,
 		"pet_image": "parrot_image.jpg",
 		"pet_name": "Sunny",
 		"pet_age": 4,
@@ -42,7 +44,7 @@
 		"pet_location": "Tropical Haven",
 		"short_description": "Vibrant and talkative parrot searching for a lively household.",
 		"long_description": "Meet Sunny, a vibrant 4-year-old parrot with a colorful plumage and a talent for mimicking words. Sunny enjoys socializing and can bring a cheerful atmosphere to any home. With proper care and attention, Sunny will become a delightful chatterbox and a beloved member of your family. Are you ready to welcome this feathered friend into your life?",
-		"posted_date": "2023-08-15",
+		"posted_date": "Sun Nov 26 2023 17:06:41 GMT+0600 (Bangladesh Standard Time)",
 		"adopted": false
 	}
 ]

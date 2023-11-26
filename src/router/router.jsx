@@ -4,7 +4,7 @@ import Home from "../layout/home/Home";
 import NotFound from "../layout/shared/NotFound";
 import LoginPage from "../layout/login/LoginPage";
 import RegisterPage from "../layout/register/RegisterPage";
-import AvailablePets from "../layout/pets/AvailablePets";
+import AvailablePets from "../layout/pets/AvailablePets/AvailablePets";
 
 const router = createBrowserRouter([
 	{
