@@ -10,6 +10,8 @@ import axios from "axios";
 import DonationCampaign from "../layout/home/donations/DonationCampaign/DonationCampaign";
 import DonationDetails from "../layout/home/donations/DonationDetails/DonationDetails";
 import Dashboard from "../layout/Dashboard/Dashboard";
+import AddPet from "../layout/Dashboard/adoptions/AddPet";
+import MyPets from "../layout/Dashboard/adoptions/MyPets";
 
 const router = createBrowserRouter([
 	{
@@ -42,7 +44,23 @@ const router = createBrowserRouter([
 			{ path: "/register", element: <RegisterPage/> },
 		],
 	},
-	{ path: "/dashboard", element: <Dashboard/> },
+	{ 
+		path: "/dashboard", 
+		element: <Dashboard/>,
+		children: [
+			{ path: "/dashboard/*", element: <NotFound/>},
+			{ path: "/dashboard/adoption/add", element: <AddPet/> },
+			{ 
+				path: "/dashboard/adoption/:email", 
+				element: <MyPets/>,
+				loader: async ({ params }) => {
+					const { data } = await axios.get("/petData.json");
+					const myPets = data.filter(dat => dat.author === params.email);
+					return myPets || null;
+				}
+			},
+		]
+	},
 ])
 
 export default router;

@@ -5,18 +5,32 @@ import { IoHeartHalf } from "react-icons/io5";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaDonate } from "react-icons/fa";
 import { IoMdCreate } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { GiReceiveMoney } from "react-icons/gi";
+import { FaUsers } from "react-icons/fa";
+import { MdPets } from "react-icons/md";
+import { FiLogOut } from "react-icons/fi";
+import useAuth from "../../hooks/useAuth";
+import { FaHome } from "react-icons/fa";
 
 export default function Sidebar({ props }) {
+	const { user, logOut } = useAuth();
 	const { toggleSidebar } = props
+	const email = user?.email;
 	
 	const utilities = [
-		{ id:"1", label: "Add a Pet", icon: MdAddCircleOutline },
-		{ id:"2", label: "My Added Pets", icon: FaCat },
-		{ id:"3", label: "Adoption Requests", icon: IoHeartHalf },
-		{ id:"4", label: "Create Donation Campaign", icon: IoMdCreate },
-		{ id:"5", label: "My Donation Campaigns", icon: FaDonate },
-		{ id:"6", label: "My Donations", icon: BiSolidDonateHeart },
+		{ label: "Add a Pet", icon: MdAddCircleOutline, path: "/dashboard/adoption/add" },
+		{ label: "My Added Pets", icon: FaCat, path: `/dashboard/adoption/${email}` },
+		{ label: "Adoption Requests", icon: IoHeartHalf, path: "/dashboard/adoption/requests" },
+		{ label: "Create Donation Campaign", icon: IoMdCreate, path: "/dashboard/campaign/add" },
+		{ label: "My Donation Campaigns", icon: FaDonate, path: `/dashboard/campaign/${email}` },
+		{ label: "My Donations", icon: BiSolidDonateHeart, path: `/dashboard/campaign/donation/${email}` },
 	];
+	const adminUtilities = [
+		{ label: "Users", icon: FaUsers, path: "/dashboard/users/all" },
+		{ label: "All Pets", icon: MdPets, path: "/dashboard/adoption/all" },
+		{ label: "All Donations", icon: GiReceiveMoney, path: "/dashboard/donation/all" },
+	]
 	// const proBadge = <span className="inline-flex items-center justify-center px-2 text-sm font-medium text-gray-800 bg-gray-100 rounded-full ms-3">Pro</span>
 	// const numberBadge = num => <span className="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ms-3">{ num }</span>
 	
@@ -25,14 +39,35 @@ export default function Sidebar({ props }) {
 	>    
 		<div className="h-full px-3 pb-4 overflow-y-auto bg-white">
 			<ul className="font-medium space-y-2">
-				{ utilities.map(({ label, icon: Icon, id }) => <li key={ id }>
-					<a
-						href="#"
+				<li className="w-full sm:hidden">
+					<Link
+						to={ "/" }
+						className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
+					>
+						<FaHome className="text-2xl text-gray-500 transition duration-75 group-hover:text-gray-900"/>
+						<span className="ms-3 font-montserrat">Home</span>
+					</Link>
+				</li>
+				<hr className="sm:hidden"/>
+				{ utilities.map(({ label, icon: Icon, path }) => <li key={ path }>
+					<Link
+						to={ path }
 						className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
 					>
 						<Icon className="text-2xl text-gray-500 transition duration-75 group-hover:text-gray-900"/>
 						<span className="ms-3 font-montserrat">{ label }</span>
-					</a>
+					</Link>
+				</li>
+				)}
+				<hr/>
+				{ adminUtilities.map(({ label, icon: Icon, path }) => <li key={ path }>
+					<Link
+						to={ path }
+						className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
+					>
+						<Icon className="text-2xl text-gray-500 transition duration-75 group-hover:text-gray-900"/>
+						<span className="ms-3 font-montserrat">{ label }</span>
+					</Link>
 				</li>
 				)}
 			</ul>
@@ -43,4 +78,5 @@ export default function Sidebar({ props }) {
 Sidebar.propTypes = {
 	props: PropTypes.object,
 	toggleSidebar: PropTypes.bool,
+	user: PropTypes.object,
 }
