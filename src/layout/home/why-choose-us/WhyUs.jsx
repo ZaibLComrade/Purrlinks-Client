@@ -18,7 +18,7 @@ export default function WhyUs() {
 			
 			<div className="flex flex-col">
 				<h3 className="mb-3 text-xl md:text-3xl font-montserrat text-secondary-1">Open Your Heart to a Furry Companion</h3>
-				<p className="text-subtitle font-opensans text-sm md:text-lg max-w-[500px]">Embark on a heartwarming journey of companionship at PurrLinks. Our mission is to unite loving homes with furry friends, creating moments of joy and unconditional love. By choosing to adopt, you&apos;re not just bringing a pet into your life, you&apos;re opening your heart to a lifelong companion. Be part of a story where every purr tells a tale of happiness and newfound connections. Join us in making a difference.</p>
+				<p className="text-subtitle font-opensans mb-8 text-sm md:text-lg max-w-[500px]">Embark on a heartwarming journey of companionship at PurrLinks. Our mission is to unite loving homes with furry friends, creating moments of joy and unconditional love. By choosing to adopt, you&apos;re not just bringing a pet into your life, you&apos;re opening your heart to a lifelong companion. Be part of a story where every purr tells a tale of happiness and newfound connections. Join us in making a difference.</p>
 				<ButtonPrimary text="Adopt Now"/>
 			</div>
 		</div>

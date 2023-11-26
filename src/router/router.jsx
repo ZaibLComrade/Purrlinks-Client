@@ -4,6 +4,7 @@ import Home from "../layout/home/Home";
 import NotFound from "../layout/shared/NotFound";
 import LoginPage from "../layout/login/LoginPage";
 import RegisterPage from "../layout/register/RegisterPage";
+import AvailablePets from "../layout/pets/AvailablePets";
 
 const router = createBrowserRouter([
 	{
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
 		children: [
 			{ path: "/*", element: <NotFound/> },
 			{ path: "/", element: <Home/> },
+			{ path: "/pets/available", element: <AvailablePets/> },
 			{ path: "/login", element: <LoginPage/> },
 			{ path: "/register", element: <RegisterPage/> },
 		],
