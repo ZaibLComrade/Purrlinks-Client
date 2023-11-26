@@ -2,6 +2,7 @@ import {useEffect, useState} from "react"
 import axios from "axios";
 import Skeleton from "./Skeleton";
 import Card from "./Card";
+import Header from "../../../../components/headers/Header";
 
 export default function DonationCampaign() {
 	const [campaigns, setCampaigns] = useState([]);
@@ -24,6 +25,7 @@ export default function DonationCampaign() {
 	}, [])
 	
 	return <div>
+		<Header title="Donation Campaigns" subtitle="Give Hope, Give Love"/>
 		{/* Card Grids */}
 		{ (loading) ?
 		<div className="py-[50px] space-y-6">

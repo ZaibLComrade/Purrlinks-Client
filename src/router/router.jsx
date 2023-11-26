@@ -9,6 +9,7 @@ import AvailablePets from "../layout/pets/AvailablePets/AvailablePets";
 import axios from "axios";
 import DonationCampaign from "../layout/home/donations/DonationCampaign/DonationCampaign";
 import DonationDetails from "../layout/home/donations/DonationDetails/DonationDetails";
+import Dashboard from "../layout/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
 	{
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
 			{ path: "/register", element: <RegisterPage/> },
 		],
 	},
-	{ path: "/dashboard", element: <div>This is dashboard</div> },
+	{ path: "/dashboard", element: <Dashboard/> },
 ])
 
 export default router;
