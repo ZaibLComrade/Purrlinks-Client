@@ -12,7 +12,7 @@ export default function Navbar() {
 	const navlinks = <>
 		<li><NavLink to="/">Home</NavLink></li>
 		<li><NavLink to="/pets/available">Pet Listing</NavLink></li>
-		<li><NavLink to="/donation">Donation Campaign</NavLink></li>
+		<li><NavLink to="/donation/campaigns">Donation Campaign</NavLink></li>
 	</>
 	
 	const avatarLinks = <>

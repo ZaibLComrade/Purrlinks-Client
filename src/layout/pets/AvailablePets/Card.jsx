@@ -12,7 +12,7 @@ export default function Card({ pet }) {
 		</div>
 		<div className="absolute left-1/2 -translate-x-1/2 rounded-lg justify-between text-center bg-white w-[85%] bottom-0 text-title font-opensans gap-6">
 				<div className="p-3 rounded-lg space-y-2">
-					<h3 className="text-xl font-bold font-nunito"><span>Name:</span> <span>{ pet_name }</span></h3>
+					<h3 className="text-2xl font-bold font-nunito"><span>{ pet_name }</span></h3>
 					<div className="flex flex-col flex-col-reverse md:flex-row items-center justify-between border-b-[1px] pb-2 mb-2">
 						<p className="flex items-center gap-px">
 							<IoLocationOutline className="mr-px"/>

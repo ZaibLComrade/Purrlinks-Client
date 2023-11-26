@@ -7,6 +7,7 @@ import RegisterPage from "../layout/register/RegisterPage";
 import PetDetails from "../layout/pets/PetDetails/PetDetails";
 import AvailablePets from "../layout/pets/AvailablePets/AvailablePets";
 import axios from "axios";
+import DonationCampaign from "../layout/home/donations/DonationCampaign/DonationCampaign";
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
 					return petData || null;
 				}
 			},
+			{ path: "/donation/campaigns", element: <DonationCampaign/> },
 			{ path: "/login", element: <LoginPage/> },
 			{ path: "/register", element: <RegisterPage/> },
 		],
