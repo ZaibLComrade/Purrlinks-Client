@@ -1,9 +1,7 @@
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
-import Select from "react-select";
-import category from "../../home/category/categoryData";
 import axios from "axios";
 
-export default function AddPet() {
+export default function CreateCampaign() {
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
 			className="block mb-2 text-sm font-bold text-gray-700" 
@@ -23,8 +21,6 @@ export default function AddPet() {
 		</p>
 	</div>
 	
-	const categoryOptions = [{ label: "None", icon: null }, ...category]
-	
 	const MyTextArea = ({label, ...props}) => {
 		const [field, meta] = useField(props);
 		return (
@@ -42,19 +38,19 @@ export default function AddPet() {
 };
 	
 	return <div className="">
-		<h2 className="text-2xl font-semibold font-nunito">Add a Pet</h2>
+		<h2 className="pl-4 text-2xl font-semibold font-nunito">Create a Donation Campaign</h2>
 		<div>
 			<Formik
 				initialValues={{
 					pet_name: "",
-					pet_age: 0,
-					pet_location: "",
+					max_donation_amount: 0,
+					last_date: "",
 					short_description: "",
 					long_description: "",
-					pet_category: "",
 					imageFile: {},
 				}}
 				validate ={ values => {
+					console.log(values);
 					const errors = {};
 					
 					// Name validation
@@ -63,7 +59,7 @@ export default function AddPet() {
 						errors.fullName = "Required";
 					}
 					
-					// Age validation
+					// max donation amount validation
 					const pet_age = values.pet_age;
 					if(!pet_age) {
 						errors.pet_age = "Required";
@@ -71,11 +67,12 @@ export default function AddPet() {
 						errors.pet_age = "Invalid number";
 					}
 					
-					// location validation
-					const pet_location = values.pet_location;
-					if(!pet_location) {
-						errors.pet_location = "Required";
-					}
+					// date validation
+					// const last_date = values.last_data;
+					// if(new Date() < new Date(last_date)) {
+					// 	console.log(new Date, new Date(last_date))
+					// 	errors.last_date = "Invalid date format";
+					// }
 					
 					// short description validation
 					const short_description = values.short_description;
@@ -87,12 +84,6 @@ export default function AddPet() {
 					const long_description = values.long_description;
 					if(!long_description) {
 						errors.long_description = "Required";
-					}
-					
-					// Category Validation
-					const pet_category = values.pet_category;
-					if(pet_category === "None") {
-						errors.pet_category = "Required";
 					}
 					
 					// Image file validation
@@ -109,12 +100,12 @@ export default function AddPet() {
 					const formData = new FormData();
 					formData.append("image", imageFile);
 					const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
-					const { data } = await axios.post(imgHostingApi, formData, {
-						headers: {
-							"Content-Type": "multipart/form-data",
-						}
-					})
-					const imgUrl = data.data.display_url;
+					// const { data } = await axios.post(imgHostingApi, formData, {
+					// 	headers: {
+					// 		"Content-Type": "multipart/form-data",
+					// 	}
+					// })
+					// const imgUrl = data.data.display_url;
 				}}
 			>
 				{ (formik) => {
@@ -123,11 +114,11 @@ export default function AddPet() {
 					{/* Pet Name */}
 					<CreateInputField id="pet_name" label="Pet Name" type="text"/>
 					
-					{/* Age */}
-					<CreateInputField id="pet_age" label="Age" type="number"/>
+					{/* Maximum Donation Amount */}
+					<CreateInputField id="max_donation_amount" label="Maximum Donation Amount" type="number"/>
 					
 					{/* Pet Location */}
-					<CreateInputField id="pet_location" label="Pet Location" type="text"/>
+					<CreateInputField id="last_date" label="Last Date" type="date"/>
 					
 					{/* short_description */}
 					<CreateInputField id="short_description" label="Short Description" type="text"/>
@@ -141,31 +132,6 @@ export default function AddPet() {
 						placeholder="Long Description"
 					/>
 					
-					{/* Category options */}
-					<div className="my-4">
-						<label 
-							className="block mb-2 text-sm font-bold text-gray-700"
-							htmlFor="pet_category"
-						>Category</label>
-						<Select
-          styles={{
-            control: (base) => ({
-              ...base,
-              height: 40,
-              minHeight: 40,
-              boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-            }),
-          }}
-          name="pet_category"
-          options={categoryOptions}
-          value={categoryOptions.find((option) => option.value === formik.values.pet_category)}
-          onChange={(selectedOption) => formik.setFieldValue("pet_category", selectedOption?.value)}
-        />
-        <p className="text-xs italic text-red-500">
-          <ErrorMessage name="pet_category" />
-        </p>
-					</div>
-					
 					{/* Image File */}
 					<div className="mb-4">
 						<label 
@@ -175,7 +141,7 @@ export default function AddPet() {
 							Upload Image
 						</label>
 						<input 
-							className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+							className="w-full px-3 py-2 leading-tight text-gray-700 bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
 							name="imageFile"
 							id="imageFile" 
 							type="file" 
@@ -184,14 +150,13 @@ export default function AddPet() {
 							}}
 						/>
 						
-						
 						<p className="text-xs italic text-red-500">
 							<ErrorMessage name="imageFile"/>
 						</p>
 					</div>
 					<div className="flex items-center justify-between font-opensans">
 						<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
-							Register
+							Submit
 						</button>
 					</div>
 				</Form>

@@ -12,6 +12,7 @@ import DonationDetails from "../layout/home/donations/DonationDetails/DonationDe
 import Dashboard from "../layout/Dashboard/Dashboard";
 import AddPet from "../layout/Dashboard/adoptions/AddPet";
 import MyPets from "../layout/Dashboard/adoptions/MyPets";
+import CreateCampaign from "../layout/Dashboard/campaigns/CreateCampaign";
 
 const router = createBrowserRouter([
 	{
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
 					return myPets || null;
 				}
 			},
+			{ path: "/dashboard/campaign/add", element: <CreateCampaign/> }
 		]
 	},
 ])
