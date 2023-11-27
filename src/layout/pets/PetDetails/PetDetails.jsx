@@ -3,9 +3,11 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import Modal from "./Modal";
 import {useState} from "react";
+import useAuth from "../../../hooks/useAuth";
 
 export default function PetDetails() {
 	const [toggleModal, setToggleModal] = useState(false);
+	const { user } = useAuth();
 	const {
 		pet_category,
 		pet_name,
@@ -42,6 +44,9 @@ export default function PetDetails() {
 			</div>
 		</div>
 		
-		<Modal setToggleModal={ setToggleModal } toggleModal={ toggleModal }/>
+		<Modal 
+			setToggleModal={ setToggleModal } 
+			toggleModal={ toggleModal }
+		/>
 	</div>
 }

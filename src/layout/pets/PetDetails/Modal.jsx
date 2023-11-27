@@ -1,6 +1,31 @@
 import PropTypes from "prop-types";
+import { Formik, Field, ErrorMessage, Form } from "formik";
+import useAuth from "../../../hooks/useAuth";
+import {useEffect, useState} from "react";
 
 export default function Modal({ setToggleModal, toggleModal }) {
+	const { user } = useAuth();
+	console.log(user);
+	
+	const [ initVals, setInitVals ] = useState({
+		full_name: user.displayName,
+		email: user.email,
+		user_location: "",
+		phone: "",
+	})
+	console.log(initVals);
+	useEffect(() => {
+		setInitVals({
+			full_name: user.displayName,
+			email: user.email,
+			user_location: "",
+			phone: "",
+		})
+		console.log("rendered");
+	}, [user?.displayName, user?.email, user])
+	
+	if(user)
+	
 	return (
 		<>
 			{/* <!-- Main modal --> */}
@@ -9,20 +34,20 @@ export default function Modal({ setToggleModal, toggleModal }) {
 				onClick={() => setToggleModal(false)}
 				className={`overflow-y-auto ${
 					toggleModal ? "block" : "hidden"
-				} bg-black/50 overflow-x-hidden fixed top-1/2 right-1/2 z-50 justify-center flex items-center w-full md:inset-0 h-screen w-screen max-h-full`}
+				} bg-black/50 overflow-x-hidden fixed z-50 justify-center flex items-center w-full inset-0 h-screen w-screen max-h-full`}
 			>
-				<div className="relative w-full max-w-md max-h-full p-4">
+				<div  className="relative w-full max-w-md max-h-full p-4">
 					{/* <!-- Modal content --> */}
-					<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+					<div onClick={ e => e.stopPropagation() } className="relative bg-white rounded-lg shadow">
 						{/* <!-- Modal header --> */}
-						<div className="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
-							<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-								Sign in to our platform
+						<div className="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+							<h3 className="text-xl font-semibold text-gray-900">
+								Adopt The Purr
 							</h3>
 							<button
 								onClick={() => setToggleModal(false)}
 								type="button"
-								className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+								className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
 								data-modal-hide="authentication-modal"
 							>
 								<svg
@@ -45,80 +70,123 @@ export default function Modal({ setToggleModal, toggleModal }) {
 						</div>
 						{/* <!-- Modal body --> */}
 						<div className="p-4 md:p-5">
-							<form className="space-y-4" action="#">
-								<div>
-									<label
-										htmlFor="email"
-										className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-									>
-										Your email
-									</label>
-									<input
-										type="email"
-										name="email"
-										id="email"
-										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-										placeholder="name@company.com"
-										required
-									/>
-								</div>
-								<div>
-									<label
-										htmlFor="password"
-										className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-									>
-										Your password
-									</label>
-									<input
-										type="password"
-										name="password"
-										id="password"
-										placeholder="••••••••"
-										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-										required
-									/>
-								</div>
-								<div className="flex justify-between">
-									<div className="flex items-start">
-										<div className="flex items-center h-5">
-											<input
-												id="remember"
-												type="checkbox"
-												value=""
-												className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-												required
+							
+							{/* Formik */}
+							<Formik
+								initialValues={ initVals }
+								validate={ values => {
+									const errors = {};
+									console.log(values);
+									
+									if(!values.user_location) {
+										errors.user_location = "Required";
+									}
+									
+									if(!values.phone) {
+										errors.phone = "Required";
+									}
+									
+									return errors;
+								}}
+								onSubmut={ (values) => {
+									console.log(values);
+								}}
+							>
+								<Form className="space-y-4" action="#">
+									<div>
+										{/* Full Name */}
+										<div className="mb-4">
+											<label 
+												className="block mb-2 text-sm font-medium text-gray-900" 
+												htmlFor="full_name"
+											>
+												Full Name
+											</label>
+											<Field 
+												className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+												id="full_name"
+												name="full_name"
+												type="text"
+												defaultValue={ user.displayName }
+												// Custom Style
+												disabled={ true }
+												placeholder="Full Name"
 											/>
+											<p className="mt-1 text-xs italic text-red-500">
+												<ErrorMessage name="full_name"/>
+											</p>
 										</div>
-										<label
-											htmlFor="remember"
-											className="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300"
-										>
-											Remember me
-										</label>
+										
+										{/* Email */}
+										<div className="mb-4">
+											<label 
+												className="block mb-2 text-sm font-medium text-gray-900" 
+												htmlFor="email"
+											>
+												Email
+											</label>
+											<Field 
+												className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+												id="email"
+												name="email"
+												type="email"
+												defaultValue={ user.email }
+												// Custom Style
+												disabled={ true }
+												placeholder="Email"
+											/>
+											<p className="mt-1 text-xs italic text-red-500">
+												<ErrorMessage name="email"/>
+											</p>
+										</div>
+										
+										{/* Phone */}
+										<div className="mb-4">
+											<label 
+												className="block mb-2 text-sm font-medium text-gray-900" 
+												htmlFor="phone"
+											>
+												Phone Number
+											</label>
+											<Field 
+												className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+												id="phone"
+												name="phone"
+												type="text"
+												placeholder="Phone Number"
+											/>
+											<p className="mt-1 text-xs italic text-red-500">
+												<ErrorMessage name="phone"/>
+											</p>
+										</div>
+										
+										<div className="mb-4">
+											<label 
+												className="block mb-2 text-sm font-medium text-gray-900" 
+												htmlFor="user_location"
+											>
+												Address
+											</label>
+											<Field 
+												className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+												id="user_location"
+												name="user_location"
+												type="text"
+												placeholder="Address"
+											/>
+											<p className="mt-1 text-xs italic text-red-500">
+												<ErrorMessage name="user_location"/>
+											</p>
+										</div>
 									</div>
-									<a
-										href="#"
-										className="text-sm text-blue-700 hover:underline dark:text-blue-500"
+									<button
+										type="submit"
+										className="w-full text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center"
 									>
-										Lost Password?
-									</a>
-								</div>
-								<button
-									type="submit"
-									className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-								>
-									Login to your account
-								</button>
-								<div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-									Not registered?{" "}
-									<a
-										href="#"
-										className="text-blue-700 hover:underline dark:text-blue-500"
-									>
-										Create account
-									</a>
-								</div>
-							</form>
+										Send Adoption Request
+									</button>
+								</Form>
+							</Formik>
 						</div>
 					</div>
 				</div>

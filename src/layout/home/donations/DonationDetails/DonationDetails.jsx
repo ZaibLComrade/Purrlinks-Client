@@ -2,14 +2,15 @@ import { useLoaderData } from "react-router-dom";
 import { IoCalendarOutline } from "react-icons/io5";
 import { BiDonateHeart } from "react-icons/bi";
 import { BiSolidDonateHeart } from "react-icons/bi";
-import ButtonPrimary from "../../../../components/buttons/ButtonPrimary";
 import { FaDonate } from "react-icons/fa";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Skeleton from "./Skeleton";
 import Card from "./Card";
+import PaymentModal from "./PaymentModal";
 
 export default function DonationDetails() {
+	const [toggleModal, setToggleModal] = useState(false);
 	const [recommended, setRecommended] = useState([])
 	const [loading, setLoading] = useState(true);
 	const {
@@ -31,7 +32,7 @@ export default function DonationDetails() {
 			})
 	}, [])
 	
-	return <div className="container py-[50px] mx-auto space-y-14">
+	return <><div className="container py-[50px] mx-auto space-y-14">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 			<div className="p-4 place-self-center">
 				<img src={ pet_image } className="w-full h-full object cover rounded-xl"/>
@@ -67,7 +68,11 @@ export default function DonationDetails() {
 				</div>
 				<p className="text-left">{ long_description }</p>
 				<div>
-					<ButtonPrimary text="Donate Now"/>
+					<button 
+						onClick={ () => setToggleModal(true) }
+		className="px-5 py-3 text-sm font-semibold border-2 rounded-lg md:text-base bg-accent-2 border-accent-2 w-max text-title font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60"
+	
+					>Donate Now</button>
 					{/* <ButtonPrimary text="See All Donations"/> */}
 				</div>
 			</div>
@@ -96,4 +101,6 @@ export default function DonationDetails() {
 			}
 		</div>
 	</div>
+	<PaymentModal toggleModal={ toggleModal } setToggleModal={ setToggleModal }/>
+	</>
 }
