@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import exampleImage from "../../../assets/embrace-purr1.jpg";
 import { IoCalendarOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import ButtonPrimary from "../../../components/buttons/ButtonPrimary";
@@ -11,11 +10,12 @@ export default function PetDetails() {
 		pet_age,
 		pet_location,
 		long_description,
+		pet_image,
 	} = useLoaderData();
 	return <div className="container py-[50px] mx-auto">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 			<div className="p-4 place-self-center">
-				<img src={ exampleImage } className="w-full h-full object cover rounded-xl"/>
+				<img src={ pet_iamge } className="w-full h-full object cover rounded-xl"/>
 			</div>
 			<div className="relative p-4 text-subtitle space-y-4">
 				<h5 className="font-medium">{ pet_category }</h5>

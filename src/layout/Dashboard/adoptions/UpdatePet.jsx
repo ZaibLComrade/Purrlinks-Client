@@ -23,6 +23,8 @@ export default function AddPet() {
 		</p>
 	</div>
 	
+	const categoryOptions = [{ label: "None", icon: null }, ...category]
+	
 	const MyTextArea = ({label, ...props}) => {
 		const [field, meta] = useField(props);
 		return (
@@ -102,7 +104,7 @@ export default function AddPet() {
 					return errors;
 				}}
 				onSubmit={ async (values) => {
-					const { imageFile } = values;
+					const { fullName, email, password, imageFile } = values;
 					console.log(values);
 					const formData = new FormData();
 					formData.append("image", imageFile);
@@ -113,37 +115,11 @@ export default function AddPet() {
 						}
 					})
 					const imgUrl = data.data.display_url;
-					values.imageFile = imgUrl;
 				}}
 			>
 				{ (formik) => {
 					return <>
 				<Form className="px-4 pt-6 pb-8 max-w-[500px]">
-					
-					{/* Image File */}
-					<div className="mb-4">
-						<label 
-							className="block mb-2 text-sm font-bold text-gray-700" 
-							htmlFor="imageFile"
-						>
-							Upload Image
-						</label>
-						<input 
-							className="w-full px-3 py-2 leading-tight text-gray-700 bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-							name="imageFile"
-							id="imageFile" 
-							type="file" 
-							onChange={(event) => {
-								formik.setFieldValue("imageFile", event.currentTarget.files[0]);
-							}}
-						/>
-						
-						
-						<p className="text-xs italic text-red-500">
-							<ErrorMessage name="imageFile"/>
-						</p>
-					</div>
-					
 					{/* Pet Name */}
 					<CreateInputField id="pet_name" label="Pet Name" type="text"/>
 					
@@ -152,30 +128,6 @@ export default function AddPet() {
 					
 					{/* Pet Location */}
 					<CreateInputField id="pet_location" label="Pet Location" type="text"/>
-					
-					{/* Category options */}
-					<div className="my-4">
-						<label 
-							className="block mb-2 text-sm font-bold text-gray-700"
-							htmlFor="pet_category"
-						>Category</label>
-						<Select
-							options={ category }
-							styles = {{
-								control: base => ({
-									...base,
-									height: 40,
-									minHeight: 40,
-									boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
-								})
-							}}
-							name="pet_category"
-							onChange={ val => formik.setFieldValue("pet_category", val.value) }
-						/>
-						<p className="text-xs italic text-red-500">
-							<ErrorMessage name="pet_category" />
-						</p>
-					</div>
 					
 					{/* short_description */}
 					<CreateInputField id="short_description" label="Short Description" type="text"/>
@@ -189,6 +141,54 @@ export default function AddPet() {
 						placeholder="Long Description"
 					/>
 					
+					{/* Category options */}
+					<div className="my-4">
+						<label 
+							className="block mb-2 text-sm font-bold text-gray-700"
+							htmlFor="pet_category"
+						>Category</label>
+						<Select
+          styles={{
+            control: (base) => ({
+              ...base,
+              height: 40,
+              minHeight: 40,
+              boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+            }),
+          }}
+          name="pet_category"
+          options={categoryOptions}
+          value={categoryOptions.find((option) => option.value === formik.values.pet_category)}
+          onChange={(selectedOption) => formik.setFieldValue("pet_category", selectedOption?.value)}
+        />
+        <p className="text-xs italic text-red-500">
+          <ErrorMessage name="pet_category" />
+        </p>
+					</div>
+					
+					{/* Image File */}
+					<div className="mb-4">
+						<label 
+							className="block mb-2 text-sm font-bold text-gray-700" 
+							htmlFor="imageFile"
+						>
+							Upload Image
+						</label>
+						<input 
+							className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+							name="imageFile"
+							id="imageFile" 
+							type="file" 
+							onChange={(event) => {
+								formik.setFieldValue("imageFile", event.currentTarget.files[0]);
+							}}
+						/>
+						
+						
+						<p className="text-xs italic text-red-500">
+							<ErrorMessage name="imageFile"/>
+						</p>
+					</div>
 					<div className="flex items-center justify-between font-opensans">
 						<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
 							Register

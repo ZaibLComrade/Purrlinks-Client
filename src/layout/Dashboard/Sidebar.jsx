@@ -12,6 +12,7 @@ import { MdPets } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { FaHome } from "react-icons/fa";
+import { GrUploadOption } from "react-icons/gr";
 
 export default function Sidebar({ props }) {
 	const { user, logOut } = useAuth();
@@ -35,7 +36,7 @@ export default function Sidebar({ props }) {
 	// const numberBadge = num => <span className="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ms-3">{ num }</span>
 	
 	return <aside
-		className={`fixed top-0 left-0 mt-5 z-40 w-72 h-screen pt-20 bg-white border-r border-gray-200 transition-transform ${toggleSidebar ? "-translate-x-full": ""} sm:translate-x-0`}
+		className={`fixed top-0 h-full left-0 mt-5 z-40 w-72 pt-20 bg-white border-r border-gray-200 transition-transform ${toggleSidebar ? "-translate-x-full": ""} sm:translate-x-0`}
 	>    
 		<div className="h-full px-3 pb-4 overflow-y-auto bg-white">
 			<ul className="font-medium space-y-2">

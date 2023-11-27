@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import exampleImage from "../../../../assets/embrace-purr1.jpg";
 import { IoCalendarOutline } from "react-icons/io5";
 import { BiDonateHeart } from "react-icons/bi";
 import { BiSolidDonateHeart } from "react-icons/bi";
@@ -21,6 +20,7 @@ export default function DonationDetails() {
 		short_description,
 		post_created,
 		last_donated,
+		pet_image
 	} = useLoaderData();
 	
 	useEffect(() => {
@@ -34,7 +34,7 @@ export default function DonationDetails() {
 	return <div className="container py-[50px] mx-auto space-y-14">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 			<div className="p-4 place-self-center">
-				<img src={ exampleImage } className="w-full h-full object cover rounded-xl"/>
+				<img src={ pet_image } className="w-full h-full object cover rounded-xl"/>
 			</div>
 			<div className="relative p-4 text-subtitle space-y-6">
 				<div className="space-y-3">

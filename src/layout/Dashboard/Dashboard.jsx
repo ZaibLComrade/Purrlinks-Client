@@ -13,7 +13,7 @@ export default function Dashboard() {
 		user,
 	}
 	return (
-		<div className="bg-neutral">
+		<div className="overflow-hidden bg-neutral">
 			<Navbar props={ props }/>
 			<Sidebar props={ props }/>
 			<div className="p-4 mt-[74px] min-h-[calc(100vh-90px)] lg:mt-[90px] sm:ml-72">

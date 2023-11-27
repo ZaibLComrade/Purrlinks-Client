@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import dummyImage from "../../../../assets/embrace-purr1.jpg";
 import {Link} from "react-router-dom";
 
 export default function Card({ recommendation }) {
@@ -8,10 +7,11 @@ export default function Card({ recommendation }) {
 		pet_name,
 		max_donation_amount,
 		donated_amount,
+		pet_image,
 	} = recommendation;
 	return <div className="items-center mb-4 text-center lg:text-left rounded-xl bg-neutral">
 		<div className="w-full h-[300px] rounded-xl rounded-b-none">
-			<img src={ dummyImage } className="object-cover w-full h-full rounded-b-none rounded-xl"/>
+			<img src={ pet_image } className="object-cover w-full h-full rounded-b-none rounded-xl"/>
 		</div>
 		<div>
 			<div className="bottom-0 justify-between p-3 text-center bg-white rounded-lg rounded-t-none space-y-4 divide-y full text-title font-opensans gap-6">
