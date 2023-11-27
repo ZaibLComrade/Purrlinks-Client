@@ -47,10 +47,9 @@ export default function CreateCampaign() {
 					last_date: "",
 					short_description: "",
 					long_description: "",
-					imageFile: {},
+					pet_image: {},
 				}}
 				validate ={ values => {
-					console.log(values);
 					const errors = {};
 					
 					// Name validation
@@ -60,10 +59,10 @@ export default function CreateCampaign() {
 					}
 					
 					// max donation amount validation
-					const pet_age = values.pet_age;
-					if(!pet_age) {
+					const maxDonation = values.max_donation_amount;
+					if(!maxDonation) {
 						errors.pet_age = "Required";
-					} else if(!/^\d+$/.test(pet_age) && parseInt(pet_age, 10) > 0) {
+					} else if(!/^\d+$/.test(maxDonation) && parseInt(maxDonation, 10) > 0) {
 						errors.pet_age = "Invalid number";
 					}
 					
@@ -87,25 +86,32 @@ export default function CreateCampaign() {
 					}
 					
 					// Image file validation
-					const imageFile = values.imageFile;
-					if(!imageFile) {
-						errors.imageFile = "Required";
+					const pet_image = values.pet_image;
+					if(!pet_image) {
+						errors.pet_image = "Required";
 					}
-					
-					return errors;
+					// return errors;
 				}}
 				onSubmit={ async (values) => {
-					const { fullName, email, password, imageFile } = values;
 					console.log(values);
+					const { pet_image } = values;
 					const formData = new FormData();
-					formData.append("image", imageFile);
+					formData.append("image", pet_image);
 					const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
-					// const { data } = await axios.post(imgHostingApi, formData, {
-					// 	headers: {
-					// 		"Content-Type": "multipart/form-data",
-					// 	}
-					// })
-					// const imgUrl = data.data.display_url;
+					const { data } = await axios.post(imgHostingApi, formData, {
+						headers: {
+							"Content-Type": "multipart/form-data",
+						}
+					})
+					values.pet_image = data.data.display_url;
+					values.last_date = new Date(values.last_date).toISOString();
+					
+					const finalValues = {
+						...values,
+						post_created: new Date().toISOString(),
+						paused: false,
+					}
+					console.log(finalValues);
 				}}
 			>
 				{ (formik) => {
@@ -136,22 +142,22 @@ export default function CreateCampaign() {
 					<div className="mb-4">
 						<label 
 							className="block mb-2 text-sm font-bold text-gray-700" 
-							htmlFor="imageFile"
+							htmlFor="pet_image"
 						>
 							Upload Image
 						</label>
 						<input 
 							className="w-full px-3 py-2 leading-tight text-gray-700 bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-							name="imageFile"
-							id="imageFile" 
+							name="pet_image"
+							id="pet_image" 
 							type="file" 
 							onChange={(event) => {
-								formik.setFieldValue("imageFile", event.currentTarget.files[0]);
+								formik.setFieldValue("pet_image", event.currentTarget.files[0]);
 							}}
 						/>
 						
 						<p className="text-xs italic text-red-500">
-							<ErrorMessage name="imageFile"/>
+							<ErrorMessage name="pet_image"/>
 						</p>
 					</div>
 					<div className="flex items-center justify-between font-opensans">

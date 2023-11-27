@@ -2,8 +2,10 @@ import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import Select from "react-select";
 import category from "../../home/category/categoryData";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 
 export default function AddPet() {
+	const { user } = useAuth();
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
 			className="block mb-2 text-sm font-bold text-gray-700" 
@@ -50,7 +52,7 @@ export default function AddPet() {
 					short_description: "",
 					long_description: "",
 					pet_category: "",
-					imageFile: {},
+					pet_image: {},
 				}}
 				validate ={ values => {
 					const errors = {};
@@ -94,18 +96,17 @@ export default function AddPet() {
 					}
 					
 					// Image file validation
-					const imageFile = values.imageFile;
-					if(!imageFile) {
-						errors.imageFile = "Required";
+					const pet_image = values.pet_image;
+					if(!pet_image) {
+						errors.pet_image = "Required";
 					}
 					
 					return errors;
 				}}
 				onSubmit={ async (values) => {
-					const { imageFile } = values;
-					console.log(values);
+					const { pet_image } = values;
 					const formData = new FormData();
-					formData.append("image", imageFile);
+					formData.append("image", pet_image);
 					const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
 					const { data } = await axios.post(imgHostingApi, formData, {
 						headers: {
@@ -113,7 +114,14 @@ export default function AddPet() {
 						}
 					})
 					const imgUrl = data.data.display_url;
-					values.imageFile = imgUrl;
+					values.pet_image = imgUrl;
+					
+					const finalValues = {
+						...values,
+						adpoted: false,
+						author: user.email,
+						posted_date: new Date().toISOString(),
+					}
 				}}
 			>
 				{ (formik) => {
@@ -124,23 +132,23 @@ export default function AddPet() {
 					<div className="mb-4">
 						<label 
 							className="block mb-2 text-sm font-bold text-gray-700" 
-							htmlFor="imageFile"
+							htmlFor="pet_image"
 						>
 							Upload Image
 						</label>
 						<input 
 							className="w-full px-3 py-2 leading-tight text-gray-700 bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-							name="imageFile"
-							id="imageFile" 
+							name="pet_image"
+							id="pet_image" 
 							type="file" 
 							onChange={(event) => {
-								formik.setFieldValue("imageFile", event.currentTarget.files[0]);
+								formik.setFieldValue("pet_image", event.currentTarget.files[0]);
 							}}
 						/>
 						
 						
 						<p className="text-xs italic text-red-500">
-							<ErrorMessage name="imageFile"/>
+							<ErrorMessage name="pet_image"/>
 						</p>
 					</div>
 					
