@@ -20,7 +20,7 @@ export default function AddPet() {
 			type={ type } 
 			placeholder={ label }
 		/>
-		<p className="text-xs italic text-red-500">
+		<p className="mt-1 text-xs italic text-red-500">
 			<ErrorMessage name={ id }/>
 		</p>
 	</div>
@@ -35,7 +35,7 @@ export default function AddPet() {
 				>{ label }</label>
 				<textarea className="text-area" {...field} {...props} />
 				{meta.touched && meta.error ? (
-				<div className="error">{meta.error}</div>
+				<div className="mt-1 text-xs italic text-red-500">{meta.error}</div>
 				) : null}
 			</>
 		);
@@ -60,7 +60,13 @@ export default function AddPet() {
 					// Name validation
 					const pet_name = values.pet_name;
 					if(!pet_name) {
-						errors.fullName = "Required";
+						errors.pet_name = "Required";
+					}
+					
+					// Category validation
+					const pet_category = values.pet_category;
+					if(!pet_category) {
+						errors.pet_category = "Reqiured";
 					}
 					
 					// Age validation
@@ -87,12 +93,6 @@ export default function AddPet() {
 					const long_description = values.long_description;
 					if(!long_description) {
 						errors.long_description = "Required";
-					}
-					
-					// Category Validation
-					const pet_category = values.pet_category;
-					if(pet_category === "None") {
-						errors.pet_category = "Required";
 					}
 					
 					// Image file validation
@@ -122,6 +122,7 @@ export default function AddPet() {
 						author: user.email,
 						posted_date: new Date().toISOString(),
 					}
+					console.log(finalValues)
 				}}
 			>
 				{ (formik) => {
@@ -180,7 +181,7 @@ export default function AddPet() {
 							name="pet_category"
 							onChange={ val => formik.setFieldValue("pet_category", val.value) }
 						/>
-						<p className="text-xs italic text-red-500">
+						<p className="mt-1 text-xs italic text-red-500">
 							<ErrorMessage name="pet_category" />
 						</p>
 					</div>
@@ -197,9 +198,9 @@ export default function AddPet() {
 						placeholder="Long Description"
 					/>
 					
-					<div className="flex items-center justify-between font-opensans">
-						<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
-							Register
+					<div className="flex items-center justify-between mt-4 font-opensans">
+						<button className="px-4 py-2 font-bold text-white rounded bg-primary hover:bg-primary/80 focus:outline-none focus:shadow-outline" type="submit">
+							Submit
 						</button>
 					</div>
 				</Form>

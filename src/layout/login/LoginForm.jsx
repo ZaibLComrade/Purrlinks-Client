@@ -80,7 +80,7 @@ export default function LoginForm() {
 			})
 	}
 	
-	return <div className="flex w-full max-w-xs border-2 rounded-lg font-montserrat border-primary">
+	return <div className="w-full border-2 rounded-lg font-montserrat">
 		<Formik
 			initialValues={{
 				email: "",
@@ -139,16 +139,16 @@ export default function LoginForm() {
 			});
 			}}
 		>
-			<Form className="px-4 pt-6 pb-4 bg-white rounded-lg shadow-md">
+			<Form className="px-6 pt-6 min-w-[350px] pb-4 bg-white rounded-lg shadow-md">
 				<div className="mb-4">
 					<label 
-						className="block mb-2 text-sm font-bold text-gray-700" 
+						className="block mb-2 text-sm font-medium text-gray-900" 
 						htmlFor="email"
 					>
 						Email
 					</label>
 					<Field 
-						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
 						id="email" 
 						name="email"
 						type="email" 
@@ -159,15 +159,15 @@ export default function LoginForm() {
 					</p>
 				</div>
 				
-				<div className="mb-4">
+				<div className="mb-8">
 					<label 
-						className="block mb-2 text-sm font-bold text-gray-700" 
+						className="block mb-2 text-sm font-medium text-gray-900" 
 						htmlFor="password"
 					>
 						Password
 					</label>
 					<Field 
-						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
 						id="password" 
 						name="password"
 						type="password" 
@@ -178,29 +178,22 @@ export default function LoginForm() {
 					</p>
 				</div>
 				
-				<div className="flex items-center justify-between font-opensans">
-					<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
+				<div className="items-center justify-between font-opensans">
+					<button className="w-full bg-primary text-white hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center " type="submit">
 						Sign In
 					</button>
-						<a className="inline-block text-sm font-bold text-blue-500 align-baseline hover:text-blue-800" href="#">
+						<a className="text-sm font-medium text-gray-400 hover:underline " href="#">
 							Forgot Password?
 						</a>
 				</div>
 				<div className="mx-auto mt-6 text-sm text-center md:text-sm">
-					<p>
-						Don&apos;t have an account?{" "}
-						<Link
-							className="text-blue-600 underline hover:text-blue-500"
-							to="/register"
-						>
-							Register
-						</Link>{" "}
-						here
+					<p className="text-sm font-light text-gray-500">
+						Don’t have an account yet? <Link to="/register" className="font-medium text-primary hover:underline ">Sign up</Link>
 					</p>
 				</div>
 				<div className="w-full mx-auto mt-6 text-center">
 					<hr className="w-full border"/>
-					<p className="relative w-8 mx-auto font-bold bg-base-100 -top-3"> Or</p>
+					<p className="relative w-8 mx-auto font-bold bg-white -top-3">Or</p>
 					<div className="space-y-3">
 						<button onClick={ handleGoogleSignIn } type="button" className="flex items-center justify-center w-full py-2 mx-auto border-2 rounded-lg border-accent-2 bg-accent-2 gap-2"><FcGoogle className="text-2xl"/><span>Login with Google</span></button>
 						<button onClick={ handleFacebookSignIn } type="button" className="flex items-center justify-center w-full py-2 mx-auto border-2 rounded-lg border-accent-1 bg-accent-1 gap-2"><FaFacebook className="text-2xl bg-white rounded-full text-[#4267B2]"/><span>Login with Facebook</span></button>

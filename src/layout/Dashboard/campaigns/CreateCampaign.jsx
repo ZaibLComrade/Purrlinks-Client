@@ -16,7 +16,7 @@ export default function CreateCampaign() {
 			type={ type } 
 			placeholder={ label }
 		/>
-		<p className="text-xs italic text-red-500">
+		<p className="mt-1 text-xs italic text-red-500">
 			<ErrorMessage name={ id }/>
 		</p>
 	</div>
@@ -31,7 +31,7 @@ export default function CreateCampaign() {
 				>{ label }</label>
 				<textarea className="text-area" {...field} {...props} />
 				{meta.touched && meta.error ? (
-				<div className="error">{meta.error}</div>
+				<div className="mt-1 text-xs italic text-red-500">{meta.error}</div>
 				) : null}
 			</>
 		);
@@ -55,15 +55,20 @@ export default function CreateCampaign() {
 					// Name validation
 					const pet_name = values.pet_name;
 					if(!pet_name) {
-						errors.fullName = "Required";
+						errors.pet_name = "Required";
 					}
 					
 					// max donation amount validation
 					const maxDonation = values.max_donation_amount;
 					if(!maxDonation) {
-						errors.pet_age = "Required";
-					} else if(!/^\d+$/.test(maxDonation) && parseInt(maxDonation, 10) > 0) {
-						errors.pet_age = "Invalid number";
+						errors.max_donation_amount = "Required";
+					} else if(!/^\d+$/.test(maxDonation) && parseInt(maxDonation, 10) < 0) {
+						errors.max_donation_amount = "Invalid number";
+					}
+					
+					const last_date = values.last_date;
+					if(!last_date) {
+						errors.last_date = "Required";
 					}
 					
 					// date validation
@@ -90,7 +95,8 @@ export default function CreateCampaign() {
 					if(!pet_image) {
 						errors.pet_image = "Required";
 					}
-					// return errors;
+					
+					return errors;
 				}}
 				onSubmit={ async (values) => {
 					console.log(values);

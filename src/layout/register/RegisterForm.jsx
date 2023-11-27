@@ -11,7 +11,7 @@ export default function RegisterForm() {
 		setLoading,
 	} = useAuth();
 	
-	return <div className="flex w-full max-w-xs border-2 rounded-lg font-montserrat border-primary">
+	return <div className="w-full border-2 rounded-lg font-montserrat">
 		<Formik
 			initialValues={{
 				email: "",
@@ -93,17 +93,17 @@ export default function RegisterForm() {
 		>
 			{ (formik) => {
 				return <>
-			<Form className="px-4 pt-6 pb-8 bg-white rounded-lg shadow-md">
+			<Form className="px-6 min-w-[350px] pt-6 pb-8 bg-white rounded-lg shadow-md">
 				{/* Name */}
 				<div className="mb-4">
 					<label 
-						className="block mb-2 text-sm font-bold text-gray-700" 
+						className="block mb-2 text-sm font-medium text-gray-900" 
 						htmlFor="fullName"
 					>
 						Full Name
 					</label>
 					<Field 
-						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
 						id="fullName" 
 						name="fullName"
 						type="text" 
@@ -117,13 +117,13 @@ export default function RegisterForm() {
 				{/* Email */}
 				<div className="mb-4">
 					<label 
-						className="block mb-2 text-sm font-bold text-gray-700" 
+						className="block mb-2 text-sm font-medium text-gray-900" 
 						htmlFor="email"
 					>
 						Email
 					</label>
 					<Field 
-						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
 						id="email" 
 						name="email"
 						type="email" 
@@ -137,13 +137,13 @@ export default function RegisterForm() {
 				{/* Password */}
 				<div className="mb-4">
 					<label 
-						className="block mb-2 text-sm font-bold text-gray-700" 
+						className="block mb-2 text-sm font-medium text-gray-900" 
 						htmlFor="password"
 					>
 						Password
 					</label>
 					<Field 
-						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
 						id="password" 
 						name="password"
 						type="password" 
@@ -157,13 +157,13 @@ export default function RegisterForm() {
 				{/* Image File */}
 				<div className="mb-4">
 					<label 
-						className="block mb-2 text-sm font-bold text-gray-700" 
+						className="block mb-2 text-sm font-medium text-gray-900" 
 						htmlFor="file"
 					>
 						Upload Image
 					</label>
 					<input 
-						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
 						name="imageFile"
 						id="imageFile" 
 						type="file" 
@@ -177,11 +177,11 @@ export default function RegisterForm() {
 						<ErrorMessage name="imageFile"/>
 					</p>
 				</div>
-				<div className="mx-auto my-6 text-sm text-center md:text-sm">
+				<div className="mx-auto my-6 text-sm text-center text-gray-500 md:text-sm">
 					<p>
 						Already have an account?{" "}
 						<Link
-							className="text-blue-600 underline hover:text-blue-500"
+							className="underline text-primary hover:text-blue-500"
 							to="/login"
 						>
 							Login
@@ -191,10 +191,10 @@ export default function RegisterForm() {
 				</div>
 				
 				<div className="flex items-center justify-between font-opensans">
-					<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
+					<button className="px-4 py-2 font-bold text-white rounded bg-primary hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
 						Register
 					</button>
-						<a className="inline-block text-sm font-bold text-blue-500 align-baseline hover:text-blue-800" href="#">
+						<a className="inline-block text-sm font-bold align-baseline text-primary hover:text-blue-800" href="#">
 							Forgot Password?
 						</a>
 				</div>
