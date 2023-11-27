@@ -5,26 +5,22 @@ import {useEffect, useState} from "react";
 
 export default function Modal({ setToggleModal, toggleModal }) {
 	const { user } = useAuth();
-	console.log(user);
 	
-	const [ initVals, setInitVals ] = useState({
-		full_name: user.displayName,
-		email: user.email,
+	const [ formVals, setFormVals ] = useState({
+		full_name: "",
+		email: "",
 		user_location: "",
 		phone: "",
 	})
-	console.log(initVals);
+	
 	useEffect(() => {
-		setInitVals({
-			full_name: user.displayName,
-			email: user.email,
+		setFormVals({
+			full_name: user.displayName || "",
+			email: user.email || "",
 			user_location: "",
 			phone: "",
 		})
-		console.log("rendered");
-	}, [user?.displayName, user?.email, user])
-	
-	if(user)
+	}, [user.displayName, user.email])
 	
 	return (
 		<>
@@ -73,7 +69,8 @@ export default function Modal({ setToggleModal, toggleModal }) {
 							
 							{/* Formik */}
 							<Formik
-								initialValues={ initVals }
+								initialValues={ formVals }
+								enableReinitialize
 								validate={ values => {
 									const errors = {};
 									console.log(values);
@@ -88,7 +85,7 @@ export default function Modal({ setToggleModal, toggleModal }) {
 									
 									return errors;
 								}}
-								onSubmut={ (values) => {
+								onSubmit={ (values) => {
 									console.log(values);
 								}}
 							>
@@ -107,8 +104,6 @@ export default function Modal({ setToggleModal, toggleModal }) {
 												id="full_name"
 												name="full_name"
 												type="text"
-												defaultValue={ user.displayName }
-												// Custom Style
 												disabled={ true }
 												placeholder="Full Name"
 											/>
@@ -130,8 +125,6 @@ export default function Modal({ setToggleModal, toggleModal }) {
 												id="email"
 												name="email"
 												type="email"
-												defaultValue={ user.email }
-												// Custom Style
 												disabled={ true }
 												placeholder="Email"
 											/>
