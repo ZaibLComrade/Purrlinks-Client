@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import Table from "../shared/table/Table";
 import { IoMdCreate } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import DashboardHeader from "../shared/header/DashboardHeader";
 
 const allPetsColDef = [
 	{ 
@@ -18,7 +19,7 @@ const allPetsColDef = [
 		header: "Image",
 		cell: row => {
 			const imgRef = row.getValue();
-			return <div className="border rounded-lg max-h-[200px]">
+			return <div className="rounded-lg max-h-[200px]">
 				<img className="object-cover w-full h-full rounded-lg max-h-[200px]" src={ imgRef }/>
 			</div>
 		},
@@ -69,5 +70,8 @@ export default function AllPets() {
 			.then(({ data }) => setAllPets(data));
 	}, [])
 	
-	return <Table columnDef={ allPetsColDef } data={ allPets }/>
+	return <div>
+		<DashboardHeader title="All Pets"/>
+		<Table columnDef={ allPetsColDef } data={ allPets }/>
+	</div>
 }

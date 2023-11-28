@@ -28,9 +28,9 @@ export default function Sidebar({ props }) {
 		{ label: "My Donations", icon: BiSolidDonateHeart, path: `/dashboard/campaign/donation/${email}` },
 	];
 	const adminUtilities = [
-		{ label: "Users", icon: FaUsers, path: "/dashboard/users/all" },
+		{ label: "Users", icon: FaUsers, path: "/dashboard/user/all" },
 		{ label: "All Pets", icon: MdPets, path: "/dashboard/adoption/all" },
-		{ label: "All Donations", icon: GiReceiveMoney, path: "/dashboard/donation/all" },
+		{ label: "All Donations", icon: GiReceiveMoney, path: "/dashboard/campaign/all" },
 	]
 	// const proBadge = <span className="inline-flex items-center justify-center px-2 text-sm font-medium text-gray-800 bg-gray-100 rounded-full ms-3">Pro</span>
 	// const numberBadge = num => <span className="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ms-3">{ num }</span>

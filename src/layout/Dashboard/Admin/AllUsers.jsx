@@ -1,10 +1,9 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Table from "../shared/table/Table";
-import { IoMdCreate } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+import DashboardHeader from "../shared/header/DashboardHeader";
 
-const allPetsColDef = [
+const allUsersColDef = [
 	{ 
 		accessorKey: "sl",
 		header: "SL.",
@@ -41,11 +40,14 @@ const allPetsColDef = [
 ]
 
 export default function AllUsers() {
-	const [allPets, setAllPets] = useState([]);
+	const [allUsers, setAllUsers] = useState([]);
 	useEffect(() => {
 		axios.get("/usersData.json")
-			.then(({ data }) => setAllPets(data));
+			.then(({ data }) => setAllUsers(data));
 	}, [])
 	
-	return <Table columnDef={ allPetsColDef } data={ allPets }/>
+	return <div>
+		<DashboardHeader title="All Users"/>
+		<Table columnDef={ allUsersColDef } data={ allUsers }/>
+	</div>
 }

@@ -15,6 +15,7 @@ import MyPets from "../layout/Dashboard/adoptions/MyPets";
 import CreateCampaign from "../layout/Dashboard/campaigns/CreateCampaign";
 import AllPets from "../layout/Dashboard/Admin/AllPets";
 import AllUsers from "../layout/Dashboard/Admin/AllUsers";
+import AllCamapigns from "../layout/Dashboard/Admin/AllDonations";
 
 const router = createBrowserRouter([
 	{
@@ -64,7 +65,8 @@ const router = createBrowserRouter([
 			},
 			{ path: "/dashboard/campaign/add", element: <CreateCampaign/> },
 			{ path: "/dashboard/adoption/all", element: <AllPets/>},
-			{ path: "/dashboard/users/all", element: <AllUsers/>},
+			{ path: "/dashboard/user/all", element: <AllUsers/>},
+			{ path: "/dashboard/campaign/all", element: <AllCamapigns/>},
 		]
 	},
 ])

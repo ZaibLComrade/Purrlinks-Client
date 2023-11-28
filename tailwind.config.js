@@ -15,6 +15,8 @@ export default {
 				"title": "#333333",
 				"subtitle": "#666666",
 				"neutral": " #EDEDED",
+				"active-status": "#4CAF50",
+				"paused-status": "#B0B0B0"
 			},
 		},
 	},

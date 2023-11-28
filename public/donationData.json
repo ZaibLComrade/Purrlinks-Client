@@ -8,7 +8,8 @@
 		"short_description": "Help Fluffy Recover and Find a Loving Home",
 		"long_description": "Fluffy is a resilient cat who has overcome various challenges. Unfortunately, Fluffy recently faced a health setback and requires medical treatment. We're seeking your support to cover Fluffy's medical expenses and provide a chance for this brave feline to find a loving forever home. Your generous donations will make a significant impact on Fluffy's journey to recovery and happiness.",
 		"last_donated": "2023-11-15",
-		"post_created": "2023-11-01"
+		"post_created": "2023-11-01",
+		"isPaused": true
 	},
 	{
 		"id": "2",
@@ -19,7 +20,8 @@
 		"short_description": "Support Rover's Training for a Better Life",
 		"long_description": "Rover, an energetic and friendly dog, is on a journey to improve his behavior and skills through professional training. We believe that with the right training, Rover can become an ideal companion for a loving family. Your donations will contribute to Rover's training program, covering expenses for classes, equipment, and specialized care. Join us in helping Rover become the best version of himself and find a forever home filled with love and understanding.",
 		"last_donated": "2023-11-18",
-		"post_created": "2023-11-05"
+		"post_created": "2023-11-05",
+		"isPaused": false
 	},
 	{
 		"id": "3",
@@ -30,7 +32,8 @@
 		"short_description": "Help Fluffy Recover and Find a Loving Home",
 		"long_description": "Fluffy is a resilient cat who has overcome various challenges. Unfortunately, Fluffy recently faced a health setback and requires medical treatment. We're seeking your support to cover Fluffy's medical expenses and provide a chance for this brave feline to find a loving forever home. Your generous donations will make a significant impact on Fluffy's journey to recovery and happiness.",
 		"last_donated": "2023-11-15",
-		"post_created": "2023-11-01"
+		"post_created": "2023-11-01",
+		"isPaused": false
 	},
 	{
 		"id": "4",
@@ -41,6 +44,7 @@
 		"short_description": "Support Rover's Training for a Better Life",
 		"long_description": "Rover, an energetic and friendly dog, is on a journey to improve his behavior and skills through professional training. We believe that with the right training, Rover can become an ideal companion for a loving family. Your donations will contribute to Rover's training program, covering expenses for classes, equipment, and specialized care. Join us in helping Rover become the best version of himself and find a forever home filled with love and understanding.",
 		"last_donated": "2023-11-18",
-		"post_created": "2023-11-05"
+		"post_created": "2023-11-05",
+		"isPaused": true
 	}
 ]
