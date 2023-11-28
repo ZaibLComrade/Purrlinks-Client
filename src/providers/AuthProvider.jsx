@@ -11,33 +11,32 @@ import {
 } from "firebase/auth";
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import useAxiosPublic from "../hooks/useAxiosPublic";
 import axios from "axios";
+import url from "../router/url";
 
 export const AuthContext = createContext({});
 
 export default function AuthProvider({ children }) {
 	const [ user, setUser ] = useState({});
 	const [ loading, setLoading ] = useState(true);
-	const axiosPublic = useAxiosPublic();
+	const [ dashboardLoading, setDashboardLoading ] = useState(true);
 	
 	useEffect(() => {
-		const unSubscribe = onAuthStateChanged(auth, currentUser => {
-			const userEmail = currentUser?.email || user?.email
-			
-			const userCredential = { email: userEmail };
+		const unsubscribe = onAuthStateChanged(auth, currentUser => {
+			const userEmail = currentUser?.email || user?.email;
+			const userCredential = { email: userEmail }
 			setUser(currentUser);
-			setLoading(false)
-			
+			setLoading(false);
 			if(currentUser) {
-				axios.post("https://purrlinks-server.vercel.app/authenticate?method=login", userCredential);
+				console.log("logged in", currentUser?.email);
+				axios.post(`${url}/authenticate?method=login`, userCredential, { withCredentials: true })
 			} else {
-				axios.post("https://purrlinks-server.vercel.app/authenticate?method=logout", userCredential);
+				console.log("logged out", currentUser?.email);
+				axios.post(`${url}/authenticate?method=logout`, userCredential, { withCredentials: true })
 			}
 		})
-		
-		return () => unSubscribe();
-	}, [user?.email, axiosPublic])
+		return () => unsubscribe();
+	}, [user?.email])
 	
 	const loginUser = (email, password) => {
 		setLoading(true);
@@ -81,9 +80,11 @@ export default function AuthProvider({ children }) {
 		loginUser,
 		setLoading,
 		updateUser,
-		googleSignIn,
 		registerUser,
+		googleSignIn,
 		facebookSignIn,
+		dashboardLoading,
+		setDashboardLoading
 	}
 	return <AuthContext.Provider value={ authUtilities }>
 		{ children }

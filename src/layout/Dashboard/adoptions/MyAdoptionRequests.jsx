@@ -1,11 +1,10 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
 import {useLoaderData} from "react-router-dom";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 
 export default function MyAdoptionRequests() {
-	const [requestsData, setRequestsData] = useState([])
+	const requestsData = useLoaderData([]);
+	console.log(requestsData);
 	
 	const requestsColDef = [
 		{
@@ -16,7 +15,7 @@ export default function MyAdoptionRequests() {
 				return i + 1;
 			},
 		},
-		{ accessorKey: "adoption", header: "Adoption" },
+		{ accessorKey: "pet_name", header: "Pet" },
 		{ accessorKey: "full_name", header: "Name" },
 		{ accessorKey: "email", header: "Email" },
 		{ accessorKey: "phone", header: "Ph. Number" },
@@ -45,12 +44,8 @@ export default function MyAdoptionRequests() {
 		}
 	]
 	
-	useEffect(() => {
-		axios.get("/requestData.json").then(({data}) => setRequestsData(data))
-	}, [])
-	
 	return <div>
-		<DashboardHeader title="My Requests"/>
+		<DashboardHeader title="Adoption Requests"/>
 		<Table columnDef={requestsColDef} data={requestsData}/>
 	</div>
 }

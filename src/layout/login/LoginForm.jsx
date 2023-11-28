@@ -141,7 +141,7 @@ export default function LoginForm() {
 			});
 			}}
 		>
-			<Form className="px-6 pt-6 min-w-[350px] pb-4 bg-white rounded-lg shadow-md">
+			<Form className="px-6 pt-6 md:min-w-[360px] pb-4 bg-white rounded-lg shadow-md">
 				<div className="mb-4">
 					<label 
 						className="block mb-2 text-sm font-medium text-gray-900" 

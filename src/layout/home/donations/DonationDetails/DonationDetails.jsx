@@ -1,15 +1,17 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { IoCalendarOutline } from "react-icons/io5";
 import { BiDonateHeart } from "react-icons/bi";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaDonate } from "react-icons/fa";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import Skeleton from "./Skeleton";
 import Card from "./Card";
 import PaymentModal from "./PaymentModal";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 export default function DonationDetails() {
+	const campaign_id = useParams().id;
+	const axiosPublic = useAxiosPublic();
 	const [toggleModal, setToggleModal] = useState(false);
 	const [recommended, setRecommended] = useState([])
 	const [loading, setLoading] = useState(true);
@@ -25,12 +27,19 @@ export default function DonationDetails() {
 	} = useLoaderData();
 	
 	useEffect(() => {
-		axios.get("/donationData.json")
+		axiosPublic.get("/donation")
 			.then(({ data }) => {
 				setRecommended(data);
 				setLoading(false);
 			})
-	}, [])
+	}, [axiosPublic])
+	
+	//for database
+	const campaign_details = {
+		pet_name,
+		pet_image,
+		campaign_id,
+	}
 	
 	return <><div className="container py-[50px] mx-auto space-y-14">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -71,7 +80,6 @@ export default function DonationDetails() {
 					<button 
 						onClick={ () => setToggleModal(true) }
 		className="px-5 py-3 text-sm font-semibold border-2 rounded-lg md:text-base bg-accent-2 border-accent-2 w-max text-title font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60"
-	
 					>Donate Now</button>
 					{/* <ButtonPrimary text="See All Donations"/> */}
 				</div>
@@ -101,6 +109,10 @@ export default function DonationDetails() {
 			}
 		</div>
 	</div>
-	<PaymentModal toggleModal={ toggleModal } setToggleModal={ setToggleModal }/>
+		<PaymentModal 
+			toggleModal={ toggleModal } 
+			setToggleModal={ setToggleModal }
+			campaign_details={ campaign_details }
+		/>
 	</>
 }

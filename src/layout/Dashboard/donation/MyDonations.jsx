@@ -1,18 +1,33 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
+import {useLoaderData} from "react-router-dom";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 
 export default function MyDonations() {
-	const [myDonations, setMyDonations] = useState([]);
-	useEffect(() => {
-		axios.get('/donationMade.json').then(({data}) => setMyDonations(data)); 
-	}, [])
+	const myDonations = useLoaderData([]);
+	
+	// useEffect(() => {
+	// }, [axiosSecure])
 	
 	const myDonationsColDef = [
-		{ accessorKey: "pet_image", header: "Pet Image" },
+		{ 
+			accessorKey: "pet_image",
+			header: "Pet Image",
+			cell: row => {
+				const imgRef = row.getValue();
+				return <div className="rounded-lg max-h-[200px]">
+				<img className="object-cover w-full h-full rounded-lg max-h-[200px]" src={ imgRef }/>
+			</div>
+			},
+		},
 		{ accessorKey: "pet_name", header: "Pet Name" },
-		{ accessorKey: "donated_amount", header: "Donated Amount" },
+		{ 
+			accessorKey: "donated_amount",
+			header: "Donated Amount",
+			cell: prop => {
+				const amount = prop.getValue();
+				return <span>${amount}</span>
+			}
+		},
 		{ 
 			accessorKey: "action",
 			header: "Action",

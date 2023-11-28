@@ -1,7 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import PropTypes from "prop-types";
 import {useState} from "react";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ campaign_details }) {
 	const [error, setError] = useState("");
 	const stripe = useStripe();
 	const elements = useElements();
@@ -68,4 +69,8 @@ export default function CheckoutForm() {
 			</div>
 		</form>
 	</div>
+}
+
+CheckoutForm.propTypes = {
+	campaign_details: PropTypes.object,
 }

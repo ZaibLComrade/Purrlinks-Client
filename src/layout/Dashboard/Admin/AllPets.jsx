@@ -4,6 +4,7 @@ import Table from "../shared/table/Table";
 import { IoMdCreate } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import DashboardHeader from "../shared/header/DashboardHeader";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const allPetsColDef = [
 	{ 
@@ -33,7 +34,7 @@ const allPetsColDef = [
 			
 			const isAdopted = row.getValue();
 			return <span className="flex flex-col items-center justify-center gap-3">
-				<span>{isAdopted ? "Adopted" : "Not Adopted"}</span>
+				<span className={`${isAdopted ? "text-accept" : "text-paused-status"}`}>{isAdopted ? "Adopted" : "Not Adopted"}</span>
 				<button className="text-sm rounded-lg font-sekibold md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Toggle Status</button>
 			</span>;
 		}
@@ -64,11 +65,12 @@ const allPetsColDef = [
 ]
 
 export default function AllPets() {
+	const axiosSecure = useAxiosSecure();
 	const [allPets, setAllPets] = useState([]);
 	useEffect(() => {
-		axios.get("/petData.json")
+		axiosSecure.get("/adoption")
 			.then(({ data }) => setAllPets(data));
-	}, [])
+	}, [axiosSecure])
 	
 	return <div>
 		<DashboardHeader title="All Pets"/>

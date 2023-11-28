@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Payment from "../../../../Payment/Payment";
 
-export default function PaymentModal({ toggleModal, setToggleModal }) {
+export default function PaymentModal({ toggleModal, setToggleModal, campaign_details }) {
 	return (
 		<div
 			tabIndex="-1"
@@ -45,7 +45,7 @@ export default function PaymentModal({ toggleModal, setToggleModal }) {
 					
 					{/* <!-- Modal body --> */}
 					<div className="p-4 md:p-5">
-						<Payment/>
+						<Payment campaign_details={ campaign_details }/>
 					</div>
 				</div>
 			</div>
@@ -56,4 +56,5 @@ export default function PaymentModal({ toggleModal, setToggleModal }) {
 PaymentModal.propTypes = {
 	toggleModal: PropTypes.bool,
 	setToggleModal: PropTypes.func,
+	campaign_details: PropTypes.object,
 };

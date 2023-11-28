@@ -1,12 +1,11 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 import { IoMdCreate } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import {useLoaderData} from "react-router-dom";
 
 export default function MyDonationCampaigns() {
-	const [campaigns, setCampaigns] = useState([]);
+	const campaigns = useLoaderData([]);
 	
 	const campaignsColDef = [
 		{ accessorKey: "pet_name", header: "Name" },
@@ -62,9 +61,6 @@ export default function MyDonationCampaigns() {
 		}
 	]
 	
-	useEffect(() => {
-		axios.get("/donationData.json").then(({data}) => setCampaigns(data));
-	}, [])
 	return <div>
 		<DashboardHeader title="My Donation Campaigns"/>
 		<Table columnDef={campaignsColDef} data={campaigns}/>

@@ -3,8 +3,10 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export default function RegisterForm() {
+	const axiosPublic = useAxiosPublic();
 	const {
 		registerUser,
 		updateUser,
@@ -58,18 +60,28 @@ export default function RegisterForm() {
 				return errors;
 			}}
 			onSubmit={ async (values) => {
-				const { full_name, email, password, profile_picture } = values;
-				const formData = new FormData();
-				formData.append("image", profile_picture);
-				const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
-				const { data } = await axios.post(imgHostingApi, formData, {
-					headers: {
-						"Content-Type": "multipart/form-data",
-					}
-				})
-				const imgUrl = data.data.display_url;
+				const { email, full_name, password, profile_picture } = values;
+				let imgUrl = "https://i.ibb.co/LC2f6WY/dummy-user.jpg";
+				
+				const pfpObjLen = profile_picture?.type;
+				if(pfpObjLen) {
+					const formData = new FormData();
+					formData.append("image", profile_picture);
+					
+					const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
+					const { data } = await axios.post(imgHostingApi, formData, {
+						headers: {
+							"Content-Type": "multipart/form-data",
+						}
+					})
+					imgUrl = data.data.display_url;
+				} 
+				
+				values.profile_picture = imgUrl;
 				const finalValues = {
-					...values,
+					email,
+					full_name,
+					profile_picture,
 					role: "user",
 				}
 				console.log(finalValues);
@@ -84,6 +96,7 @@ export default function RegisterForm() {
 									icon: "success",
 									confirmButtonText: "Close",
 								})
+								axiosPublic.post("/users", finalValues)
 							})
 					})
 					.catch((err) => {
@@ -197,7 +210,7 @@ export default function RegisterForm() {
 				</div>
 				
 				<div className="flex items-center justify-between font-opensans">
-					<button className="px-4 py-2 font-bold text-white rounded bg-primary hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
+					<button className="px-4 py-2 font-bold text-white rounded bg-primary hover:bg-primay/80 focus:outline-none focus:shadow-outline" type="submit">
 						Register
 					</button>
 						<a className="inline-block text-sm font-bold align-baseline text-primary hover:text-blue-800" href="#">

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 export default function Card({ campaign }) {
 	const { 
-		id,
+		_id,
 		pet_name,
 		max_donation_amount,
 		donated_amount,
@@ -29,7 +29,7 @@ export default function Card({ campaign }) {
 					</div>
 				</div>
 				<div className="pt-3 normal-case rounded-lg font-montserrat">
-					<Link to={`/donation/details/${id}`} className="font-bold hover:underline text-primary">
+					<Link to={`/donation/details/${_id}`} className="font-bold hover:underline text-primary">
 						View Details
 					</Link>
 				</div>

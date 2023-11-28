@@ -6,7 +6,7 @@ import LoginPage from "../layout/login/LoginPage";
 import RegisterPage from "../layout/register/RegisterPage";
 import PetDetails from "../layout/pets/PetDetails/PetDetails";
 import AvailablePets from "../layout/pets/AvailablePets/AvailablePets";
-import axios from "axios";
+import PrivateRoute from "../components/PrivateRoutes/PrivateRoute";
 import DonationCampaign from "../layout/home/donations/DonationCampaign/DonationCampaign";
 import DonationDetails from "../layout/home/donations/DonationDetails/DonationDetails";
 import Dashboard from "../layout/Dashboard/Dashboard";
@@ -38,11 +38,7 @@ const router = createBrowserRouter([
 			{ 
 				path: "/donation/details/:id",
 				element: <DonationDetails/>,
-				loader: async ({ params }) => {
-					const { data } = await axios.get("/donationData.json");
-					const campaignDetails = data.find(campaign => params.id === campaign.id);
-					return campaignDetails || null;
-				}
+				loader: ({ params }) => fetch(`${url}/donation/details/${params.id}`)
 			},
 			{ path: "/login", element: <LoginPage/> },
 			{ path: "/register", element: <RegisterPage/> },
@@ -50,23 +46,32 @@ const router = createBrowserRouter([
 	},
 	{ 
 		path: "/dashboard", 
-		element: <Dashboard/>,
+		element: <PrivateRoute><Dashboard/></PrivateRoute>,
 		children: [
+			// User routes
 			{ path: "/dashboard/*", element: <NotFound/>},
 			{ path: "/dashboard/adoption/add", element: <AddPet/> },
 			{ 
 				path: "/dashboard/adoption/my/:email", 
 				element: <MyPets/>,
-				loader: async ({ params }) => {
-					const { data } = await axios.get("/petData.json");
-					const myPets = data.filter(dat => dat.author === params.email);
-					return myPets || null;
-				}
+				loader: ({ params }) => fetch(`${url}/adoption/user/${params.email}`)
 			},
-			{ path: "/dashboard/adoption/requests/:email", element: <MyAdoptionRequests/> },
+			{ 
+				path: "/dashboard/adoption/requests/:email",
+				element: <MyAdoptionRequests/>,
+				loader: ({ params }) => fetch(`${url}/adoption/requests/${params.email}`)
+			},
 			{ path: "/dashboard/donation/add", element: <CreateCampaign/> },
-			{ path: "/dashboard/donation/my/:email", element: <MyDonationCampaigns/> },
-			{ path: "/dashboard/donation/contributed/:email", element: <MyDonations/> },
+			{ 
+				path: "/dashboard/donation/my/:email",
+				element: <MyDonationCampaigns/>,
+				loader: ({ params }) => fetch(`${url}/donation/user/${params.email}`)
+			},
+			{ 
+				path: "/dashboard/donation/contributed/:email",
+				element: <MyDonations/>,
+				loader: ({ params }) => fetch(`/contributions.json`)
+			},
 			
 			// Admin routes
 			{ path: "/dashboard/adoption/all", element: <AllPets/>},

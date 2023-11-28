@@ -2,6 +2,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import Table from "../shared/table/Table";
 import DashboardHeader from "../shared/header/DashboardHeader";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const allUsersColDef = [
 	{ 
@@ -18,7 +19,7 @@ const allUsersColDef = [
 		cell: row => {
 			const imgRef = row.getValue();
 			return <div className="mx-auto w-max">
-				<img className="w-16 rounded-full" src={ imgRef }/>
+				<img className="object-cover w-16 h-16 rounded-full" src={ imgRef }/>
 			</div>
 		},
 	},
@@ -28,7 +29,6 @@ const allUsersColDef = [
 		accessorKey: "role",
 		header: "Role",
 		cell: row => {
-			
 			const role = row.getValue();
 			const isAdmin = role === "admin"
 			return <span className="flex flex-col items-center justify-center gap-3">
@@ -40,11 +40,12 @@ const allUsersColDef = [
 ]
 
 export default function AllUsers() {
+	const axiosSecure = useAxiosSecure();
 	const [allUsers, setAllUsers] = useState([]);
 	useEffect(() => {
-		axios.get("/usersData.json")
+		axiosSecure.get("/users")
 			.then(({ data }) => setAllUsers(data));
-	}, [])
+	}, [axiosSecure])
 	
 	return <div>
 		<DashboardHeader title="All Users"/>

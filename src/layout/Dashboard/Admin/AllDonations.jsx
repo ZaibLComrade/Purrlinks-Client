@@ -1,16 +1,17 @@
-import axios from "axios";
 import {useEffect, useState} from "react";
 import { IoMdCreate } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 export default function AllDonations() {
+	const axiosSecure = useAxiosSecure();
 	const [allCampaigns, setAllCampaigns] = useState([]);
 	useEffect(() => {
-		axios.get("/donationData.json")
+		axiosSecure.get("/donation")
 			.then(({ data }) => setAllCampaigns(data));
-	}, [])
+	}, [axiosSecure])
 	
 	const allCampaignsColDef = [
 		{ 
