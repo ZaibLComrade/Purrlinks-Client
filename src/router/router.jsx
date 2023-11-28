@@ -19,6 +19,7 @@ import AllDonations from "../layout/Dashboard/Admin/AllDonations";
 import MyAdoptionRequests from "../layout/Dashboard/adoptions/MyAdoptionRequests";
 import MyDonationCampaigns from "../layout/Dashboard/donation/MyDonationCampaigns";
 import MyDonations from "../layout/Dashboard/donation/MyDonations";
+import url from "./url";
 
 const router = createBrowserRouter([
 	{
@@ -31,11 +32,7 @@ const router = createBrowserRouter([
 			{ 
 				path: "/pets/details/:id",
 				element: <PetDetails/>,
-				loader: async ({ params }) => {
-					const { data } = await axios.get("/petData.json");
-					const petData = data.find(pet => params.id === pet.id);
-					return petData || null;
-				}
+				loader: ({ params }) => fetch(`${url}/adoption/details/${params.id}`)
 			},
 			{ path: "/donation/campaigns", element: <DonationCampaign/> },
 			{ 

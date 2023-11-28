@@ -7,7 +7,6 @@ import useAuth from "../../../hooks/useAuth";
 
 export default function PetDetails() {
 	const [toggleModal, setToggleModal] = useState(false);
-	const { user } = useAuth();
 	const {
 		pet_category,
 		pet_name,

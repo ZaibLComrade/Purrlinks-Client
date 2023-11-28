@@ -1,3 +1,6 @@
+import { IoMdCreate } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
+
 const addedPetsColDef = [
 	{ 
 		accessorKey: "sl",
@@ -27,6 +30,29 @@ const addedPetsColDef = [
 			return isAdopted ? "Adopted" : "Not Adopted";
 		}
 	},
+	{
+		header: "actions",
+		columns: [
+			{ 
+				accessorKey: "update",
+				header: "Update",
+				cell: prop => {
+					return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+						<IoMdCreate className="text-xl"/>
+					</button>
+				}
+			},
+			{
+				accessorKey: "delete",
+				header: "Delete",
+				cell: prop => {
+					return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+						<MdDelete className="text-xl"/>
+					</button>
+				}
+			}
+		]
+	}
 ]
 
 export default addedPetsColDef;

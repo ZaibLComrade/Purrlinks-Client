@@ -11,21 +11,33 @@ import {
 } from "firebase/auth";
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import axios from "axios";
 
 export const AuthContext = createContext({});
 
 export default function AuthProvider({ children }) {
 	const [ user, setUser ] = useState({});
 	const [ loading, setLoading ] = useState(true);
+	const axiosPublic = useAxiosPublic();
 	
 	useEffect(() => {
 		const unSubscribe = onAuthStateChanged(auth, currentUser => {
+			const userEmail = currentUser?.email || user?.email
+			
+			const userCredential = { email: userEmail };
 			setUser(currentUser);
 			setLoading(false)
+			
+			if(currentUser) {
+				axios.post("https://purrlinks-server.vercel.app/authenticate?method=login", userCredential);
+			} else {
+				axios.post("https://purrlinks-server.vercel.app/authenticate?method=logout", userCredential);
+			}
 		})
 		
 		return () => unSubscribe();
-	}, [])
+	}, [user?.email, axiosPublic])
 	
 	const loginUser = (email, password) => {
 		setLoading(true);

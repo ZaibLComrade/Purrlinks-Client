@@ -1,28 +1,21 @@
 import {useEffect, useState} from "react"
-import axios from "axios";
 import Skeleton from "./Skeleton";
 import Card from "./Card";
 import Header from "../../../../components/headers/Header";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 export default function DonationCampaign() {
 	const [campaigns, setCampaigns] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const axiosPublic = useAxiosPublic();
 	
 	useEffect(() => {
-	// 	axiosSecure.get(`/books?email=${user.email}&filter=${toggleFilter}`)
-	// 		.then(res => {
-	// 			setBooks(res.data);
-	// 			setLoading(false);
-	// 		});
-	// }, [axiosSecure, user.email, toggleFilter])
-		
-		axios.get('/donationData.json')
-			.then(({ data }) => {
-				setCampaigns(data)
+		axiosPublic.get(`/donation`)
+			.then(res => {
+				setCampaigns(res.data);
 				setLoading(false);
 			});
-		
-	}, [])
+	}, [axiosPublic])
 	
 	return <div>
 		<Header title="Donation Campaigns" subtitle="Give Hope, Give Love"/>

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function LoginForm() {
 	const { loginUser, setLoading, googleSignIn, facebookSignIn } = useAuth();
 	const navigate = useNavigate();
+	const axiosSecure = useAxiosSecure();
 	
 	const handleGoogleSignIn = e => {
 		e.preventDefault();

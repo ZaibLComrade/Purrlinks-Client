@@ -1,30 +1,23 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import Skeleton from "./Skeleton";
 import Card from "./Card";
 import Header from "../../../components/headers/Header";
 import Search from "./Search";
 import Categories from "./Categories";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 export default function UnadoptedPets() {
 	const [pets, setPets] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const axiosPublic = useAxiosPublic();
 	
 	useEffect(() => {
-	// 	axiosSecure.get(`/books?email=${user.email}&filter=${toggleFilter}`)
-	// 		.then(res => {
-	// 			setBooks(res.data);
-	// 			setLoading(false);
-	// 		});
-	// }, [axiosSecure, user.email, toggleFilter])
-		
-		axios.get('/petData.json')
-			.then(({ data }) => {
-				setPets(data)
+		axiosPublic.get(`/adoption`)
+			.then(res => {
+				setPets(res.data);
 				setLoading(false);
 			});
-		
-	}, [])
+	}, [axiosPublic])
 	
 	
 	// Main component
