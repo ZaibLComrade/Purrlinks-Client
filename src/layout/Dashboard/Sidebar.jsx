@@ -9,28 +9,26 @@ import { Link } from "react-router-dom";
 import { GiReceiveMoney } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
 import { MdPets } from "react-icons/md";
-import { FiLogOut } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { FaHome } from "react-icons/fa";
-import { GrUploadOption } from "react-icons/gr";
 
 export default function Sidebar({ props }) {
-	const { user, logOut } = useAuth();
+	const { user } = useAuth();
 	const { toggleSidebar } = props
 	const email = user?.email;
 	
 	const utilities = [
 		{ label: "Add a Pet", icon: MdAddCircleOutline, path: "/dashboard/adoption/add" },
-		{ label: "My Added Pets", icon: FaCat, path: `/dashboard/adoption/${email}` },
-		{ label: "Adoption Requests", icon: IoHeartHalf, path: "/dashboard/adoption/requests" },
-		{ label: "Create Donation Campaign", icon: IoMdCreate, path: "/dashboard/campaign/add" },
-		{ label: "My Donation Campaigns", icon: FaDonate, path: `/dashboard/campaign/${email}` },
-		{ label: "My Donations", icon: BiSolidDonateHeart, path: `/dashboard/campaign/donation/${email}` },
+		{ label: "My Added Pets", icon: FaCat, path: `/dashboard/adoption/my/${email}` },
+		{ label: "Adoption Requests", icon: IoHeartHalf, path: `/dashboard/adoption/requests/${email}` },
+		{ label: "Create Donation Campaign", icon: IoMdCreate, path: "/dashboard/donation/add" },
+		{ label: "My Donation Campaigns", icon: FaDonate, path: `/dashboard/donation/my/${email}` },
+		{ label: "My Donations", icon: BiSolidDonateHeart, path: `/dashboard/donation/contributed/${email}` },
 	];
 	const adminUtilities = [
 		{ label: "Users", icon: FaUsers, path: "/dashboard/user/all" },
 		{ label: "All Pets", icon: MdPets, path: "/dashboard/adoption/all" },
-		{ label: "All Donations", icon: GiReceiveMoney, path: "/dashboard/campaign/all" },
+		{ label: "All Donations", icon: GiReceiveMoney, path: "/dashboard/donation/all" },
 	]
 	// const proBadge = <span className="inline-flex items-center justify-center px-2 text-sm font-medium text-gray-800 bg-gray-100 rounded-full ms-3">Pro</span>
 	// const numberBadge = num => <span className="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ms-3">{ num }</span>

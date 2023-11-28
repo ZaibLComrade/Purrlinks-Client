@@ -1,7 +1,9 @@
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 
 export default function CreateCampaign() {
+	const { user } = useAuth();
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
 			className="block mb-2 text-sm font-bold text-gray-700" 
@@ -99,7 +101,6 @@ export default function CreateCampaign() {
 					return errors;
 				}}
 				onSubmit={ async (values) => {
-					console.log(values);
 					const { pet_image } = values;
 					const formData = new FormData();
 					formData.append("image", pet_image);
@@ -110,10 +111,12 @@ export default function CreateCampaign() {
 						}
 					})
 					values.pet_image = data.data.display_url;
-					values.last_date = new Date(values.last_date).toISOString();
+					const lastDateISO = new Date(values.last_date).toISOString();
 					
 					const finalValues = {
 						...values,
+						last_date: lastDateISO,
+						creator: user.email,
 						post_created: new Date().toISOString(),
 						paused: false,
 					}

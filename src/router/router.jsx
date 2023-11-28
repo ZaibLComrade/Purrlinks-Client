@@ -12,10 +12,13 @@ import DonationDetails from "../layout/home/donations/DonationDetails/DonationDe
 import Dashboard from "../layout/Dashboard/Dashboard";
 import AddPet from "../layout/Dashboard/adoptions/AddPet";
 import MyPets from "../layout/Dashboard/adoptions/MyPets";
-import CreateCampaign from "../layout/Dashboard/campaigns/CreateCampaign";
+import CreateCampaign from "../layout/Dashboard/donation/CreateCampaign";
 import AllPets from "../layout/Dashboard/Admin/AllPets";
 import AllUsers from "../layout/Dashboard/Admin/AllUsers";
-import AllCamapigns from "../layout/Dashboard/Admin/AllDonations";
+import AllDonations from "../layout/Dashboard/Admin/AllDonations";
+import MyAdoptionRequests from "../layout/Dashboard/adoptions/MyAdoptionRequests";
+import MyDonationCampaigns from "../layout/Dashboard/donation/MyDonationCampaigns";
+import MyDonations from "../layout/Dashboard/donation/MyDonations";
 
 const router = createBrowserRouter([
 	{
@@ -55,7 +58,7 @@ const router = createBrowserRouter([
 			{ path: "/dashboard/*", element: <NotFound/>},
 			{ path: "/dashboard/adoption/add", element: <AddPet/> },
 			{ 
-				path: "/dashboard/adoption/:email", 
+				path: "/dashboard/adoption/my/:email", 
 				element: <MyPets/>,
 				loader: async ({ params }) => {
 					const { data } = await axios.get("/petData.json");
@@ -63,10 +66,15 @@ const router = createBrowserRouter([
 					return myPets || null;
 				}
 			},
-			{ path: "/dashboard/campaign/add", element: <CreateCampaign/> },
+			{ path: "/dashboard/adoption/requests/:email", element: <MyAdoptionRequests/> },
+			{ path: "/dashboard/donation/add", element: <CreateCampaign/> },
+			{ path: "/dashboard/donation/my/:email", element: <MyDonationCampaigns/> },
+			{ path: "/dashboard/donation/contributed/:email", element: <MyDonations/> },
+			
+			// Admin routes
 			{ path: "/dashboard/adoption/all", element: <AllPets/>},
 			{ path: "/dashboard/user/all", element: <AllUsers/>},
-			{ path: "/dashboard/campaign/all", element: <AllCamapigns/>},
+			{ path: "/dashboard/donation/all", element: <AllDonations/>},
 		]
 	},
 ])

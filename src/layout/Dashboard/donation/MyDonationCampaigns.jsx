@@ -1,36 +1,14 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import { IoMdCreate } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
+import { IoMdCreate } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 
-export default function AllDonations() {
-	const [allCampaigns, setAllCampaigns] = useState([]);
-	useEffect(() => {
-		axios.get("/donationData.json")
-			.then(({ data }) => setAllCampaigns(data));
-	}, [])
+export default function MyDonationCampaigns() {
+	const [campaigns, setCampaigns] = useState([]);
 	
-	const allCampaignsColDef = [
-		{ 
-			accessorKey: "sl",
-			header: "SL.",
-			cell: prop => {
-				const i  = prop.row.index;
-				return i + 1;
-			}
-		},
-		{ 
-			accessorKey: "pet_image",
-			header: "Image",
-			cell: row => {
-				const imgRef = row.getValue();
-				return <div className="rounded-lg max-h-[200px]">
-				<img className="object-cover w-full h-full rounded-lg max-h-[200px]" src={ imgRef }/>
-			</div>
-			},
-		},
+	const campaignsColDef = [
 		{ accessorKey: "pet_name", header: "Name" },
 		{ 
 			accessorKey: "max_donation_amount", 
@@ -40,13 +18,9 @@ export default function AllDonations() {
 				return <span>${amount}</span>
 			}
 		},
-		{ 
-			accessorKey: "donated_amount", 
-			header: "Donated Amount",
-			cell: prop => {
-				const amount = prop.getValue();
-				return <span>${amount}</span>
-			}
+		{
+			accessorKey: "progress",
+			header: "Progress",
 		},
 		{ 
 			accessorKey: "isPaused",
@@ -88,8 +62,11 @@ export default function AllDonations() {
 		}
 	]
 	
+	useEffect(() => {
+		axios.get("/donationData.json").then(({data}) => setCampaigns(data));
+	}, [])
 	return <div>
-		<DashboardHeader title="All Donations"/>
-		<Table columnDef={ allCampaignsColDef } data={ allCampaigns }/>
+		<DashboardHeader title="My Donation Campaigns"/>
+		<Table columnDef={campaignsColDef} data={campaigns}/>
 	</div>
 }

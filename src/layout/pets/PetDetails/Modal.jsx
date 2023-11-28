@@ -2,9 +2,11 @@ import PropTypes from "prop-types";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import useAuth from "../../../hooks/useAuth";
 import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 export default function Modal({ setToggleModal, toggleModal }) {
 	const { user } = useAuth();
+	const adoption_id = useParams().id;
 	
 	const [ formVals, setFormVals ] = useState({
 		full_name: "",
@@ -85,7 +87,11 @@ export default function Modal({ setToggleModal, toggleModal }) {
 									return errors;
 								}}
 								onSubmit={ (values) => {
-									console.log(values);
+									const finalValues = {
+										...values,
+										"adoption_id": adoption_id,
+									}
+									console.log(finalValues);
 								}}
 							>
 								<Form className="space-y-4" action="#">
