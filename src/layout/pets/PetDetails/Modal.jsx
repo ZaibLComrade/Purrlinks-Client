@@ -73,7 +73,6 @@ export default function Modal({ setToggleModal, toggleModal }) {
 								enableReinitialize
 								validate={ values => {
 									const errors = {};
-									console.log(values);
 									
 									if(!values.user_location) {
 										errors.user_location = "Required";

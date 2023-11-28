@@ -11,16 +11,17 @@ table {
 
 table td,
 table th {
+  text-align: center;
   border: 1px solid var(--border-color);
-  padding: 8px;
+  width: max-content;
 }
 
 table tr:nth-child(even) {
   background-color: var(--table-bg);
 }
 
-table tr:hover {
-  background-color: var(--border-color);
+table tr:nth-child(even):hover {
+  @apply bg-gray-200
 }
 
 table th, tfoot td {
@@ -28,4 +29,24 @@ table th, tfoot td {
   padding-bottom: 12px;
   text-align: center;
   color: var(--header-text-color);
+}
+
+table {
+	@apply w-full text-sm text-left
+}
+
+thead {
+	@apply text-xs text-gray-700 uppercase bg-gray-50
+}
+
+th {
+	@apply px-6 py-3
+}
+
+tr {
+	@apply bg-white border-b hover:bg-gray-200
+}
+
+td {
+	@apply  p-2 font-semibold text-gray-900
 }

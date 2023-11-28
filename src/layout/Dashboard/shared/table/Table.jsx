@@ -22,13 +22,13 @@ export default function Table({ columnDef, data }) {
 		getCoreRowModel: getCoreRowModel(),
 	})
 	
-	return <>
-		<table className="">
+	return <div className="overflow-x-auto rounded-lg">
+		<table>
 			<thead>
 				{table.getHeaderGroups().map(header => {
 					return <tr key={ header.id }>
 						{header.headers.map(column => {
-							return <th key={ column.id} className="text-white bg-primary" colSpan={ column.colSpan }>
+							return <th key={ column.id } className="text-white bg-primary" colSpan={ column.colSpan }>
 								{column.isPlaceholder
 									? null
 									: flexRender(
@@ -42,17 +42,14 @@ export default function Table({ columnDef, data }) {
 			</thead>
 			<tbody>
 				{table.getRowModel().rows.map(row => {
-					return <tr key={ row.id }>
+					return <tr key={ row.id } className="">
 						{ row.getVisibleCells().map(cell => {
-							return <td key={ cell.id }>
-								{ cell.column.columnDef.cellType === "image" && cell.value ? (
-									<img src={ cell.value } alt={ `Image for ${cell.column.columnDef.header}` }/>
-								) : (
-										flexRender(
-											cell.column.columnDef.cell,
-											cell.getContext(),
-										)
-								)
+							return <td key={ cell.id } className="md:text-lg">
+								{ 
+									flexRender(
+										cell.column.columnDef.cell,
+										cell.getContext(),
+									)
 								}
 							</td>
 						})}
@@ -60,5 +57,5 @@ export default function Table({ columnDef, data }) {
 				})}
 			</tbody>
 		</table>
-	</>
+	</div>
 }

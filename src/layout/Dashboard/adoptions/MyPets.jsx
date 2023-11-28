@@ -4,7 +4,5 @@ import addedPetsColDef from "../shared/table/addedPetsColDef";
 
 export default function MyPets() {
 	const pets = useLoaderData([]);
-	return <div className="overflow-x-auto rounded-lg">
-		<Table columnDef={ addedPetsColDef } data={ pets } />
-	</div>
+	return <Table columnDef={ addedPetsColDef } data={ pets } />
 }

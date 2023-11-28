@@ -46,7 +46,6 @@ export default function PaymentModal({ toggleModal, setToggleModal }) {
 					{/* <!-- Modal body --> */}
 					<div className="p-4 md:p-5">
 						<Payment/>
-
 					</div>
 				</div>
 			</div>

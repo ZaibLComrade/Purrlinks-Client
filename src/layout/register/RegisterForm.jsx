@@ -16,8 +16,8 @@ export default function RegisterForm() {
 			initialValues={{
 				email: "",
 				password: "",
-				fullName: "",
-				imageFile: {},
+				full_name: "",
+				profile_picture: {},
 			}}
 			validate ={ values => {
 				const errors = {};
@@ -28,9 +28,9 @@ export default function RegisterForm() {
 				const specialChar = /[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/;
 				
 				// Name validation
-				const fullName = values.fullName;
-				if(!fullName) {
-					errors.fullName = "Required";
+				const full_name = values.full_name;
+				if(!full_name) {
+					errors.full_name = "Required";
 				}
 				
 				// Email Validation
@@ -58,9 +58,9 @@ export default function RegisterForm() {
 				return errors;
 			}}
 			onSubmit={ async (values) => {
-				const { fullName, email, password, imageFile } = values;
+				const { full_name, email, password, profile_picture } = values;
 				const formData = new FormData();
-				formData.append("image", imageFile);
+				formData.append("image", profile_picture);
 				const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
 				const { data } = await axios.post(imgHostingApi, formData, {
 					headers: {
@@ -68,9 +68,15 @@ export default function RegisterForm() {
 					}
 				})
 				const imgUrl = data.data.display_url;
+				const finalValues = {
+					...values,
+					role: "user",
+				}
+				console.log(finalValues);
+				
 				registerUser(email, password)
 					.then(() => {
-						updateUser(fullName, imgUrl)
+						updateUser(full_name, imgUrl)
 							.then(() => {
 								Swal.fire({
 									title: "Success",
@@ -98,19 +104,19 @@ export default function RegisterForm() {
 				<div className="mb-4">
 					<label 
 						className="block mb-2 text-sm font-medium text-gray-900" 
-						htmlFor="fullName"
+						htmlFor="full_name"
 					>
 						Full Name
 					</label>
 					<Field 
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
-						id="fullName" 
-						name="fullName"
+						id="full_name" 
+						name="full_name"
 						type="text" 
 						placeholder="Full Name"
 					/>
 					<p className="text-xs italic text-red-500">
-						<ErrorMessage name="fullName"/>
+						<ErrorMessage name="full_name"/>
 					</p>
 				</div>
 				
@@ -164,17 +170,17 @@ export default function RegisterForm() {
 					</label>
 					<input 
 						className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
-						name="imageFile"
-						id="imageFile" 
+						name="profile_picture"
+						id="profile_picture" 
 						type="file" 
 						onChange={(event) => {
-							formik.setFieldValue("imageFile", event.currentTarget.files[0]);
+							formik.setFieldValue("profile_picture", event.currentTarget.files[0]);
 						}}
 					/>
 					
 					
 					<p className="text-xs italic text-red-500">
-						<ErrorMessage name="imageFile"/>
+						<ErrorMessage name="profile_picture"/>
 					</p>
 				</div>
 				<div className="mx-auto my-6 text-sm text-center text-gray-500 md:text-sm">
