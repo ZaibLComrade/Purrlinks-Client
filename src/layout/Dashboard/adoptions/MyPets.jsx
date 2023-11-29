@@ -37,7 +37,7 @@ export default function MyPets() {
 			header: "SL.",
 			cell: prop => {
 				const i  = prop.row.index;
-				return i + 1;
+				return `${i + 1}`;
 			},
 		},
 		// { 
