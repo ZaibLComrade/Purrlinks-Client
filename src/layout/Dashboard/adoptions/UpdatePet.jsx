@@ -10,7 +10,7 @@ import axios from "axios";
 export default function UpdatePet({ setToggleModal, toggleModal, _id }) {
 	const { user } = useAuth();
 	const axiosSecure = useAxiosSecure()
-	const { data: petFormValues = [] } = useQuery({
+	const { data: petFormValues = {} } = useQuery({
 		queryKey: ["formVal"],
 		queryFn: async() => {
 			const { data } = await axiosSecure.get(`/adoption/details/${_id}?email=${user.email}`)

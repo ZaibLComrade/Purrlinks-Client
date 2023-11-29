@@ -5,19 +5,31 @@ import Header from "../../../components/headers/Header";
 import Search from "./Search";
 import Categories from "./Categories";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import {useSearchParams} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import qs from "query-string"
 
 export default function UnadoptedPets() {
-	const [pets, setPets] = useState([]);
-	const [loading, setLoading] = useState(true);
 	const axiosPublic = useAxiosPublic();
+	const [params, setParams] = useSearchParams();
 	
-	useEffect(() => {
-		axiosPublic.get(`/adoption`)
-			.then(res => {
-				setPets(res.data);
-				setLoading(false);
-			});
-	}, [axiosPublic])
+	const categoryQuery = qs.parse(params.toString()).category || "";
+	console.log(categoryQuery)
+	const { data: pets = [], isPending: loading } = useQuery({
+		queryKey: ["pets"],
+		queryFn: async() => {
+			const { data } = await axiosPublic.get(`/adoption?category=${categoryQuery}`)
+			return data;
+		}
+	})
+	
+	// useEffect(() => {
+	// 	axiosPublic.get(`/adoption`)
+	// 		.then(res => {
+	// 			setPets(res.data);
+	// 			setLoading(false);
+	// 		});
+	// }, [axiosPublic])
 	
 	
 	// Main component
@@ -40,7 +52,7 @@ export default function UnadoptedPets() {
 		<div className="container mx-auto space-y-6">
 			<div className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 				{
-					pets.length ? pets.map((pet) => <Card key={ pet.id } pet={ pet }/>) :
+					pets.length ? pets.map((pet) => <Card key={ pet._id } pet={ pet }/>) :
 					<div className="mx-auto h-[50vh] relative col-span-2 w-max">
 						<p className="text-base md:text-3xl">Data not available. Please try again later</p>
 					</div>

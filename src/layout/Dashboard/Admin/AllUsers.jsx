@@ -40,7 +40,7 @@ const allUsersColDef = [
 
 export default function AllUsers() {
 	const axiosSecure = useAxiosSecure();
-	const { data: allUsers = [], isPending } = useQuery({
+	const { data: allUsers = [], refetch } = useQuery({
 		queryKey: ["allUsers"],
 		queryFn: async() => {
 			const { data } = await axiosSecure.get("/users")

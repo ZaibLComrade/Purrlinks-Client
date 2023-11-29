@@ -1,18 +1,18 @@
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 import { IoMdCreate } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
-import {useQuery} from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import {useQuery} from "@tanstack/react-query"; import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import ViewDonationModal from "./ViewDonatorsModal";
 import {useState} from "react";
+import ProgressBar from "@ramonak/react-progress-bar";
+import Swal from "sweetalert2";
 
 export default function MyDonationCampaigns() {
 	const [ toggleModal, setToggleModal ] = useState(false);
 	const { user } = useAuth();
 	const axiosSecure = useAxiosSecure();
-	const { data: campaigns = [] } = useQuery({
+	const { data: campaigns = [], refetch } = useQuery({
 		queryKey: ["campaigns"],
 		queryFn: async() => {
 			const { data } = await axiosSecure(`/donation/user?email=${user.email}`);
@@ -33,53 +33,56 @@ export default function MyDonationCampaigns() {
 		{
 			accessorKey: "progress",
 			header: "Progress",
+			cell: ({ row }) => {
+				const max = row.original.max_donation_amount;
+				const prog = row.original.donated_amount;
+				let persentage;
+				if(prog) persentage = (prog/max) * 100;
+				else persentage = 0;
+				return <ProgressBar 
+					completed={ persentage }
+					bgColor= {"#B683AB"}
+				/>
+			}
 		},
 		{ 
 			accessorKey: "isPaused",
 			header: "Status",
-			cell: row => {
+			cell: ({ row }) => {
+				const _id = row.original._id;
+				const isPaused = row.original.isPaused;
+				console.log(row.original);
+				const togglePause = () => {
+					axiosSecure.patch(`/donation/${_id}?email=${user.email}`, { isPaused: !isPaused })
+						.then(() => refetch())
+				}
 				
-				const isPaused = row.getValue();
 				return <span className="flex flex-col items-center justify-center gap-3">
 					<span className={`${isPaused ? "text-paused-status" : "text-active-status"}`}>{isPaused ? "Paused" : "Active"}</span>
 					{!isPaused 
-						? <button className="text-sm font-semibold rounded-lg md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Pause</button>
-						: <button className="text-sm font-semibold rounded-lg md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Resume</button>
+						? <button onClick={ togglePause } className="text-sm font-semibold rounded-lg md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Pause</button>
+						: <button onClick={ togglePause } className="text-sm font-semibold rounded-lg md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Resume</button>
 					}
 				</span>
 			}
 		},
-		{
-			header: "actions",
-			columns: [
-				{ 
-					accessorKey: "update",
-					header: "Update",
-					cell: prop => {
-						return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
-							<IoMdCreate className="text-xl"/>
-						</button>
-					}
-				},
-				{
-					accessorKey: "delete",
-					header: "Delete",
-					cell: prop => {
-						return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
-							<MdDelete className="text-xl"/>
-						</button>
-					}
-				},
-				{ 
-					accessorKey: "view_donations",
-					header: "View Donations",
-					cell: prop => {
-						return <button onClick={() => setToggleModal(true)} className="text-base font-semibold rounded-lg hover:underline text-primary w-max font-montserrat transition delay-50 ease-in-out">
-							View Donations
-						</button>
-					}
-				},
-			]
+		{ 
+			accessorKey: "update",
+			header: "Update",
+			cell: prop => {
+			return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+					<IoMdCreate className="text-xl"/>
+				</button>
+			}
+		},
+		{ 
+			accessorKey: "view_donations",
+			header: "View Donations",
+			cell: prop => {
+				return <button onClick={() => setToggleModal(true)} className="text-base font-semibold rounded-lg hover:underline text-primary w-max font-montserrat transition delay-50 ease-in-out">
+					View Donations
+				</button>
+			}
 		}
 	]
 	

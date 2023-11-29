@@ -1,36 +1,55 @@
 import category from "./categoryData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { MdOutlineArrowDropUp } from "react-icons/md";
 import { useState } from "react";
+import qs from "query-string";
 
 export default function Category() {
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
+	const [params, setParams] = useSearchParams()
+	const navigate = useNavigate();
 	const rightArrowStyle = "h-0 w-0 border border-[30px] border-transparent border-r-0 border-l-primary";
-	const maxItemDisplay = 5;
+	const maxItemDisplay = 3;
+	const handleCategoyItemClick = (label) => {
+		let currentQueries = {};
+		
+		if(params) {
+			currentQueries = qs.parse(params.toString())
+			const updatedQuery = { ...currentQueries, category: label }
+			const url = qs.stringifyUrl({
+				url: "/pets",
+				query: updatedQuery,
+			})
+			navigate(url);
+		}
+	}
+	
 	const createCategoryItem = (label, Icon) => {
-		return <Link 
+		return <div 
 			key={label}
-			className={`px-5 group max-lg:py-3 border max-md:flex justify-center max-md:w-full border-transparent max-md:border-b-primary md:border-r-primary`}
+			onClick={ () => handleCategoyItemClick(label) }
+			className={`px-5 group max-lg:py-3 cursor-pointer border max-md:flex justify-center max-md:w-full border-transparent max-md:border-b-primary md:border-r-primary`}
 		>
 			<div className="flex items-center gap-1 hover:text-primary">
 				<Icon className="text-3xl"/>
 				<h5>{ label }</h5>
 			</div>
 			<div className="w-0 rounded-full hidden md:block h-[2px] group-hover:w-full delay-200 ease-out transition-all bg-primary"></div>
-		</Link>
+		</div>
 	}
 	
 	const createDropdownItem = (label, Icon) => {
-		return <Link 
+		return <div
 			key={label}
+			onClick={ () => handleCategoyItemClick(label) }
 			className={`px-5`}
 		>
-			<div className="flex items-center gap-1 hover:text-primary">
+			<div className="flex items-center cursor-pointer gap-1 hover:text-primary">
 				<Icon className="text-3xl"/>
 				<h5>{ label }</h5>
 			</div>
-		</Link>
+		</div>
 	}
 	
 	return <div className="container flex justify-center px-4 mx-auto my-10">
@@ -51,7 +70,7 @@ export default function Category() {
 				
 				{/* Menu */}
 				{
-					(maxItemDisplay < category.length) && <div onClick={ () => setIsOpenMenu(!isOpenMenu) } className="flex items-center px-5 border border-transparent hover:text-primary group max-lg:py-3">
+					(maxItemDisplay < category.length) && <div onClick={ () => setIsOpenMenu(!isOpenMenu) } className="flex items-center px-5 border border-transparent cursor-pointer hover:text-primary group max-lg:py-3">
 						<h5>More</h5>
 						{!isOpenMenu ? 
 							<MdOutlineArrowDropDown className="text-2xl"/> 

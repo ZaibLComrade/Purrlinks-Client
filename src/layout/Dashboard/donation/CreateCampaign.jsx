@@ -1,9 +1,12 @@
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 export default function CreateCampaign() {
 	const { user } = useAuth();
+	const axiosSecure = useAxiosSecure();
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
 			className="block mb-2 text-sm font-bold text-gray-700" 
@@ -102,15 +105,23 @@ export default function CreateCampaign() {
 				}}
 				onSubmit={ async (values) => {
 					const { pet_image } = values;
-					const formData = new FormData();
-					formData.append("image", pet_image);
-					const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
-					const { data } = await axios.post(imgHostingApi, formData, {
-						headers: {
-							"Content-Type": "multipart/form-data",
-						}
-					})
-					values.pet_image = data.data.display_url;
+					
+					let imgUrl = "";
+					const pfpObjLen = pet_image?.type;
+					if(pfpObjLen) {
+						const formData = new FormData();
+						formData.append("image", pet_image);
+						
+						const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
+						const { data } = await axios.post(imgHostingApi, formData, {
+							headers: {
+								"Content-Type": "multipart/form-data",
+							}
+						})
+						imgUrl = data.data.display_url;
+					} 
+					
+					values.pet_image = imgUrl;
 					const lastDateISO = new Date(values.last_date).toISOString();
 					
 					const finalValues = {
@@ -118,9 +129,19 @@ export default function CreateCampaign() {
 						last_date: lastDateISO,
 						creator: user.email,
 						post_created: new Date().toISOString(),
-						paused: false,
+						isPaused: false,
 					}
-					console.log(finalValues);
+					
+					axiosSecure.post(`/donation?email=${user.email}`, finalValues)
+						.then(({ data }) => {
+							if(data.acknowledged) {
+								Swal.fire({
+									title: "Campaign created successfully",
+									icon: "success",
+									confirmButtonText: "Ok",
+								})
+							}
+						})
 				}}
 			>
 				{ (formik) => {
