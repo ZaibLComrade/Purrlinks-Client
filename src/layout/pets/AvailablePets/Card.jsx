@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 
 export default function Card({ pet }) {
 	const { _id, pet_name, pet_age, pet_location, pet_image } = pet;
+	console.log(pet_name, (new Date(pet.posted_date).toDateString()));
 	return <div className="relative min-h-[405px] mb-4 items-center text-center lg:text-left rounded-xl bg-neutral">
 		<div className="w-full h-[300px] rounded-xl">
 			<img src={ pet_image } className="object-cover w-full h-full rounded-xl"/>

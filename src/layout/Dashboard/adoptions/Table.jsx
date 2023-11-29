@@ -4,7 +4,7 @@ import {
 	getCoreRowModel,
 	getPaginationRowModel,
 } from "@tanstack/react-table";
-import "./tableStyles.css";
+import "../shared/table/tableStyles.css";
 import { useMemo } from "react";
 
 // const petData = async () => {
@@ -84,16 +84,11 @@ export default function Table({ columnDef, data }) {
 					>Previous</button>
 					</li>
 					
-					{
-						[...Array(totalPage).keys()].map(num => <li key={num} >
-							<button 
-								className={ `${pageLegendPaginationStyle} ${ (num === currentPage) && "font-bold text-black" }` }
-								onClick={ () => setPageIndex(num) }
-							>
-								{ num + 1 }
-							</button>
-						</li>)
-					}
+					<li>
+					<button
+						className={ pageLegendPaginationStyle }
+					>1</button>
+					</li>
 					
 					<li>
 					<button

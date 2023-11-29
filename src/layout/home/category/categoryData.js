@@ -7,27 +7,27 @@ import { IoFishOutline } from "react-icons/io5";
 const category = [
 	{
 		label: "Dog",
-		value: "dog",
+		value: "Dog",
 		icon: TbDog,
 	},
 	{
 		label: "Cat",
-		value: "cat",
+		value: "Cat",
 		icon: PiCat,
 	},
 	{
 		label: "Bird",
-		value: "bird",
+		value: "Bird",
 		icon: LuBird,
 	},
 	{
 		label: "Rabbit",
-		value: "rabbit",
+		value: "Rabbit",
 		icon: GiRabbit,
 	},
 	{
 		label: "Fish",
-		value: "fish",
+		value: "Fish",
 		icon: IoFishOutline,
 	},
 ]

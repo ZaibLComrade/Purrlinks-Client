@@ -14,8 +14,7 @@ export default function UnadoptedPets() {
 	const [params, setParams] = useSearchParams();
 	
 	const categoryQuery = qs.parse(params.toString()).category || "";
-	console.log(categoryQuery)
-	const { data: pets = [], isPending: loading } = useQuery({
+	const { data: pets = [], isPending: loading, refetch } = useQuery({
 		queryKey: ["pets"],
 		queryFn: async() => {
 			const { data } = await axiosPublic.get(`/adoption?category=${categoryQuery}`)
@@ -23,21 +22,12 @@ export default function UnadoptedPets() {
 		}
 	})
 	
-	// useEffect(() => {
-	// 	axiosPublic.get(`/adoption`)
-	// 		.then(res => {
-	// 			setPets(res.data);
-	// 			setLoading(false);
-	// 		});
-	// }, [axiosPublic])
-	
-	
 	// Main component
 	return <div className="space-y-8 py-[50px]">
 		{/* Search */}
 		<Header title="All pets" subtitle={"Browse your adoption"}/>
 		<div className="container flex flex-col items-center justify-center mx-auto gap-4 md:flex-row">
-				<Categories/>
+				<Categories refetch={ refetch }/>
 			<Search/>
 		</div>
 		

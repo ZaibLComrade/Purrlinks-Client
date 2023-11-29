@@ -49,12 +49,6 @@ export default function MyPets() {
 		{ 
 			accessorKey: "pet_image",
 			header: "Image",
-			cell: row => {
-				const imgRef = row.getValue();
-				return <div className="border rounded-lg h-[200px]">
-					<img className="object-cover w-full h-full rounded-lg max-h-[200px]" src={ imgRef }/>
-				</div>
-			},
 		},
 		{ accessorKey: "pet_name", header: "Name" },
 		{ accessorKey: "pet_category", header: "Category" },
@@ -75,7 +69,7 @@ export default function MyPets() {
 					cell: ({ row }) => {
 						const _id = row.original._id;
 						return <>
-							<button onClick={() => setToggleEditModal(true)} className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+							<button onClick={() => setToggleEditModal(true)} className="p-2 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
 								<IoMdCreate className="text-xl"/>
 							</button>
 							<UpdatePet 
@@ -114,7 +108,7 @@ export default function MyPets() {
 							})
 						}
 						
-						return <button onClick={ handleDeletePet } className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+						return <button onClick={ handleDeletePet } className="p-2 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
 							<MdDelete className="text-xl"/>
 						</button>
 					}

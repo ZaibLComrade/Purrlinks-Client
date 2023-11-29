@@ -48,5 +48,5 @@ tr {
 }
 
 td {
-	@apply  p-2 font-semibold text-gray-900
+	@apply  p-2 font-medium text-gray-900
 }

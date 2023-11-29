@@ -3,7 +3,6 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import Modal from "./Modal";
 import {useState} from "react";
-import useAuth from "../../../hooks/useAuth";
 
 export default function PetDetails() {
 	const [toggleModal, setToggleModal] = useState(false);
@@ -18,7 +17,7 @@ export default function PetDetails() {
 	return <div className="container py-[50px] mx-auto">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 			<div className="p-4 h-[500px] w-full place-self-center">
-				<img src={ pet_image } className="w-full h-full object cover rounded-xl"/>
+				<img src={ pet_image } className="object-cover w-full h-full rounded-xl"/>
 			</div>
 			<div className="relative p-4 text-subtitle space-y-4">
 				<h5 className="font-medium">{ pet_category }</h5>
