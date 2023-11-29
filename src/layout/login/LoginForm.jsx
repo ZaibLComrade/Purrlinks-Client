@@ -118,6 +118,7 @@ export default function LoginForm() {
 								navigate(location?.state || "/")
 							}
 						})
+						setLoading(false);
 					})
 					.catch((err) => {
 							if(err.code === "auth/invalid-login-credentials") {

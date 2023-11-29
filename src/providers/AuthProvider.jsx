@@ -19,7 +19,6 @@ export const AuthContext = createContext({});
 export default function AuthProvider({ children }) {
 	const [ user, setUser ] = useState({});
 	const [ loading, setLoading ] = useState(true);
-	const [ dashboardLoading, setDashboardLoading ] = useState(true);
 	
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -28,10 +27,8 @@ export default function AuthProvider({ children }) {
 			setUser(currentUser);
 			setLoading(false);
 			if(currentUser) {
-				console.log("logged in", currentUser?.email);
 				axios.post(`${url}/authenticate?method=login`, userCredential, { withCredentials: true })
 			} else {
-				console.log("logged out", currentUser?.email);
 				axios.post(`${url}/authenticate?method=logout`, userCredential, { withCredentials: true })
 			}
 		})
@@ -83,8 +80,6 @@ export default function AuthProvider({ children }) {
 		registerUser,
 		googleSignIn,
 		facebookSignIn,
-		dashboardLoading,
-		setDashboardLoading
 	}
 	return <AuthContext.Provider value={ authUtilities }>
 		{ children }

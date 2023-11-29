@@ -11,18 +11,20 @@ import { FaUsers } from "react-icons/fa";
 import { MdPets } from "react-icons/md";
 import useAuth from "../../hooks/useAuth";
 import { FaHome } from "react-icons/fa";
+import useIsAdmin from "../../hooks/useIsAdmin";
 
 export default function Sidebar({ props }) {
 	const { user } = useAuth();
+	const isAdmin = useIsAdmin();
 	const { toggleSidebar } = props
 	const email = user?.email;
 	
 	const utilities = [
 		{ label: "Add a Pet", icon: MdAddCircleOutline, path: "/dashboard/adoption/add" },
-		{ label: "My Added Pets", icon: FaCat, path: `/dashboard/adoption/my/${email}` },
-		{ label: "Adoption Requests", icon: IoHeartHalf, path: `/dashboard/adoption/requests/${email}` },
+		{ label: "My Added Pets", icon: FaCat, path: `/dashboard/adoption/my` },
+		{ label: "Adoption Requests", icon: IoHeartHalf, path: `/dashboard/adoption/requests` },
 		{ label: "Create Donation Campaign", icon: IoMdCreate, path: "/dashboard/donation/add" },
-		{ label: "My Donation Campaigns", icon: FaDonate, path: `/dashboard/donation/my/${email}` },
+		{ label: "My Donation Campaigns", icon: FaDonate, path: `/dashboard/donation/my` },
 		{ label: "My Donations", icon: BiSolidDonateHeart, path: `/dashboard/donation/contributed/${email}` },
 	];
 	const adminUtilities = [
@@ -59,7 +61,7 @@ export default function Sidebar({ props }) {
 				</li>
 				)}
 				<hr/>
-				{ adminUtilities.map(({ label, icon: Icon, path }) => <li key={ path }>
+				{ isAdmin && adminUtilities.map(({ label, icon: Icon, path }) => <li key={ path }>
 					<Link
 						to={ path }
 						className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"

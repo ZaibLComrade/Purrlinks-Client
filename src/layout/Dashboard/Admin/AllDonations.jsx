@@ -1,17 +1,19 @@
-import {useEffect, useState} from "react";
 import { IoMdCreate } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import {useQuery} from "@tanstack/react-query";
 
 export default function AllDonations() {
 	const axiosSecure = useAxiosSecure();
-	const [allCampaigns, setAllCampaigns] = useState([]);
-	useEffect(() => {
-		axiosSecure.get("/donation")
-			.then(({ data }) => setAllCampaigns(data));
-	}, [axiosSecure])
+	const { data: allCampaigns = [] } = useQuery({
+		queryKey: ["allCampaigns"],
+		queryFn: async() => {
+			const { data } = await axiosSecure.get("/donation");
+			return data;
+		}
+	})
 	
 	const allCampaignsColDef = [
 		{ 

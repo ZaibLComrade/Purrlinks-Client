@@ -6,8 +6,8 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
 export default function Dashboard() {
-	const { user, dashboardLoading, setDashboardLoading } = useAuth();
-	setDashboardLoading(false);
+	const { user } = useAuth();
+	const [ dashboardLoading, setDashboardLoading ] = useState(false);
 	const [toggleSidebar, setToggleSidebar] = useState(false);
 	const props = {
 		toggleSidebar,

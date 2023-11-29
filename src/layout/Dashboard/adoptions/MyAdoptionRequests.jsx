@@ -1,10 +1,19 @@
-import {useLoaderData} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 
 export default function MyAdoptionRequests() {
-	const requestsData = useLoaderData([]);
-	console.log(requestsData);
+	const { user } = useAuth();
+	const axiosSecure = useAxiosSecure();
+	const { data: requestsData = [] } = useQuery({
+		queryKey: ['requests'],
+		queryFn: async() => {
+			const { data } = await axiosSecure(`/adoption/requests?email=${user.email}`)
+			return data;
+		}
+	})
 	
 	const requestsColDef = [
 		{

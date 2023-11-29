@@ -2,10 +2,23 @@ import DashboardHeader from "../shared/header/DashboardHeader";
 import Table from "../shared/table/Table";
 import { IoMdCreate } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import {useLoaderData} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import ViewDonationModal from "./ViewDonatorsModal";
+import {useState} from "react";
 
 export default function MyDonationCampaigns() {
-	const campaigns = useLoaderData([]);
+	const [ toggleModal, setToggleModal ] = useState(false);
+	const { user } = useAuth();
+	const axiosSecure = useAxiosSecure();
+	const { data: campaigns = [] } = useQuery({
+		queryKey: ["campaigns"],
+		queryFn: async() => {
+			const { data } = await axiosSecure(`/donation/user?email=${user.email}`);
+			return(data)
+		}
+	})
 	
 	const campaignsColDef = [
 		{ accessorKey: "pet_name", header: "Name" },
@@ -56,12 +69,22 @@ export default function MyDonationCampaigns() {
 							<MdDelete className="text-xl"/>
 						</button>
 					}
-				}
+				},
+				{ 
+					accessorKey: "view_donations",
+					header: "View Donations",
+					cell: prop => {
+						return <button onClick={() => setToggleModal(true)} className="text-base font-semibold rounded-lg hover:underline text-primary w-max font-montserrat transition delay-50 ease-in-out">
+							View Donations
+						</button>
+					}
+				},
 			]
 		}
 	]
 	
 	return <div>
+		<ViewDonationModal toggleModal={ toggleModal } setToggleModal={ setToggleModal }/>
 		<DashboardHeader title="My Donation Campaigns"/>
 		<Table columnDef={campaignsColDef} data={campaigns}/>
 	</div>

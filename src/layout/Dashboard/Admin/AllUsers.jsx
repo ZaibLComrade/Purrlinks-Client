@@ -1,8 +1,7 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
 import Table from "../shared/table/Table";
 import DashboardHeader from "../shared/header/DashboardHeader";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import {useQuery} from "@tanstack/react-query";
 
 const allUsersColDef = [
 	{ 
@@ -41,11 +40,13 @@ const allUsersColDef = [
 
 export default function AllUsers() {
 	const axiosSecure = useAxiosSecure();
-	const [allUsers, setAllUsers] = useState([]);
-	useEffect(() => {
-		axiosSecure.get("/users")
-			.then(({ data }) => setAllUsers(data));
-	}, [axiosSecure])
+	const { data: allUsers = [] } = useQuery({
+		queryKey: ["allUsers"],
+		queryFn: async() => {
+			const { data } = await axiosSecure.get("/users")
+			return data;
+		}
+	})
 	
 	return <div>
 		<DashboardHeader title="All Users"/>

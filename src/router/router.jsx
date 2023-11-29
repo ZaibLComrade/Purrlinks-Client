@@ -19,6 +19,7 @@ import AllDonations from "../layout/Dashboard/Admin/AllDonations";
 import MyAdoptionRequests from "../layout/Dashboard/adoptions/MyAdoptionRequests";
 import MyDonationCampaigns from "../layout/Dashboard/donation/MyDonationCampaigns";
 import MyDonations from "../layout/Dashboard/donation/MyDonations";
+import axiosPublic from "../axios/axiosPublic";
 import url from "./url";
 
 const router = createBrowserRouter([
@@ -51,22 +52,10 @@ const router = createBrowserRouter([
 			// User routes
 			{ path: "/dashboard/*", element: <NotFound/>},
 			{ path: "/dashboard/adoption/add", element: <AddPet/> },
-			{ 
-				path: "/dashboard/adoption/my/:email", 
-				element: <MyPets/>,
-				loader: ({ params }) => fetch(`${url}/adoption/user/${params.email}`)
-			},
-			{ 
-				path: "/dashboard/adoption/requests/:email",
-				element: <MyAdoptionRequests/>,
-				loader: ({ params }) => fetch(`${url}/adoption/requests/${params.email}`)
-			},
+			{ path: "/dashboard/adoption/my", element: <MyPets/> },
+			{ path: "/dashboard/adoption/requests", element: <MyAdoptionRequests/> },
 			{ path: "/dashboard/donation/add", element: <CreateCampaign/> },
-			{ 
-				path: "/dashboard/donation/my/:email",
-				element: <MyDonationCampaigns/>,
-				loader: ({ params }) => fetch(`${url}/donation/user/${params.email}`)
-			},
+			{ path: "/dashboard/donation/my", element: <MyDonationCampaigns/> },
 			{ 
 				path: "/dashboard/donation/contributed/:email",
 				element: <MyDonations/>,
