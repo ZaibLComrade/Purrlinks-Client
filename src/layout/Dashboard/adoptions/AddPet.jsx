@@ -3,9 +3,12 @@ import Select from "react-select";
 import category from "../../home/category/categoryData";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 export default function AddPet() {
 	const { user } = useAuth();
+	const axiosSecure = useAxiosSecure();
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
 			className="block mb-2 text-sm font-bold text-gray-700" 
@@ -105,15 +108,21 @@ export default function AddPet() {
 				}}
 				onSubmit={ async (values) => {
 					const { pet_image } = values;
-					const formData = new FormData();
-					formData.append("image", pet_image);
-					const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
-					const { data } = await axios.post(imgHostingApi, formData, {
-						headers: {
-							"Content-Type": "multipart/form-data",
-						}
-					})
-					const imgUrl = data.data.display_url;
+					let imgUrl = "";
+					
+					const pfpObjLen = pet_image?.type;
+					if(pfpObjLen) {
+						const formData = new FormData();
+						formData.append("image", pet_image);
+						
+						const imgHostingApi = import.meta.env.VITE_IMG_HOSTING_API;
+						const { data } = await axios.post(imgHostingApi, formData, {
+							headers: {
+								"Content-Type": "multipart/form-data",
+							}
+						})
+						imgUrl = data.data.display_url;
+					} 
 					values.pet_image = imgUrl;
 					
 					const finalValues = {
@@ -122,7 +131,16 @@ export default function AddPet() {
 						author: user.email,
 						posted_date: new Date().toISOString(),
 					}
-					console.log(finalValues)
+					axiosSecure.post(`/adoption?email=${user.email}`, finalValues)
+						.then(({ data }) => {
+							if(data.acknowledged) {
+								Swal.fire({
+									title: "Pet added successfully",
+									icon: "success",
+									confirmButtonText: "Ok",
+								})
+							}
+						})
 				}}
 			>
 				{ (formik) => {

@@ -40,7 +40,7 @@ const allUsersColDef = [
 
 export default function AllUsers() {
 	const axiosSecure = useAxiosSecure();
-	const { data: allUsers = [] } = useQuery({
+	const { data: allUsers = [], isPending } = useQuery({
 		queryKey: ["allUsers"],
 		queryFn: async() => {
 			const { data } = await axiosSecure.get("/users")
@@ -50,6 +50,6 @@ export default function AllUsers() {
 	
 	return <div>
 		<DashboardHeader title="All Users"/>
-		<Table columnDef={ allUsersColDef } data={ allUsers }/>
+		{<Table columnDef={ allUsersColDef } data={ allUsers }/>}
 	</div>
 }
