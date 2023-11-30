@@ -8,8 +8,7 @@ import {useLoaderData, useParams} from "react-router-dom";
 export default function UpdateCampaign() {
 	const defaultCampaign = useLoaderData();
 	const id = useParams().id;
-	console.log(defaultCampaign);
-	const { user } = useAuth();
+	const { user, setLoading } = useAuth();
 	const axiosSecure = useAxiosSecure();
 	const formDefaults = {
 		pet_name: defaultCampaign.pet_name,
@@ -112,6 +111,7 @@ export default function UpdateCampaign() {
 					return errors;
 				}}
 				onSubmit={ async (values) => {
+					setLoading(true);
 					const { pet_image } = values;
 					
 					let imgUrl = "";
@@ -136,18 +136,17 @@ export default function UpdateCampaign() {
 						...values,
 						last_date: lastDateISO,
 					}
-					console.log(finalValues);
 					
-					console.log(id, finalValues);
 					axiosSecure.put(`/donation/${id}?email=${user.email}`, finalValues)
 						.then(({ data }) => {
-							if(data.acknowledged) {
+							if(data) {
 								Swal.fire({
 									title: "Campaign created successfully",
 									icon: "success",
 									confirmButtonText: "Ok",
 								})
 							}
+							setLoading(false);
 						})
 				}}
 			>

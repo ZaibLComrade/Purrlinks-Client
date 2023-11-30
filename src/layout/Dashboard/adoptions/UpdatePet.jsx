@@ -10,7 +10,7 @@ import {useLoaderData, useParams} from "react-router-dom";
 
 export default function UpdatePet() {
 	const _id = useParams().id;
-	const { user } = useAuth();
+	const { user, setLoading } = useAuth();
 	const axiosSecure = useAxiosSecure();
 	const data = useLoaderData();
 	const petFormValues = {
@@ -116,6 +116,7 @@ export default function UpdatePet() {
 					return errors;
 				}}
 				onSubmit={ async (values) => {
+					setLoading(true);
 					const { pet_image } = values;
 					let imgUrl = "";
 					
@@ -146,6 +147,7 @@ export default function UpdatePet() {
 									confirmButtonText: "Ok",
 								})
 							}
+							setLoading(false);
 						})
 				}}
 			>

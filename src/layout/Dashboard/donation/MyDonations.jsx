@@ -7,7 +7,7 @@ import Table from "../shared/table/Table";
 
 export default function MyDonations() {
 	const axiosSecure = useAxiosSecure();
-	const { user } = useAuth()
+	const { user, setLoading } = useAuth()
 	
 	const { data: myDonations = [], refetch } = useQuery({
 		queryKey: ["myDonations"],
@@ -41,7 +41,7 @@ export default function MyDonations() {
 					axiosSecure.delete(`/contribution/${id}`)
 						.then(({data}) => {
 							console.log(data);
-							if(data.acknowledged) {
+							if(data) {
 								Swal.fire({
 									title: "Asked for refund",
 									text: "Donation removed",

@@ -7,7 +7,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
 export default function AddPet() {
-	const { user } = useAuth();
+	const { user, setLoading } = useAuth();
 	const axiosSecure = useAxiosSecure();
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
@@ -107,6 +107,7 @@ export default function AddPet() {
 					return errors;
 				}}
 				onSubmit={ async (values) => {
+					setLoading(true);
 					const { pet_image } = values;
 					let imgUrl = "";
 					
@@ -140,6 +141,7 @@ export default function AddPet() {
 									confirmButtonText: "Ok",
 								})
 							}
+							setLoading(false)
 						})
 				}}
 			>

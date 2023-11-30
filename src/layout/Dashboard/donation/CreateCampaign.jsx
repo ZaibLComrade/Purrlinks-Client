@@ -3,9 +3,11 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import LoadingScreen from "../shared/LoadingScreen";
+import {useState} from "react";
 
 export default function CreateCampaign() {
-	const { user } = useAuth();
+	const { user, setLoading } = useAuth();
 	const axiosSecure = useAxiosSecure();
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
 		<label 
@@ -41,7 +43,6 @@ export default function CreateCampaign() {
 			</>
 		);
 };
-	
 	return <div className="">
 		<h2 className="pl-4 text-2xl font-semibold font-nunito">Create a Donation Campaign</h2>
 		<div>
@@ -105,7 +106,7 @@ export default function CreateCampaign() {
 				}}
 				onSubmit={ async (values) => {
 					const { pet_image } = values;
-					
+					setLoading(true);
 					let imgUrl = "";
 					const pfpObjLen = pet_image?.type;
 					if(pfpObjLen) {
@@ -142,6 +143,7 @@ export default function CreateCampaign() {
 									confirmButtonText: "Ok",
 								})
 							}
+							setLoading(false);
 						})
 				}}
 			>
