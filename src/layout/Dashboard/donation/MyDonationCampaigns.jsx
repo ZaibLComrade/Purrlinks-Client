@@ -1,4 +1,5 @@
 import DashboardHeader from "../shared/header/DashboardHeader";
+import { Link } from "react-router-dom";
 import Table from "../shared/table/Table";
 import { IoMdCreate } from "react-icons/io";
 import {useQuery} from "@tanstack/react-query"; import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -67,10 +68,13 @@ export default function MyDonationCampaigns() {
 		{ 
 			accessorKey: "update",
 			header: "Update",
-			cell: prop => {
-			return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
-					<IoMdCreate className="text-xl"/>
-				</button>
+			cell: ({ row }) => {
+			const campaign_id = row.original._id
+				return <Link to={ `/dashboard/donation/update/${ campaign_id }` }>
+					<button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+						<IoMdCreate className="text-xl"/>
+					</button>
+				</Link>
 			}
 		},
 		{ 

@@ -20,6 +20,7 @@ import MyAdoptionRequests from "../layout/Dashboard/adoptions/MyAdoptionRequests
 import MyDonationCampaigns from "../layout/Dashboard/donation/MyDonationCampaigns";
 import MyDonations from "../layout/Dashboard/donation/MyDonations";
 import url from "./url";
+import UpdateCampaign from "../layout/Dashboard/donation/UpdateCampaign";
 
 const router = createBrowserRouter([
 	{
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
 			{ path: "/dashboard/adoption/requests", element: <MyAdoptionRequests/> },
 			{ path: "/dashboard/donation/add", element: <CreateCampaign/> },
 			{ path: "/dashboard/donation/my", element: <MyDonationCampaigns/> },
+			{ 
+				path: "/dashboard/donation/update/:id", 
+				element: <UpdateCampaign/>,
+				loader: ({ params }) => fetch(`${url}/donation/details/${params.id}`)
+			},
 			{ path: "/dashboard/donation/contributed/:email", element: <MyDonations/> },
 			
 			// Admin routes
