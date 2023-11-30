@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import {useQuery} from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
+import {Link} from "react-router-dom";
 
 export default function AllPets() {
 	const { user  } = useAuth();
@@ -67,10 +68,13 @@ export default function AllPets() {
 				{ 
 					accessorKey: "update",
 					header: "Update",
-					cell: prop => {
-						return <button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
-							<IoMdCreate className="text-xl"/>
-						</button>
+					cell: ({ row }) => {
+						const adoption_id = row.original._id
+						return <Link to={ `/dashboard/adoption/update/${ adoption_id }` }>
+					<button className="p-4 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+						<IoMdCreate className="text-xl"/>
+					</button>
+				</Link>
 					}
 				},
 				{

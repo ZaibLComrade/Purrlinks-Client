@@ -8,6 +8,7 @@ import { MdDelete } from "react-icons/md";
 import UpdatePet from "./UpdatePet";
 import {useState} from "react";
 import Swal from "sweetalert2";
+import {Link} from "react-router-dom";
 
 export default function MyPets() {
 	const axiosSecure = useAxiosSecure()
@@ -67,17 +68,12 @@ export default function MyPets() {
 					accessorKey: "update",
 					header: "Update",
 					cell: ({ row }) => {
-						const _id = row.original._id;
-						return <>
-							<button onClick={() => setToggleEditModal(true)} className="p-2 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
-								<IoMdCreate className="text-xl"/>
-							</button>
-							<UpdatePet 
-								toggleModal={ toggleEditModal } 
-								setToggleModal={ setToggleEditModal }
-								_id={ _id }
-							/>
-						</>
+						const adoption_id = row.original._id
+						return <Link to={ `/dashboard/adoption/update/${ adoption_id }` }>
+					<button className="p-2 font-semibold border-2 rounded-lg bg-accent-2 border-accent-2 w-max font-montserrat transition delay-50 ease-in-out hover:bg-accent-2/60">
+						<IoMdCreate className="text-xl"/>
+					</button>
+				</Link>
 					}
 				},
 				{

@@ -13,6 +13,7 @@ export default function PetDetails() {
 		pet_location,
 		long_description,
 		pet_image,
+		author,
 	} = useLoaderData();
 	return <div className="container py-[50px] mx-auto">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -45,6 +46,8 @@ export default function PetDetails() {
 		<Modal 
 			setToggleModal={ setToggleModal } 
 			toggleModal={ toggleModal }
+			author={ author }
+			pet_name={ pet_name }
 		/>
 	</div>
 }

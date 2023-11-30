@@ -1,4 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
+import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import DashboardHeader from "../shared/header/DashboardHeader";
@@ -7,13 +8,14 @@ import Table from "../shared/table/Table";
 export default function MyAdoptionRequests() {
 	const { user } = useAuth();
 	const axiosSecure = useAxiosSecure();
-	const { data: requestsData = [] } = useQuery({
+	const { data: requestsData = [], refetch } = useQuery({
 		queryKey: ['requests'],
 		queryFn: async() => {
 			const { data } = await axiosSecure(`/adoption/requests?email=${user.email}`)
 			return data;
 		}
 	})
+	console.log(requestsData);
 	
 	const requestsColDef = [
 		{
@@ -34,8 +36,26 @@ export default function MyAdoptionRequests() {
 				{ 
 					accessorKey: "accept",
 					header: "Accept",
-					cell: prop => {
-						return <button className="text-sm font-semibold rounded-lg md:text-base w-max text-accept hover:underline font-montserrat transition delay-50 ease-in-out">
+					cell: ({ row }) => {
+						const request_id = row.original._id;
+						const handleAccept = () => {
+							console.log(request_id);
+							axiosSecure.patch(`/adoption/requests/${ request_id }?email=${ user.email }`, { adopted: true })
+								.then(({ data }) => {
+									if(data.acknowledged) {
+										Swal.fire({
+											title: "Request accepted",
+											icon: "success",
+											confirmButtonText: "Ok",
+										}).then(() => {
+											axiosSecure.delete(`/adoption/requests/${ request_id }?email=${ user.email }`)
+										}) 
+										refetch();
+									}
+								})
+						}
+						
+						return <button onClick={ handleAccept } className="text-sm font-semibold rounded-lg md:text-base w-max text-accept hover:underline font-montserrat transition delay-50 ease-in-out">
 							Accept
 						</button>
 					}
@@ -43,8 +63,23 @@ export default function MyAdoptionRequests() {
 				{
 					accessorKey: "reject",
 					header: "Reject",
-					cell: prop => {
-						return <button className="text-sm font-semibold rounded-lg md:text-base w-max text-reject hover:underline font-montserrat transition delay-50 ease-in-out">
+					cell: ({ row }) => {
+						const request_id = row.original._id;
+						const handleDelete = () => {
+							console.log(request_id);
+							axiosSecure.delete(`/adoption/requests/${ request_id }?email=${ user.email }`)
+								.then(({ data }) => {
+									if(data.acknowledged) {
+										Swal.fire({
+											title: "Request Rejected",
+											icon: "success",
+											confirmButtonText: "Ok",
+										})
+										refetch();
+									}
+								})
+						}
+						return <button onClick={ handleDelete } className="text-sm font-semibold rounded-lg md:text-base w-max text-reject hover:underline font-montserrat transition delay-50 ease-in-out">
 							Reject
 						</button>
 					}

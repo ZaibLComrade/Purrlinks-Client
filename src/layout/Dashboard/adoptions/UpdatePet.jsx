@@ -1,38 +1,27 @@
-import PropTypes from "prop-types";
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import Select from "react-select";
 import category from "../../home/category/categoryData";
-import useAuth from "../../../hooks/useAuth";
-import {useQuery} from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import {useLoaderData, useParams} from "react-router-dom";
 
-export default function UpdatePet({ setToggleModal, toggleModal, _id }) {
+
+export default function UpdatePet() {
+	const _id = useParams().id;
 	const { user } = useAuth();
-	const axiosSecure = useAxiosSecure()
-	const { data: petFormValues = {} } = useQuery({
-		queryKey: ["formVal"],
-		queryFn: async() => {
-			const { data } = await axiosSecure.get(`/adoption/details/${_id}?email=${user.email}`)
-			return {
-				pet_name: data.pet_name,
-				pet_age: data.pet_age,
-				pet_location: data.pet_location,
-				short_description: data.short_description,
-				long_description: data.long_description,
-				pet_category: data.pet_category,
-				pet_image: data.pet_image,
-			}
-		}
-	})
-	const defaultFormValue = {
-		pet_name: "",
-		pet_age: 0,
-		pet_location: "",
-		short_description: "",
-		long_description: "",
-		pet_category: "",
-		pet_image: {},
+	const axiosSecure = useAxiosSecure();
+	const data = useLoaderData();
+	console.log(data);
+	const petFormValues = {
+		pet_name: data.pet_name,
+		pet_age: data.pet_age,
+		pet_location: data.pet_location,
+		short_description: data.short_description,
+		long_description: data.long_description,
+		pet_category: data.pet_category,
+		pet_image: data.pet_image,
 	}
 	
 	const CreateInputField = ({label, id, type}) => <div className="mb-4">
@@ -69,51 +58,17 @@ export default function UpdatePet({ setToggleModal, toggleModal, _id }) {
 			</>
 		);
 };
-	
-	return (
-		<>
-			{/* <!-- Main modal --> */}
-			<div
-				tabIndex="-1"
-				onClick={() => setToggleModal(false)}
-				className={`overflow-y-auto ${
-					toggleModal ? "block" : "hidden"
-				} bg-black/50 overflow-x-hidden fixed z-50 justify-center flex items-center w-full inset-0 h-screen w-screen max-h-full`}
-			>
-				<div  className="relative w-full max-w-xl max-h-full p-4">
-					{/* <!-- Modal content --> */}
-					<div onClick={ e => e.stopPropagation() } className="relative bg-white rounded-lg shadow">
-						{/* <!-- Modal header --> */}
-						<div className="flex items-center justify-between p-4 border-b rounded-t md:p-5">
-							<h3 className="text-xl font-semibold text-gray-900">
-								Update Pet
-							</h3>
-							<button
-								onClick={() => setToggleModal(false)}
-								type="button"
-								className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-								data-modal-hide="authentication-modal"
-							>
-								<svg
-									className="w-3 h-3"
-									aria-hidden="true"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 14 14"
-								>
-									<path
-										stroke="currentColor"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="2"
-										d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-									/>
-								</svg>
-								<span className="sr-only">Close modal</span>
-							</button>
-						</div>
-						{/* <!-- Modal body --> */}
-						<div className="p-4 md:p-5">
+		const defaultFormValue = {
+		pet_name: "",
+		pet_age: 0,
+		pet_location: "",
+		short_description: "",
+		long_description: "",
+		pet_category: "",
+		pet_image: {},
+	}
+	return <div className="">
+		<h2 className="text-2xl font-semibold font-nunito">Add a Pet</h2>
 		<div>
 			<Formik
 				initialValues={ petFormValues || defaultFormValue }
@@ -186,10 +141,19 @@ export default function UpdatePet({ setToggleModal, toggleModal, _id }) {
 					} 
 					values.pet_image = imgUrl;
 					
-					// axiosSecure.put(`/adoption/${_id}?email:${user.email}`, values)
-					// 	.then(({ data }) => {
-					// 		console.log(data);
-					// 	})
+					const finalValues = {
+						...values,
+					}
+					axiosSecure.patch(`/adoption/${ _id }?email=${user.email}`, finalValues)
+						.then(({ data }) => {
+							if(data.acknowledged) {
+								Swal.fire({
+									title: "Updated successfully",
+									icon: "success",
+									confirmButtonText: "Ok",
+								})
+							}
+						})
 				}}
 			>
 				{ (formik) => {
@@ -274,16 +238,5 @@ export default function UpdatePet({ setToggleModal, toggleModal, _id }) {
 				</>}}
 			</Formik>
 		</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</>
-	);
-}
-
-UpdatePet.propTypes = {
-	_id: PropTypes.string,
-	setToggleModal: PropTypes.func,
-	toggleModal: PropTypes.bool,
+	</div>
 }

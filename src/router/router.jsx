@@ -21,6 +21,7 @@ import MyDonationCampaigns from "../layout/Dashboard/donation/MyDonationCampaign
 import MyDonations from "../layout/Dashboard/donation/MyDonations";
 import url from "./url";
 import UpdateCampaign from "../layout/Dashboard/donation/UpdateCampaign";
+import UpdatePet from "../layout/Dashboard/adoptions/UpdatePet";
 
 const router = createBrowserRouter([
 	{
@@ -53,6 +54,11 @@ const router = createBrowserRouter([
 			{ path: "/dashboard/*", element: <NotFound/>},
 			{ path: "/dashboard/adoption/add", element: <AddPet/> },
 			{ path: "/dashboard/adoption/my", element: <MyPets/> },
+			{ 
+				path: "/dashboard/adoption/update/:id",
+				element: <UpdatePet/>,
+				loader: ({ params }) => fetch(`${url}/adoption/details/${params.id}`)
+			},
 			{ path: "/dashboard/adoption/requests", element: <MyAdoptionRequests/> },
 			{ path: "/dashboard/donation/add", element: <CreateCampaign/> },
 			{ path: "/dashboard/donation/my", element: <MyDonationCampaigns/> },

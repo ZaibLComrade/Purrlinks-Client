@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import {useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import { Link, NavLink } from "react-router-dom";
-import dummyImage from "../../assets/dummy-user.jpg";
 
 export default function Navbar({ props }) {
 	const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -11,7 +10,7 @@ export default function Navbar({ props }) {
 	
 	const navlinks = <>
 		<li><NavLink to="/">Home</NavLink></li>
-		<li><NavLink to="/pets/available">Pet Listing</NavLink></li>
+		<li><NavLink to="/pets">Pet Listing</NavLink></li>
 		<li><NavLink to="/donation/campaigns">Donation Campaign</NavLink></li>
 	</>
 	

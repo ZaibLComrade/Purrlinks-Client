@@ -136,9 +136,10 @@ export default function UpdateCampaign() {
 						...values,
 						last_date: lastDateISO,
 					}
+					console.log(finalValues);
 					
 					console.log(id, finalValues);
-					axiosSecure.patch(`/donation/${id}?email=${user.email}`, finalValues)
+					axiosSecure.put(`/donation/${id}?email=${user.email}`, finalValues)
 						.then(({ data }) => {
 							if(data.acknowledged) {
 								Swal.fire({

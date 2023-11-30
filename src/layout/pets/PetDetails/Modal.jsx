@@ -3,10 +3,14 @@ import { Formik, Field, ErrorMessage, Form } from "formik";
 import useAuth from "../../../hooks/useAuth";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
-export default function Modal({ setToggleModal, toggleModal }) {
+export default function Modal({ setToggleModal, toggleModal, author, pet_name }) {
 	const { user } = useAuth();
 	const adoption_id = useParams().id;
+	const axiosPublic = useAxiosPublic();
 	
 	const [ formVals, setFormVals ] = useState({
 		full_name: "",
@@ -89,9 +93,19 @@ export default function Modal({ setToggleModal, toggleModal }) {
 								onSubmit={ (values) => {
 									const finalValues = {
 										...values,
-										"adoption_id": adoption_id,
+										author,
+										pet_name,
 									}
-									console.log(finalValues);
+									axiosPublic.post("/adoption/requests", finalValues)
+										.then(({ data }) => {
+											if(data.acknowledged) {
+												Swal.fire({
+													title: "Posted request successfully",
+													icon: "success",
+													confirmButtonText: "Ok",
+												}).then(() => setToggleModal(false))
+											}
+										})
 								}}
 							>
 								<Form className="space-y-4" action="#">

@@ -11,13 +11,13 @@ import qs from "query-string"
 
 export default function UnadoptedPets() {
 	const axiosPublic = useAxiosPublic();
-	const [params, setParams] = useSearchParams();
+	const [params] = useSearchParams();
 	
 	const categoryQuery = qs.parse(params.toString()).category || "";
 	const { data: pets = [], isPending: loading, refetch } = useQuery({
 		queryKey: ["pets"],
 		queryFn: async() => {
-			const { data } = await axiosPublic.get(`/adoption?category=${categoryQuery}`)
+			const { data } = await axiosPublic.get(`/adoption?category=${categoryQuery}&adopted=false`)
 			return data;
 		}
 	})
