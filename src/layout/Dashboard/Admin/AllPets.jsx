@@ -5,16 +5,24 @@ import DashboardHeader from "../shared/header/DashboardHeader";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import {useQuery} from "@tanstack/react-query";
+import {useEffect, useState} from "react";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 export default function AllPets() {
 	const axiosSecure = useAxiosSecure();
-	const { data: allPets = [], refetch } = useQuery({
-		queryKey: ["allPets"],
-		queryFn: async() => {
-			const { data } = axiosSecure.get("/adoption")
-			return data;
-		}
-	})
+	const axiosPublic = useAxiosPublic();
+	// const { data: allPets = [], refetch } = useQuery({
+	// 	queryKey: ["allpets"],
+	// 	queryFn: async() => {
+	// 		const { data } = axiosSecure.get("/adoption")
+	// 		return data;
+	// 	}
+	// })
+	const [allPets, setAllPets] = useState([]);
+	useEffect(() => {
+		axiosPublic.get("/adoption").then(({data}) => setAllPets(data));
+	}, [axiosPublic])
+	console.log(allPets);
 	
 	const allPetsColDef = [
 		{ 
@@ -28,12 +36,6 @@ export default function AllPets() {
 		{ 
 			accessorKey: "pet_image",
 			header: "Image",
-			cell: row => {
-				const imgRef = row.getValue();
-				return <div className="rounded-lg max-h-[200px]">
-					<img className="object-cover w-full h-full rounded-lg max-h-[200px]" src={ imgRef }/>
-				</div>
-			},
 		},
 		{ accessorKey: "pet_name", header: "Name" },
 		{ accessorKey: "pet_category", header: "Category" },
@@ -84,7 +86,7 @@ export default function AllPets() {
 											confirmButtonText: "Ok",
 										})
 									}
-									refetch();
+									// refetch();
 								}
 							})
 						}

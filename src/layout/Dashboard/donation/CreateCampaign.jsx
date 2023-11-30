@@ -130,7 +130,7 @@ export default function CreateCampaign() {
 						creator: user.email,
 						post_created: new Date().toISOString(),
 						isPaused: false,
-						donated_amount: 0;
+						donated_amount: 0,
 					}
 					
 					axiosSecure.post(`/donation?email=${user.email}`, finalValues)

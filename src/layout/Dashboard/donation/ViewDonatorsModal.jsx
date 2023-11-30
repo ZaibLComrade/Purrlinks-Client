@@ -1,18 +1,18 @@
 import PropTypes from "prop-types";
 import {useQuery} from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import axios from "axios";
 
-export default function ViewDonationModal({ setToggleModal, toggleModal }) {
-	const axiosSecure = useAxiosSecure()
+export default function ViewDonationModal({ setToggleModal, toggleModal, campaign_id }) {
+	const axiosSecure = useAxiosSecure();
 	
-	const { data: donated = [], isLoading } = useQuery({
+	const { data: donated = [], isPending: isLoading } = useQuery({
 		queryKey: ["donated"],
 		queryFn: async () => {
-			const data = fetch("/contributions.json").then(dat => dat.json());
+			const { data } = axiosSecure.get(`/contribution/${campaign_id}`)
 			return data;
 		}
 	})
+	console.log(donated);
 	
 	return (
 		<>

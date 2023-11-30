@@ -6,7 +6,6 @@ import useAuth from "../../../hooks/useAuth";
 import ViewDonationModal from "./ViewDonatorsModal";
 import {useState} from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
-import Swal from "sweetalert2";
 
 export default function MyDonationCampaigns() {
 	const [ toggleModal, setToggleModal ] = useState(false);
@@ -33,13 +32,16 @@ export default function MyDonationCampaigns() {
 		{
 			accessorKey: "progress",
 			header: "Progress",
+				size: 500,
 			cell: ({ row }) => {
 				const max = row.original.max_donation_amount;
 				const prog = row.original.donated_amount;
-				return <ProgressBar 
+				return <div className="min-w-[200px]"><ProgressBar 
 					completed={ prog/max*100 }
 					bgColor= {"#B683AB"}
-				/>
+					customLabel={`Needs 444$`}
+					labelSize="12px"
+				/></div>
 			}
 		},
 		{ 
@@ -48,7 +50,6 @@ export default function MyDonationCampaigns() {
 			cell: ({ row }) => {
 				const _id = row.original._id;
 				const isPaused = row.original.isPaused;
-				console.log(row.original);
 				const togglePause = () => {
 					axiosSecure.patch(`/donation/${_id}?email=${user.email}`, { isPaused: !isPaused })
 						.then(() => refetch())
@@ -76,15 +77,22 @@ export default function MyDonationCampaigns() {
 			accessorKey: "view_donations",
 			header: "View Donations",
 			cell: prop => {
-				return <button onClick={() => setToggleModal(true)} className="text-base font-semibold rounded-lg hover:underline text-primary w-max font-montserrat transition delay-50 ease-in-out">
-					View Donations
-				</button>
+				const campaign_id = prop.row.original._id
+				return <>
+					<button onClick={() => { setToggleModal(true); console.log(campaign_id)}} className="text-base font-semibold rounded-lg hover:underline text-primary w-max font-montserrat transition delay-50 ease-in-out">
+						View Donations
+					</button>
+					<ViewDonationModal 
+						toggleModal={ toggleModal } 
+						setToggleModal={ setToggleModal } 
+						campaign_id={ campaign_id }
+					/>
+				</>
 			}
 		}
 	]
 	
 	return <div>
-		<ViewDonationModal toggleModal={ toggleModal } setToggleModal={ setToggleModal }/>
 		<DashboardHeader title="My Donation Campaigns"/>
 		<Table columnDef={campaignsColDef} data={campaigns}/>
 	</div>

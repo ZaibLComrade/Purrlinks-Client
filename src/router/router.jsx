@@ -55,11 +55,7 @@ const router = createBrowserRouter([
 			{ path: "/dashboard/adoption/requests", element: <MyAdoptionRequests/> },
 			{ path: "/dashboard/donation/add", element: <CreateCampaign/> },
 			{ path: "/dashboard/donation/my", element: <MyDonationCampaigns/> },
-			{ 
-				path: "/dashboard/donation/contributed/:email",
-				element: <MyDonations/>,
-				loader: ({ params }) => fetch(`/contributions.json`)
-			},
+			{ path: "/dashboard/donation/contributed/:email", element: <MyDonations/> },
 			
 			// Admin routes
 			{ path: "/dashboard/adoption/all", element: <AllPets/>},
