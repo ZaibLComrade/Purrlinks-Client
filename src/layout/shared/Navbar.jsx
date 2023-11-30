@@ -76,7 +76,7 @@ export default function Navbar() {
 			<ul className="py-1 min-w-[130px]">
 				{user  
 					? <>
-						<li className={ dropdownListStyle }><NavLink to="/dashboard">Dashboard</NavLink></li>
+						<li className={ dropdownListStyle }><NavLink to="/dashboard/adoption/my">Dashboard</NavLink></li>
 						<li className={ dropdownListStyle }><button onClick={ logOut }>Logout</button></li>
 					</>
 					: <li className={ dropdownListStyle }><NavLink to="/login">Login</NavLink></li>

@@ -34,7 +34,7 @@ export default function UnadoptedPets() {
 		{/* Card Grids */}
 		{ (loading) ?
 		<div className="py-[50px] space-y-6">
-			<div className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+			<div className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 				{[...Array(4).keys()].map((n, i) =>  <Skeleton key={ i }/> )}
 			</div>
 		</div>
