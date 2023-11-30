@@ -22,7 +22,7 @@ export default function DonationDetails() {
 		long_description,
 		short_description,
 		post_created,
-		last_donated,
+		last_date,
 		pet_image
 	} = useLoaderData();
 	
@@ -40,6 +40,7 @@ export default function DonationDetails() {
 		pet_image,
 		campaign_id,
 	}
+	
 	
 	return <><div className="container py-[50px] mx-auto space-y-14">
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,7 +73,7 @@ export default function DonationDetails() {
 					</div>
 					<div className="flex items-center gap-1">
 						<BiDonateHeart/>
-						<p>Last donated: <span className="text-subtitle">{last_donated}</span></p>
+						<p>Last date: <span className="text-subtitle">{last_date}</span></p>
 					</div>
 				</div>
 				<p className="text-left">{ long_description }</p>

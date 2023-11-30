@@ -13,7 +13,6 @@ export default function UpdatePet() {
 	const { user } = useAuth();
 	const axiosSecure = useAxiosSecure();
 	const data = useLoaderData();
-	console.log(data);
 	const petFormValues = {
 		pet_name: data.pet_name,
 		pet_age: data.pet_age,
@@ -112,12 +111,6 @@ export default function UpdatePet() {
 					const long_description = values.long_description;
 					if(!long_description) {
 						errors.long_description = "Required";
-					}
-					
-					// Image file validation
-					const pet_image = values.pet_image;
-					if(!pet_image) {
-						errors.pet_image = "Required";
 					}
 					
 					return errors;
