@@ -12,7 +12,7 @@ export default function MyDonationCampaigns() {
 	const [ toggleModal, setToggleModal ] = useState(false);
 	const { user } = useAuth();
 	const axiosSecure = useAxiosSecure();
-	const { data: campaigns = [], refetch } = useQuery({
+	const { data: campaigns = [] } = useQuery({
 		queryKey: ["campaigns"],
 		queryFn: async() => {
 			const { data } = await axiosSecure(`/donation/user?email=${user.email}`);
@@ -51,17 +51,9 @@ export default function MyDonationCampaigns() {
 			cell: ({ row }) => {
 				const _id = row.original._id;
 				const isPaused = row.original.isPaused;
-				const togglePause = () => {
-					axiosSecure.patch(`/donation/${_id}?email=${user.email}`, { isPaused: !isPaused })
-						.then(() => refetch())
-				}
 				
 				return <span className="flex flex-col items-center justify-center gap-3">
 					<span className={`${isPaused ? "text-paused-status" : "text-active-status"}`}>{isPaused ? "Paused" : "Active"}</span>
-					{!isPaused 
-						? <button onClick={ togglePause } className="text-sm font-semibold rounded-lg md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Pause</button>
-						: <button onClick={ togglePause } className="text-sm font-semibold rounded-lg md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Resume</button>
-					}
 				</span>
 			}
 		},

@@ -16,16 +16,12 @@ export default function LoginForm() {
 		e.preventDefault();
 		googleSignIn()
 			.then((result) => {
-				// const user = result.user;
-				// axiosSecure.put(`/users/${user.email}`, {
-				// 	name: user.displayName,
-				// 	image: user.photoURL,
-				// 	email: user.email,
-				// 	role: "user",
-				// 	creationTime: user?.metadata?.creationTime,
-				// 	lastSignInTime: user?.metadata?.lastSignInTime,
-				// 	borrowed: [],
-				// });
+				const user = result.user;
+				axiosSecure.put(`/users/${user.email}`, {
+					full_name: user.displayName,
+					profile_picture: user.photoURL,
+					email: user.email,
+				});
 				
 				Swal.fire({
 					title: "Successfully logged in",
@@ -51,16 +47,12 @@ export default function LoginForm() {
 		e.preventDefault();
 		facebookSignIn()
 			.then((result) => {
-				// const user = result.user;
-				// axiosSecure.put(`/users/${user.email}`, {
-				// 	name: user.displayName,
-				// 	image: user.photoURL,
-				// 	email: user.email,
-				// 	role: "user",
-				// 	creationTime: user?.metadata?.creationTime,
-				// 	lastSignInTime: user?.metadata?.lastSignInTime,
-				// 	borrowed: [],
-				// });
+				const user = result.user;
+				axiosSecure.put(`/users/${user.email}`, {
+					full_name: user.displayName,
+					profile_picture: user.photoURL,
+					email: user.email,
+				});
 				
 				Swal.fire({
 					title: "Successfully logged in",

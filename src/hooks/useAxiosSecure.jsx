@@ -11,7 +11,7 @@ export default function useAxiosSecure() {
 		withCredentials: true,
 	})
 	
-	const { logoutUser } = useAuth();
+	const { logOut } = useAuth();
 	const navigate = useNavigate();
 	
 	useEffect(() => {
@@ -19,7 +19,7 @@ export default function useAxiosSecure() {
 				return res;
 			}, err => {
 				if(err.response.status === 401) {
-					logoutUser()
+					logOut()
 						.then(() => {
 							Swal.fire({
 								title: "User was logged out",

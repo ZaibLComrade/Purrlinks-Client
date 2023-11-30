@@ -29,9 +29,8 @@ export default function AllDonations() {
 			header: "Image",
 			cell: row => {
 				const imgRef = row.getValue();
-				return <div className="rounded-lg max-h-[200px]">
-				<img className="object-cover w-full h-full rounded-lg max-h-[200px]" src={ imgRef }/>
-			</div>
+				if(!imgRef) return <p>Image Not Available</p>
+				else return <p>{ imgRef }</p>
 			},
 		},
 		{ accessorKey: "pet_name", header: "Name" },

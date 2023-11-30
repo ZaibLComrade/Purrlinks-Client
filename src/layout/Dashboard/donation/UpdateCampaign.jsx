@@ -135,10 +135,6 @@ export default function UpdateCampaign() {
 					const finalValues = {
 						...values,
 						last_date: lastDateISO,
-						creator: user.email,
-						post_created: new Date().toISOString(),
-						isPaused: false,
-						donated_amount: 0,
 					}
 					
 					console.log(id, finalValues);

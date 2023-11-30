@@ -5,24 +5,18 @@ import DashboardHeader from "../shared/header/DashboardHeader";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import {useQuery} from "@tanstack/react-query";
-import {useEffect, useState} from "react";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAuth from "../../../hooks/useAuth";
 
 export default function AllPets() {
+	const { user  } = useAuth();
 	const axiosSecure = useAxiosSecure();
-	const axiosPublic = useAxiosPublic();
-	// const { data: allPets = [], refetch } = useQuery({
-	// 	queryKey: ["allpets"],
-	// 	queryFn: async() => {
-	// 		const { data } = axiosSecure.get("/adoption")
-	// 		return data;
-	// 	}
-	// })
-	const [allPets, setAllPets] = useState([]);
-	useEffect(() => {
-		axiosPublic.get("/adoption").then(({data}) => setAllPets(data));
-	}, [axiosPublic])
-	console.log(allPets);
+	const { data: allPets = [], refetch } = useQuery({
+		queryKey: ["allpets"],
+		queryFn: async() => {
+			const { data } = await axiosSecure.get("/adoption")
+			return data;
+		}
+	})
 	
 	const allPetsColDef = [
 		{ 
@@ -42,12 +36,28 @@ export default function AllPets() {
 		{ 
 			accessorKey: "adopted",
 			header: "Adoption Status",
-			cell: row => {
+			cell: ({ row }) => {
+				const isAdopted = row.original.adopted;
+				const _id = row.original._id
+				console.log(_id);
+				console.log(isAdopted);
+				const handleToggleAdopted = () => {
+					axiosSecure.patch(`/adoption/${ _id }?email=${ user.email }`, { adopted: !isAdopted })
+						.then(({ data }) => {
+							if(data.acknowledged) {
+								Swal.fire({
+									title: "Operation Successfull",
+									icon: "success",
+									confirmButtonText: "ok",
+								})
+							}
+							refetch();
+						})
+				}
 				
-				const isAdopted = row.getValue();
 				return <span className="flex flex-col items-center justify-center gap-3">
 					<span className={`${isAdopted ? "text-accept" : "text-paused-status"}`}>{isAdopted ? "Adopted" : "Not Adopted"}</span>
-					<button className="text-sm rounded-lg font-sekibold md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Toggle Status</button>
+					<button onClick={ handleToggleAdopted } className="text-sm rounded-lg font-sekibold md:text-base w-max text-primary hover:underline font-montserrat transition delay-50 ease-in-out">Toggle Status</button>
 				</span>;
 			}
 		},
@@ -86,7 +96,7 @@ export default function AllPets() {
 											confirmButtonText: "Ok",
 										})
 									}
-									// refetch();
+									refetch();
 								}
 							})
 						}
