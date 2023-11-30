@@ -36,11 +36,8 @@ export default function MyDonationCampaigns() {
 			cell: ({ row }) => {
 				const max = row.original.max_donation_amount;
 				const prog = row.original.donated_amount;
-				let persentage;
-				if(prog) persentage = (prog/max) * 100;
-				else persentage = 0;
 				return <ProgressBar 
-					completed={ persentage }
+					completed={ prog/max*100 }
 					bgColor= {"#B683AB"}
 				/>
 			}

@@ -8,7 +8,7 @@ export default function App() {
 	const { loading } = useAuth();
 	
 	if(loading) return <LoadingScreen/>
-	return <div className="bg-neutral">
+	return <div className="overflow-x-hidden bg-neutral">
 		<Navbar/>
 		<div className="min-h-[calc(100vh-96px)]">
 			<Outlet/>

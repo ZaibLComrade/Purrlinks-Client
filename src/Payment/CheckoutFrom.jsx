@@ -1,27 +1,89 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import PropTypes from "prop-types";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 export default function CheckoutForm({ campaign_details }) {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [amountError, setAmountError] = useState(false);
+	const [clientSecret, setClientSecret] = useState(null);
 	const [error, setError] = useState("");
+	const { user } = useAuth();
 	const stripe = useStripe();
 	const elements = useElements();
-
+	const axiosSecure = useAxiosSecure();
+	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if(!stripe || !elements) return;
+		setIsSubmitting(true);
+		if(!stripe || !elements) {
+			return;
+		}
+		
+		if(e.target.donation.value <= 0) {
+			setAmountError("Invalid Amount");
+			return;
+		}
+		setAmountError("");
 		
 		const card = elements.getElement(CardElement);
-		if(!card) return;
+		if(!card) {
+			return
+		}
 		
 		const { error, paymentMethod } = await stripe.createPaymentMethod({ type: "card", card })
 		if(error) {
-			console.log("Payment error", error)
 			setError(error.message);
 		}
 		else {
-			console.log("paymentMethod", paymentMethod);
 			setError("");
+		}
+		
+		const donation = e.target.donation.value;
+		const { data } = await axiosSecure.post("/payment/create-intent", { donation })
+		setClientSecret(data.clientSecret)
+		
+		if(clientSecret) {
+			const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+				payment_method: {
+					card: card,
+					billing_details: {
+						email: user?.email || "anonymous",
+						name: user?.displayName || "anonymous"
+					}
+				}
+			})
+			if(confirmError) {Swal.fire({
+				title: "Error",
+				text: confirmError,
+				confirmButtonText: "Close",
+				icon: "error",
+			}).then((res) => {
+				if(res.isConfirmed) setIsSubmitting(false)
+			})} else {
+				if(paymentIntent.status === "succeeded") {
+					Swal.fire({
+						title: "Donation Successfull",
+						icon: "success",
+						text: `Transanction Id ${paymentIntent.id}`
+					}).then((res) => {
+						if(res.isConfirmed) setIsSubmitting(false)
+					})
+					
+					// Save info on database
+					const donationInfo = {
+						donated_to: campaign_details.campaign_id,
+						pet_name: campaign_details.pet_name,
+						pet_image: campaign_details.pet_image,
+						contributer_name: user?.displayName || "anonymous",
+						contributer_email: user?.email || "anonymous",
+						donated_amount: parseInt(donation),
+					}
+					axiosSecure.post("/contribution", donationInfo);
+				}
+			}
 		}
 	}
 	
@@ -52,18 +114,19 @@ export default function CheckoutForm({ campaign_details }) {
 						htmlFor="price"
 						className="block mb-2 text-sm font-medium text-gray-900"
 					>
-						Price
+						Amount
 					</label>
 					<input
 						type="number"
-						name="price"
-						id="price"
+						name="donation"
+						id="donation"
 						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
 						placeholder="$"
 						required=""
 					/>
+				<p className="mt-1 text-xs italic text-red-500">{ amountError }</p>
 				</div>
-				<button type="submit" className="w-full px-5 py-2 font-medium text-center text-white rounded-lg mt-7 bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary">
+				<button disabled={ isSubmitting || !stripe || !elements  } type="submit" className="w-full px-5 py-2 font-medium text-center text-white rounded-lg mt-7 md:h-[42px] bg-primary disabled:opacity-25 hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary">
 					Donate Now
 				</button>
 			</div>
