@@ -13,10 +13,13 @@ export default function UnadoptedPets() {
 	const [params] = useSearchParams();
 	const navigate = useNavigate();
 	const [pets, setPets] = useState([]);
+	const [searchString, setSearchString] = useState("");
 	
 	const query = qs.parse(params.toString()).category || "";
 	const [categoryQuery, setCategoryQuery] = useState(query);
 	const [loading, setLoading] = useState(true);
+	
+	console.log(searchString);
 	
 	// const { data: pets = [], isPending: loading, refetch } = useQuery({
 	// 	queryKey: ["pets"],
@@ -27,12 +30,12 @@ export default function UnadoptedPets() {
 	// })
 	useEffect(() => {
 		setLoading(true);
-		axiosPublic.get(`/adoption?category=${categoryQuery}&adopted=false`)
+		axiosPublic.get(`/adoption?category=${categoryQuery}&adopted=false&search=${searchString}`)
 			.then(({ data }) => {
 				setPets(data)
 				setLoading(false);
 			});
-	}, [categoryQuery, axiosPublic])
+	}, [categoryQuery, axiosPublic, searchString])
 	
 	const handleCategoyItemClick = (category) => {
 		let currentQueries = {};
@@ -54,7 +57,7 @@ export default function UnadoptedPets() {
 		<Header title="All pets" subtitle={"Browse your adoption"}/>
 		<div className="container flex flex-col items-center justify-center mx-auto gap-4 md:flex-row">
 				<Categories handleCategoyItemClick={ handleCategoyItemClick }/>
-			<Search/>
+			<Search setSearchString={ setSearchString }/>
 		</div>
 		
 		{/* Card Grids */}

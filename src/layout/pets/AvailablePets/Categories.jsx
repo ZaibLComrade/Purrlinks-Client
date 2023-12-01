@@ -1,12 +1,14 @@
-import {useNavigate, useSearchParams} from "react-router-dom";
 import Select from "react-select";
 import category from "../../home/category/categoryData";
-import qs from "query-string";
 import PropTypes from "prop-types";
+import {useSearchParams} from "react-router-dom";
+import qs from "query-string";
 
 export default function Categories({ handleCategoyItemClick }) {
 	const categoryOptions = [{ label: "All", value:"", icon: null }, ...category]
+	const [params] = useSearchParams();
 	
+	const categoryParams = qs.parse(params.toString())
 	return <div className="w-[200px] flex items-center gap-2 justify-center">
 		<h4>Category: </h4>
 		<Select 
@@ -17,6 +19,7 @@ export default function Categories({ handleCategoyItemClick }) {
 					width: 130,
 				})
 			}}
+			value={ categoryOptions.find(categ => categ.value === (categoryParams?.category || "")) }
 			options={ categoryOptions }
 			name="categories"
 			onChange={ value => handleCategoyItemClick(value) }
@@ -25,5 +28,5 @@ export default function Categories({ handleCategoyItemClick }) {
 }
 
 Categories.propTypes = {
-	refetch: PropTypes.func
+	handleCategoyItemClick: PropTypes.func,
 }
