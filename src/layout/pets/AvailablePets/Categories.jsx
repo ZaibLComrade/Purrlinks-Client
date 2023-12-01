@@ -4,25 +4,8 @@ import category from "../../home/category/categoryData";
 import qs from "query-string";
 import PropTypes from "prop-types";
 
-export default function Categories({ refetch }) {
+export default function Categories({ handleCategoyItemClick }) {
 	const categoryOptions = [{ label: "All", value:"", icon: null }, ...category]
-	const [params] = useSearchParams();
-	const navigate = useNavigate();
-	
-	const handleCategoyItemClick = (category) => {
-		let currentQueries = {};
-		console.log(category);
-		if(params) {
-			currentQueries = qs.parse(params.toString())
-			const updatedQuery = { ...currentQueries, category: category.value }
-			const url = qs.stringifyUrl({
-				url: "/pets",
-				query: category.value ? updatedQuery : {},
-			})
-			refetch()
-			navigate(url);
-		}
-	}
 	
 	return <div className="w-[200px] flex items-center gap-2 justify-center">
 		<h4>Category: </h4>
@@ -35,7 +18,6 @@ export default function Categories({ refetch }) {
 				})
 			}}
 			options={ categoryOptions }
-			value={ categoryOptions.find(opt => opt.value === qs.parse(params.toString()).category) }
 			name="categories"
 			onChange={ value => handleCategoyItemClick(value) }
 		/>

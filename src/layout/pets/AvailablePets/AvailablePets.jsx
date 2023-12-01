@@ -1,33 +1,59 @@
-import {useEffect, useState} from "react";
 import Skeleton from "./Skeleton";
 import Card from "./Card";
 import Header from "../../../components/headers/Header";
 import Search from "./Search";
 import Categories from "./Categories";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import {useSearchParams} from "react-router-dom";
-import {useQuery} from "@tanstack/react-query";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import qs from "query-string"
+import {useEffect, useState} from "react";
 
 export default function UnadoptedPets() {
 	const axiosPublic = useAxiosPublic();
 	const [params] = useSearchParams();
+	const navigate = useNavigate();
+	const [pets, setPets] = useState([]);
 	
-	const categoryQuery = qs.parse(params.toString()).category || "";
-	const { data: pets = [], isPending: loading, refetch } = useQuery({
-		queryKey: ["pets"],
-		queryFn: async() => {
-			const { data } = await axiosPublic.get(`/adoption?category=${categoryQuery}&adopted=false`)
-			return data;
+	const query = qs.parse(params.toString()).category || "";
+	const [categoryQuery, setCategoryQuery] = useState(query);
+	const [loading, setLoading] = useState(true);
+	
+	// const { data: pets = [], isPending: loading, refetch } = useQuery({
+	// 	queryKey: ["pets"],
+	// 	queryFn: async() => {
+	// 		const { data } = await axiosPublic.get(`/adoption?category=${categoryQuery}&adopted=false`)
+	// 		return data;
+	// 	}
+	// })
+	useEffect(() => {
+		setLoading(true);
+		axiosPublic.get(`/adoption?category=${categoryQuery}&adopted=false`)
+			.then(({ data }) => {
+				setPets(data)
+				setLoading(false);
+			});
+	}, [categoryQuery, axiosPublic])
+	
+	const handleCategoyItemClick = (category) => {
+		let currentQueries = {};
+		if(params) {
+			currentQueries = qs.parse(params.toString())
+			const updatedQuery = { ...currentQueries, category: category.value }
+			const url = qs.stringifyUrl({
+				url: "/pets",
+				query: category.value ? updatedQuery : {},
+			})
+			setCategoryQuery(category.value);
+			navigate(url);
 		}
-	})
+	}
 	
 	// Main component
 	return <div className="space-y-8 py-[50px]">
 		{/* Search */}
 		<Header title="All pets" subtitle={"Browse your adoption"}/>
 		<div className="container flex flex-col items-center justify-center mx-auto gap-4 md:flex-row">
-				<Categories refetch={ refetch }/>
+				<Categories handleCategoyItemClick={ handleCategoyItemClick }/>
 			<Search/>
 		</div>
 		
