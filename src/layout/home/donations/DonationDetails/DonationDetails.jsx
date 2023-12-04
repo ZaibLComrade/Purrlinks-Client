@@ -8,6 +8,7 @@ import Skeleton from "./Skeleton";
 import Card from "./Card";
 import PaymentModal from "./PaymentModal";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import shuffle from "../../../../utilities/shuffle";
 
 export default function DonationDetails() {
 	const campaign_id = useParams().id;
@@ -23,16 +24,21 @@ export default function DonationDetails() {
 		short_description,
 		post_created,
 		last_date,
-		pet_image
+		pet_image,
+		_id,
 	} = useLoaderData();
 	
 	useEffect(() => {
 		axiosPublic.get("/donation")
 			.then(({ data }) => {
-				setRecommended(data);
+				const recommendedCampaigns = data.filter(dat => dat._id !== _id)
+				console.log(recommendedCampaigns);
+				const randomizedArr = shuffle(recommendedCampaigns);
+				console.log(randomizedArr);
+				setRecommended(randomizedArr);
 				setLoading(false);
 			})
-	}, [axiosPublic])
+	}, [axiosPublic, _id])
 	
 	//for database
 	const campaign_details = {
@@ -101,7 +107,7 @@ export default function DonationDetails() {
 					<div className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 					{
 						recommended.length ? recommended.map((recommendation, i) => {
-							if(i < 3) return <Card key={ recommendation.id } recommendation={ recommendation } />
+							if(i < 3) return <Card key={ recommendation._id } recommendation={ recommendation } />
 						})
 						: <div>Something went wrong</div>
 					}
