@@ -30,7 +30,7 @@ export default function DonationCampaign() {
 		<div className="container mx-auto space-y-6">
 			<div className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 				{
-					campaigns.length ? campaigns.map(campaign => <Card key={ campaign.id } campaign={ campaign }/>) :
+					campaigns.length ? campaigns.map(campaign => <Card key={ campaign._id } campaign={ campaign }/>) :
 					<div className="mx-auto h-[50vh] relative col-span-2 w-max">
 						<p className="text-base md:text-3xl">Data not available. Please try again later</p>
 					</div>

@@ -128,7 +128,7 @@ export default function AddPet() {
 					
 					const finalValues = {
 						...values,
-						adpoted: false,
+						adopted: false,
 						author: user.email,
 						posted_date: new Date().toISOString(),
 					}

@@ -19,8 +19,6 @@ export default function UnadoptedPets() {
 	const [categoryQuery, setCategoryQuery] = useState(query);
 	const [loading, setLoading] = useState(true);
 	
-	console.log(searchString);
-	
 	// const { data: pets = [], isPending: loading, refetch } = useQuery({
 	// 	queryKey: ["pets"],
 	// 	queryFn: async() => {
