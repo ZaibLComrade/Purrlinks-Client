@@ -31,6 +31,7 @@ export default function DonationDetails() {
 	useEffect(() => {
 		axiosPublic.get("/donation")
 			.then(({ data }) => {
+				console.log(data);
 				const recommendedCampaigns = data.filter(dat => dat._id !== _id)
 				console.log(recommendedCampaigns);
 				const randomizedArr = shuffle(recommendedCampaigns);
