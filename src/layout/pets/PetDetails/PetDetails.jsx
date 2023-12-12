@@ -49,11 +49,11 @@ export default function PetDetails() {
 			</div>
 		</div>
 		
-		<Modal 
-			setToggleModal={ setToggleModal } 
-			toggleModal={ toggleModal }
-			author={ author }
-			pet_name={ pet_name }
-		/>
+		{/* <Modal */} 
+		{/* 	setToggleModal={ setToggleModal } */} 
+		{/* 	toggleModal={ toggleModal } */}
+		{/* 	author={ author } */}
+		{/* 	pet_name={ pet_name } */}
+		{/* /> */}
 	</div>
 }

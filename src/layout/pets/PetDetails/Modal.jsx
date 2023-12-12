@@ -21,7 +21,7 @@ export default function Modal({ setToggleModal, toggleModal, author, pet_name })
 	
 	useEffect(() => {
 		setFormVals({
-			full_name: user.displayName || "",
+			full_name: user?.displayName || "",
 			email: user.email || "",
 			user_location: "",
 			phone: "",
