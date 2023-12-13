@@ -70,8 +70,8 @@ export default function UnadoptedPets() {
 			<div className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 				{
 					pets.length ? pets.map((pet) => <Card key={ pet._id } pet={ pet }/>) :
-					<div className="mx-auto h-[50vh] relative col-span-2 w-max">
-						<p className="text-base md:text-3xl">Data not available. Please try again later</p>
+					<div className="mx-auto col-span-3 flex items-center justify-center text-center h-[50vh] relative col-span-2 w-full">
+						<p className="text-base text-gray-400 md:text-3xl">Pet not available. Please try again later</p>
 					</div>
 				}
 			</div>
