@@ -1,8 +1,11 @@
 import Header from "../../../components/headers/Header";
-import purrImg from "../../../assets/embrace-purr-2.jpeg";
+import purrImg from "../../../assets/parallax-min.jpg";
 import adoptionSteps from "./adoptionProcess";
-import { FaRegSquare } from "react-icons/fa6";
 import { Parallax, Background } from "react-parallax";
+import { FaHandHoldingHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { FaDonate } from "react-icons/fa";
+import { FaPaw } from "react-icons/fa";
 
 export default function AboutUs() {
 	return <div>
@@ -19,15 +22,15 @@ export default function AboutUs() {
 				}}></div>
 			</Background>
 			<div className="">
-				<div className="absolute z-10 w-full h-full bg-gradient-to-b from-black/70 to-black/70"></div>
-				<div className="relative z-20 py-12 mx-auto w-max">
+				<div className="absolute z-10 w-full h-full bg-gradient-to-t from-black/10 to-black/10"></div>
+				<div className="relative z-20 py-20 mx-auto">
 					<h3 className="mb-4 text-xl text-center md:text-3xl text-primary">--- Why Purrlinks was made?</h3>
-					<div className="mx-auto max-w-[300px] text-sm md:text-xl text-center text-white font-opensans md:max-w-[500px]">
-						<ol className="list-image-square space-y-4">
-							<li className="flex flex-col items-center gap-2"><FaRegSquare/><p>PurrLinks was crafted with a dual purpose in mind - to facilitate meaningful adoptions and to inspire compassionate giving.</p></li>
-							<li className="flex flex-col items-center gap-2"><FaRegSquare/><p>Our platform was born out of a desire to create a space where the joy of adoption meets the power of donations.</p></li>
-							<li className="flex flex-col items-center gap-2"><FaRegSquare/><p>It was created to unite pet lovers with their perfect companions while making a meaningful impact on the well-being of all pets through compassionate donations.</p></li>
-							<li className="flex flex-col items-center gap-2"><FaRegSquare/><p>PurrLinks was made to be a heartfelt intersection of adoption and compassionate giving, weaving stories of love and generosity with every purr.</p></li>
+					<div className="w-full mx-auto text-sm text-center text-white md:text-xl font-opensans">
+						<ol className="items-center justify-around w-full place-items-center grid grid-cols-4 list-image-square space-y-4">
+							<li className="grid h-full grid-rows-2 grid-cols-1 items-center max-w-[300px] gap-2"><FaHeart className="mx-auto text-6xl"/><p>PurrLinks was crafted with a dual purpose in mind - to facilitate meaningful adoptions and to inspire compassionate giving.</p></li>
+							<li className="grid grid-cols-1 grid-rows-2 h-full items-center max-w-[300px] gap-2"><FaHandHoldingHeart className="mx-auto text-6xl"/><p>Our platform was born out of a desire to create a space where the joy of adoption meets the power of donations.</p></li>
+							<li className="grid grid-cols-1 h-full grid-rows-2 items-center max-w-[300px] gap-2"><FaDonate className="mx-auto text-6xl"/><p>It was created to unite pet lovers with their perfect companions while making a meaningful impact on the well-being of all pets through compassionate donations.</p></li>
+							<li className="grid grid-cols-1 h-full items-center grid-rows-2 max-w-[300px] gap-2"><FaPaw className="mx-auto text-6xl"/><p>PurrLinks was made to be a heartfelt intersection of adoption and compassionate giving, weaving stories of love and generosity with every purr.</p></li>
 						</ol>
 					</div>
 				</div>
