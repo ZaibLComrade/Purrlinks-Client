@@ -22,21 +22,21 @@ export default function AboutUs() {
 				}}></div>
 			</Background>
 			<div className="">
-				<div className="absolute z-10 w-full h-full bg-gradient-to-t from-black/10 to-black/10"></div>
+				<div className="absolute z-10 w-full h-full bg-gradient-to-t from-black/30 to-black/30"></div>
 				<div className="relative z-20 py-20 mx-auto">
-					<h3 className="mb-4 text-xl text-center md:text-3xl text-primary">--- Why Purrlinks was made?</h3>
+					<h3 className="mb-4 text-xl text-center text-white md:text-3xl">--- Why Purrlinks was made?</h3>
 					<div className="w-full mx-auto text-sm text-center text-white md:text-xl font-opensans">
-						<ol className="items-center justify-around w-full place-items-center grid grid-cols-4 list-image-square space-y-4">
-							<li className="grid h-full grid-rows-2 grid-cols-1 items-center max-w-[300px] gap-2"><FaHeart className="mx-auto text-6xl"/><p>PurrLinks was crafted with a dual purpose in mind - to facilitate meaningful adoptions and to inspire compassionate giving.</p></li>
-							<li className="grid grid-cols-1 grid-rows-2 h-full items-center max-w-[300px] gap-2"><FaHandHoldingHeart className="mx-auto text-6xl"/><p>Our platform was born out of a desire to create a space where the joy of adoption meets the power of donations.</p></li>
-							<li className="grid grid-cols-1 h-full grid-rows-2 items-center max-w-[300px] gap-2"><FaDonate className="mx-auto text-6xl"/><p>It was created to unite pet lovers with their perfect companions while making a meaningful impact on the well-being of all pets through compassionate donations.</p></li>
-							<li className="grid grid-cols-1 h-full items-center grid-rows-2 max-w-[300px] gap-2"><FaPaw className="mx-auto text-6xl"/><p>PurrLinks was made to be a heartfelt intersection of adoption and compassionate giving, weaving stories of love and generosity with every purr.</p></li>
+						<ol className="items-center justify-around w-full place-items-center md:grid-cols-2 grid-cols-1 gap-6 grid lg:grid-cols-4 list-image-square space-y-4">
+							<li className="grid h-full grid-rows-2 grid-cols-1 items-center max-w-[300px] gap-2"><FaHeart className="mx-auto text-4xl md:text-6xl"/><p>PurrLinks was crafted with a dual purpose in mind - to facilitate meaningful adoptions and to inspire compassionate giving.</p></li>
+							<li className="grid grid-cols-1 grid-rows-2 h-full items-center max-w-[300px] gap-2"><FaHandHoldingHeart className="mx-auto text-4xl md:text-6xl"/><p>Our platform was born out of a desire to create a space where the joy of adoption meets the power of donations.</p></li>
+							<li className="grid grid-cols-1 h-full grid-rows-2 items-center max-w-[300px] gap-2"><FaDonate className="mx-auto text-4xl md:text-6xl"/><p>It was created to unite pet lovers with their perfect companions while making a meaningful impact on the well-being of all pets through compassionate donations.</p></li>
+							<li className="grid grid-cols-1 h-full items-center grid-rows-2 max-w-[300px] gap-2"><FaPaw className="mx-auto text-4xl md:text-6xl"/><p>PurrLinks was made to be a heartfelt intersection of adoption and compassionate giving, weaving stories of love and generosity with every purr.</p></li>
 						</ol>
 					</div>
 				</div>
 			</div>
 		</Parallax>
-		<div className="container p-8 py-20 mx-auto space-y-10">
+		<div className="container py-20 mx-auto md:px-8 space-y-10">
 			<h3 className="mx-auto mb-4 text-2xl text-center md:text-3xl text-primary">--- How does it work?</h3>
 			<div className="p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-16">
 				{

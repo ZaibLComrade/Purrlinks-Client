@@ -15,7 +15,7 @@ export default function Footer() {
 	const linkSection3 = [
 		{ href: "#", text: "Privacy Policy" },
 		{ href: "#", text: "Licensing" },
-		{ href: "#", text: "Terms &amp; Conditions" },
+		{ href: "#", text: "Terms & Conditions" },
 	];
 
 	const linkSection4 = [
